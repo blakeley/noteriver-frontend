@@ -1,3 +1,5 @@
+/* global localStorage */
+
 import Ember from 'ember';
 import Application from '../../app';
 import Router from '../../router';
@@ -8,6 +10,8 @@ export default function startApp(attrs) {
 
   var attributes = Ember.merge({}, config.APP);
   attributes = Ember.merge(attributes, attrs); // use defaults, but you can override;
+
+  localStorage.clear();
 
   Router.reopen({
     location: 'none'
