@@ -5,7 +5,13 @@ module.exports = function(app) {
     res.send({"users":[]});
   });
   usersRouter.post('/', function(req, res) {
-    res.send({"session":{"token":"token"}});
+    if(req.body.user.email == 'taken@mail.com'){
+      res.status(422).send({"errors": {"email": ["has already been taken"]}})
+    } else if(req.body.user.email == '') {
+      res.status(422).send({"errors": {"email": ["can't be blank","must be valid"]}})      
+    } else {
+      res.send({"session":{"token":"token"}});
+    }
   })
   app.use('/api/v1/users', usersRouter);
 };

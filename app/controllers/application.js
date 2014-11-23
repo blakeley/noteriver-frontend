@@ -22,14 +22,14 @@ export default Ember.Controller.extend({
       var _this = this;
       Ember.$.post('api/v1/users', account).then(
         function(response){
-          window.rr = response;
-          window.tt = this;
           Ember.run(function(){
             _this.set('token', response.session.token);            
           });
         },
-        function(error){
-          window.ee = error;
+        function(response){
+          Ember.run(function(){
+            _this.set("errorMessages", response.responseJSON.errors);
+          });
         }
       );  
     }
