@@ -1,0 +1,10 @@
+{{#if token}}
+  <button {{action 'logout'}} class="logout">Log out</button>
+{{else}}
+  {{#if errorMessages.email}}
+    <div class="errorMessage">Email {{errorMessages.email}}</div>
+  {{/if}}
+  {{input value=email action='register' id="new-account-email"}}
+  {{input value=password action='register' id="new-account-password"}}
+  <button {{action 'register'}} id="new-account-button">register</button>
+{{/if}}
