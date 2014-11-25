@@ -1,0 +1,11 @@
+{{#if open}}
+  {{#if errorMessages.email}}
+    <div class="errorMessage">Email {{errorMessages.email}}</div>
+  {{/if}}
+  {{input value=email action='register' id="new-account-email"}}
+  {{input type="password" value=password action='register' id="new-account-password"}}
+  <button {{action 'register'}} id="create-account-button">Register</button>
+  <button {{action 'toggleOpen'}}>Cancel</button>
+{{else}}
+  <button {{action 'toggleOpen'}} id="new-account-button">Register</button>
+{{/if}}
