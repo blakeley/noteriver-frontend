@@ -4,13 +4,13 @@ export default Ember.Controller.extend({
   init: function() {
     this.set("email", "");
     this.set("password", "");
+    this.set("token", localStorage.getItem("token"));
   },
 
-  token: localStorage.token,
 
   tokenChanged: function(){
     if(this.get('token')){
-      localStorage.token = this.get('token');
+      localStorage["token"] = this.get('token');
     } else {
       localStorage.removeItem('token');
     }
@@ -32,6 +32,10 @@ export default Ember.Controller.extend({
           });
         }
       );  
+    },
+
+    logout: function() {
+      this.set('token', null);
     }
   }
 });
