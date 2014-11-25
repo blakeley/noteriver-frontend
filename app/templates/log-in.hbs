@@ -1,0 +1,11 @@
+{{#if open}}
+  {{#if errorMessages}}
+    <div class="errorMessage">Invalid credentials</div>
+  {{/if}}
+  {{input value=email action='login' id="new-session-email"}}
+  {{input type="password" value=password action='login' id="new-session-password"}}
+  <button {{action 'login'}} id="create-session-button">Log in</button>
+  <button {{action 'toggleOpen'}}>Cancel</button>
+{{else}}
+  <button {{action 'toggleOpen'}} id="new-session-button">Log in</button>
+{{/if}}

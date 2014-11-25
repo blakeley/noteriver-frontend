@@ -28,7 +28,7 @@ test('registering successfully', function() {
 test('registering unsuccessfully', function() {
   visit('/');
   click('#new-account-button');
-  fillIn('#new-account-email', "taken@mail.com");
+  fillIn('#new-account-email', "exists@mail.com");
   fillIn('#new-account-password', "password");
   click('#create-account-button');
   andThen(function() {

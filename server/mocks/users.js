@@ -5,7 +5,7 @@ module.exports = function(app) {
     res.send({"users":[]});
   });
   usersRouter.post('/', function(req, res) {
-    if(req.body.user.email == 'taken@mail.com'){
+    if(req.body.user.email == 'exists@mail.com'){
       res.status(422).send({"errors": {"email": ["has already been taken"]}})
     } else if(req.body.user.email == '') {
       res.status(422).send({"errors": {"email": ["can't be blank","must be valid"]}})      
