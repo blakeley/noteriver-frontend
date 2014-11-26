@@ -1,11 +1,22 @@
+<button {{action 'open'}} id="new-session-button">Log in</button>
 {{#if open}}
-  {{#if errorMessages}}
-    <div class="errorMessage">Invalid credentials</div>
-  {{/if}}
-  {{input value=email action='login' id="new-session-email"}}
-  {{input type="password" value=password action='login' id="new-session-password"}}
-  <button {{action 'login'}} id="create-session-button">Log in</button>
-  <button {{action 'toggleOpen'}}>Cancel</button>
-{{else}}
-  <button {{action 'toggleOpen'}} id="new-session-button">Log in</button>
+  <div class="fullscreen">
+    <div class="modal">
+      <div class="x" {{action 'close'}}></div>
+      <div class="modal-header">
+        <h1>Log in</h1>
+        <p>Welcome back!</p>
+      </div>
+      <div class="modal-body">
+        {{input value=email action='create' id="new-session-email" name="email" placeholder="Email"}}
+        {{input type="password" value=password action='create' id="new-session-password" placeholder="Password"}}
+        {{#if errorMessages}}
+          <div class="errorMessage">Invalid credentials</div>
+        {{/if}}
+      </div>
+      <div class="modal-footer">
+        <button {{action 'create'}} id="create-session-button">Continue</button>
+      </div>
+    </div>
+  </div>
 {{/if}}

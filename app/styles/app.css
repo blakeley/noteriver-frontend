@@ -1,3 +1,11 @@
-html, body {
-  margin: 20px;
+@import 'nav.css';
+@import 'modal.css';
+
+html {
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
 }
