@@ -9,3 +9,10 @@ html {
 *, *:before, *:after {
   box-sizing: inherit;
 }
+
+button {
+  outline: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}

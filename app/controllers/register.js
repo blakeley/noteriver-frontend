@@ -6,7 +6,7 @@ export default Ember.Controller.extend({
   init: function() {
     this.set("email", "");
     this.set("password", "");
-    this.set("open", true);
+    this.set("open", false);
   },
 
   token: Ember.computed.alias('controllers.session.token'),

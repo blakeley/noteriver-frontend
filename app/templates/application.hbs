@@ -1,3 +1,14 @@
-Noteriver
-{{render "session"}}
-{{outlet}}
+
+<div class="wrapper">
+  <nav class="primary">
+    <div class="logo">
+      Noteriver
+    </div>
+    <div class="session">
+      {{render "session"}}
+    </div>
+  </nav>
+  <div class="content">
+    {{outlet}}
+  </div>
+</div>
