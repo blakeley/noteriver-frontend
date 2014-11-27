@@ -53,7 +53,7 @@
 
 .modal-body input {
   width: 100%;
-  background: rgb(23,23,23);
+  background: #171717;
   border: none;
   border-radius: 4px;
   font-size: 16px;
@@ -69,8 +69,8 @@
 
 .modal-footer button {
   width: 100%;
-  background: rgb(109, 180, 208);
-  border: 1px solid #3b93b6;
+  background: $primary-color-light;
+  border: 1px solid $primary-color;
   color: white;
   padding: 1rem;
   font-size: 14px;
@@ -83,5 +83,5 @@
 }
 
 .modal button:hover {
-  background: #3b93b6;
+  background: $primary-color;
 }

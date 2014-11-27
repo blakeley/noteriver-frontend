@@ -17,7 +17,6 @@ nav.primary {
   flex: 1;
 }
 
-
 .session {
   height: 100%;
   margin: 0 24px;
@@ -40,12 +39,12 @@ nav.primary {
 }
 
 .session > button:first-of-type {
-  background: rgb(39,184,155);
+  background: $primary-color;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
 }
 .session > button:last-of-type {
-  background: rgb(43,48,52);
+  background: $primary-color-dark;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
 }
