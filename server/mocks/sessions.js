@@ -5,7 +5,7 @@ module.exports = function(app) {
     if(req.body.user.password == 'wrong password'){
       res.status(401).send({"message": "Invalid credentials"});
     } else {
-      res.send({"session":{"token":"token"}});
+      res.send({"session":{"token": "token", "user": "1"}});
     }
   })
   app.use('/api/v1/sessions', sessionsRouter);

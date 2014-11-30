@@ -7,10 +7,15 @@
 }
 
 nav.primary {
-  height: 72px;
-  border-bottom: 2px solid #E0E0E0;
+  height: $nav-height;
+  color: $text-gray;
+  border-bottom: 2px solid $separator-gray;
   display: flex;
   flex-direction: row;
+  /* alignment */
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align vertical */
 }
 
 .logo {
@@ -27,9 +32,6 @@ nav.primary {
 }
 
 .session > button {
-  display: inline-block;
-  vertical-align: middle;
-  line-height: normal;      
   color: white;
   margin: 0px;
   padding: 12px 24px;

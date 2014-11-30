@@ -1,5 +1,8 @@
 {{#if isAuthenticated}}
   <button {{action 'logout'}} class="logout">Log out</button>
+  <img {{bind-attr src=avatarUrl}} class="avatar"/>
+  {{currentUser.username}}
+  <div class="arrow-down"></div>  
 {{else}}
   {{render "register"}}
   {{render "log-in"}}

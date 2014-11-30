@@ -14,6 +14,7 @@ module('Acceptance: Session', {
 
 test('visiting /session', function() {
   localStorage.setItem('token', 'token');
+  localStorage.setItem('userId', '1');
 
   visit('/');
   click('button.logout');

@@ -4,12 +4,11 @@ export default Ember.Controller.extend({
   needs: "session",
 
   init: function() {
-    this.set("email", "");
-    this.set("password", "");
-    this.set("open", false);
+    this.send('clear');
   },
 
   token: Ember.computed.alias('controllers.session.token'),
+  userId: Ember.computed.alias('controllers.session.userId'),
 
   actions: {
     create: function() {
@@ -19,6 +18,7 @@ export default Ember.Controller.extend({
         function(response){
           Ember.run(function(){
             _this.set('token', response.session.token);
+            _this.set('userId', response.session.user);
             _this.send('clear');
           });
         },
