@@ -3,7 +3,7 @@ import startApp from '../helpers/start-app';
 
 var App;
 
-module('Acceptance: Registration', {
+module('Acceptance: Log in', {
   setup: function() {
     App = startApp();
   },
@@ -19,6 +19,7 @@ test('logging in successfully', function() {
   fillIn('#new-session-email', "exists@mail.com");
   fillIn('#new-session-password', "password");
   click('#create-session-button');
+  click('#current-session');
   andThen(function() {
     ok(find(".logout").length, "Log out button does not exist");
     equal(currentPath(), 'index');

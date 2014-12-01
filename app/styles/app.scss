@@ -2,6 +2,7 @@
 @import 'nav.scss';
 @import 'modal.scss';
 @import 'users.scss';
+@import 'menu.scss';
 
 html {
   box-sizing: border-box;
@@ -21,4 +22,8 @@ button {
 
 .content {
   background: #F8F8F8;
+}
+
+ul {
+  margin: 0; padding: 0;
 }

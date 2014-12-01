@@ -19,26 +19,45 @@ nav.primary {
 }
 
 .logo {
+  
+}
+
+.remainder {
   flex: 1;
 }
 
-.session {
+#session {
+  position: relative;
+}
+
+.nav-element {
+  padding: 0 24px;
   height: 100%;
-  margin: 0 24px;
   /* alignment */
   display: flex;
   justify-content: center; /* align horizontal */
-  align-items: center; /* align vertical */
+  align-items: center; /* align vertical */  
 }
 
-.session > button {
-  color: white;
-  margin: 0px;
-  padding: 12px 24px;
-  font-size: 12px;
-  border: 0px;
-  text-transform: uppercase;
+#session {
+  padding: 0;
 }
+
+.session {
+  font-size: 0;
+  * {
+    font-size: 1rem;
+  }
+  > button {
+    color: white;
+    margin: 0px;
+    padding: 12px 24px;
+    font-size: 12px;
+    border: 0px;
+    text-transform: uppercase;
+  }
+}
+
 
 .session > button:first-of-type {
   background: $primary-color;
@@ -51,7 +70,14 @@ nav.primary {
   border-bottom-right-radius: 8px;
 }
 
-
 .content {
   flex: 1;
+}
+
+.arrow-down {
+  width: 0; 
+  height: 0; 
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 8px solid $text-gray;
 }

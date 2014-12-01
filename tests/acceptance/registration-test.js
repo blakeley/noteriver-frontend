@@ -20,7 +20,7 @@ test('registering successfully', function() {
   fillIn('#new-account-password', "password");
   click('#create-account-button');
   andThen(function() {
-    ok(find(".logout").length, "Log out button does not exist");
+    ok(find("#current-session").length, "Current session button does not exist");
     equal(currentPath(), 'index');
   });
 });

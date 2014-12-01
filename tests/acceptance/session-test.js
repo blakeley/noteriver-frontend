@@ -17,6 +17,7 @@ test('visiting /session', function() {
   localStorage.setItem('userId', '1');
 
   visit('/');
+  click('#current-session');
   click('button.logout');
 
   andThen(function() {

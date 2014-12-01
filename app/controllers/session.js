@@ -4,6 +4,7 @@ export default Ember.Controller.extend({
   init: function() {
     this.set('token', localStorage.getItem('token'));
     this.set('userId', localStorage.getItem('userId'));
+    this.set('isOpen', false);
   },
 
   sessionChanged: function(){
@@ -36,6 +37,11 @@ export default Ember.Controller.extend({
     logout: function() {
       this.set('token', null);
       this.set('userId', null);
+    },
+
+    toggleOpen: function() {
+      this.set('isOpen', !this.get('isOpen'));
     }
+
   }
 });
