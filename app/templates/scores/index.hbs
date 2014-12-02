@@ -10,12 +10,12 @@
 
   <tbody>
   {{#each score in model}}
-  <tr>
+  {{#link-to 'score' score.id tagName='tr'}}
     <td>{{score.title}}</td>
     <td>{{score.artist}}</td>
     <td> - </td>
     <td> - </td>
-  </tr>
+  {{/link-to}}
   {{/each}}
   </tbody>
 
