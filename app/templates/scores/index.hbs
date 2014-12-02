@@ -1,0 +1,29 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Artist</th>
+      <th>Uploader</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  {{#each score in model}}
+  <tr>
+    <td>{{score.title}}</td>
+    <td>{{score.artist}}</td>
+    <td> - </td>
+    <td> - </td>
+  </tr>
+  {{/each}}
+  </tbody>
+
+  <tfoot>
+    <tr>
+      <td colspan="100">
+        More
+      </td>
+    </tr>
+  </tfoot>
+</table> 
