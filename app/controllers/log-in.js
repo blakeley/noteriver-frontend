@@ -7,8 +7,8 @@ export default Ember.Controller.extend({
     this.send('clear');
   },
 
-  token: Ember.computed.alias('controllers.session.token'),
-  userId: Ember.computed.alias('controllers.session.userId'),
+  authToken: Ember.computed.alias('controllers.session.authToken'),
+  currentUserId: Ember.computed.alias('controllers.session.currentUserId'),
 
   actions: {
     create: function() {
@@ -17,8 +17,8 @@ export default Ember.Controller.extend({
       Ember.$.post('api/v1/sessions', account).then(
         function(response){
           Ember.run(function(){
-            _this.set('token', response.session.token);
-            _this.set('userId', response.session.user);
+            _this.set('authToken', response.session.token);
+            _this.set('currentUserId', response.session.user);
             _this.send('clear');
           });
         },

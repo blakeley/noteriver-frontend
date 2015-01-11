@@ -2,32 +2,32 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   init: function() {
-    this.set('token', localStorage.getItem('token'));
-    this.set('userId', localStorage.getItem('userId'));
+    this.set('authToken', this.storage.getItem('authToken'));
+    this.set('currentUserId', this.storage.getItem('currentUserId'));
     this.set('isOpen', false);
   },
 
   sessionChanged: function(){
-    if(!!this.get('token') && !!this.get('userId')){
-      localStorage["token"] = this.get('token');
-      localStorage['userId'] = this.get('userId');
+    if(!!this.get('authToken') && !!this.get('currentUserId')){
+      this.storage.setItem('authToken', this.get('authToken'));
+      this.storage.setItem('currentUserId', this.get('currentUserId'));
     } else {
-      localStorage.removeItem('token');
-      localStorage.removeItem('userId');
+      this.storage.removeItem('authToken');
+      this.storage.removeItem('currentUserId');
     }
-  }.observes('token','userId'),
+  }.observes('authToken','currentUserId'),
 
   isAuthenticated: function(){
-    return !!this.get('token') && !!this.get('userId');
-  }.property('token','userId'),
+    return !!this.get('authToken') && !!this.get('currentUserId');
+  }.property('authToken','currentUserId'),
 
   currentUser: function(){
     if(this.get('isAuthenticated')){
-      return this.store.find('user', this.get('userId'));
+      return this.store.find('user', this.get('currentUserId'));
     } else {
       return null;
     }
-  }.property('userId'),
+  }.property('currentUserId'),
 
   avatarUrl: function(){
     return 'http://www.gravatar.com/avatar/' + this.get('currentUser.emailMd5') + '?d=identicon';
@@ -35,8 +35,8 @@ export default Ember.Controller.extend({
 
   actions: {
     logout: function() {
-      this.set('token', null);
-      this.set('userId', null);
+      this.set('authToken', null);
+      this.set('currentUserId', null);
     },
 
     toggleOpen: function() {
