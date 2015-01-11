@@ -8,15 +8,12 @@ import {
 var mockStorage = {
   hash: {},
   getItem: function(key) {
-    console.log('get item');
     return this.hash[key];
   },
   setItem: function(key, value) {
-    console.log('set item');
     this.hash[key] = value;
   },
   removeItem: function(key) {
-    console.log('remove item');
     delete this.hash[key];
   },
 };
