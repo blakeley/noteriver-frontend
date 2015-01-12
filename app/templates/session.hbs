@@ -10,7 +10,7 @@
     </div>
     {{/if}}
     <button id="current-session" class="nav-element" {{action 'toggleOpen'}}>
-      <img {{bind-attr src=avatarUrl}} class="avatar"/>
+      <img {{bind-attr src=currentUser.avatarUrl}} class="avatar"/>
       <div class="arrow-down"></div>
     </button>
   {{else}}

@@ -29,10 +29,6 @@ export default Ember.Controller.extend({
     }
   }.property('currentUserId'),
 
-  avatarUrl: function(){
-    return 'http://www.gravatar.com/avatar/' + this.get('currentUser.emailMd5') + '?d=identicon';
-  }.property('currentUser.emailMd5'),
-
   actions: {
     logout: function() {
       this.set('authToken', null);
