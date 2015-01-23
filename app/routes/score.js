@@ -1,3 +1,5 @@
+/* global MidiFile */
+
 import Ember from 'ember';
 
 export default Ember.Route.extend({
@@ -5,16 +7,33 @@ export default Ember.Route.extend({
     return this.store.find('score', params.score_id);
   },
 
-  afterModel: function(score) {
-    var _this = this;
-    return Ember.$.ajax(score.get('fileUrl')).then(function(json){
-      _this.set('file', json);
-    });
-  },
-
   setupController: function (controller, model){
     controller.set('model', model);
-    controller.set('file', this.get('file'));
+
+    var path = model.get('fileUrl');
+    var fetch = new XMLHttpRequest();
+    fetch.open('GET', path);
+    fetch.overrideMimeType("text/plain; charset=x-user-defined");
+    fetch.onreadystatechange = function() {
+      var _this = this;
+      Ember.run(function() {
+        if(_this.readyState === 4 && _this.status === 200) {
+          /* munge response into a binary string */
+          var t = _this.responseText || "" ;
+          var ff = [];
+          var mx = t.length;
+          var scc = String.fromCharCode;
+          for (var z = 0; z < mx; z++) {
+            ff[z] = scc(t.charCodeAt(z) & 255);
+          }
+          window.f = new MidiFile(ff.join(""));
+          controller.set('midi', new MidiFile(ff.join("")) );
+        }
+      });
+    };
+    fetch.send();
+
+
   },
 
 

@@ -4,5 +4,13 @@
 {{fileUrl}}
 
 <p>
-  {{file}}
+  {{midi}}
 </p>
+
+<p>
+{{midi.tracks.length}}
+</p>
+
+{{#each track in midi.tracks}}
+  <p>{{track.length}}</p>
+{{/each}}
