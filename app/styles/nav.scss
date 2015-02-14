@@ -58,7 +58,6 @@ nav.primary {
   }
 }
 
-
 .session > button:first-of-type {
   background: $primary-color;
   border-top-left-radius: 8px;
@@ -71,6 +70,8 @@ nav.primary {
 }
 
 .content {
+  position: relative;
+  background: #F8F8F8;
   flex: 1;
 }
 

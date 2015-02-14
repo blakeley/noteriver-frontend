@@ -25,7 +25,7 @@ export default Ember.Route.extend({
                        return String.fromCharCode(c.charCodeAt() & 255);})
                      .join('');
           window.midi = new Midi(text);
-          controller.set('midi', new Midi(text));
+          controller.get('model').set('midi', new Midi(text));
         }
       });
     };

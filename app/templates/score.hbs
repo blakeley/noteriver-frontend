@@ -1,15 +1,1 @@
-<h1 id="title">{{title}}</h1>
-<h2 id="artist">{{artist}}</h2>
-
-<p>
-  {{midi.notes.length}} notes across
-  {{midi.tracks.length}} tracks with
-
-  {{#each midi.tracks as |track|}}
-    {{track.notes.length}} notes,
-  {{/each}}
-</p>
-
-
-
-
+{{midi-player score=model}}
