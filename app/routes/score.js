@@ -1,4 +1,4 @@
-/* global MidiFile */
+/* global Midi */
 
 import Ember from 'ember';
 
@@ -19,15 +19,13 @@ export default Ember.Route.extend({
       Ember.run(function() {
         if(_this.readyState === 4 && _this.status === 200) {
           /* munge response into a binary string */
-          var t = _this.responseText || "" ;
-          var ff = [];
-          var mx = t.length;
-          var scc = String.fromCharCode;
-          for (var z = 0; z < mx; z++) {
-            ff[z] = scc(t.charCodeAt(z) & 255);
-          }
-          window.f = new MidiFile(ff.join(""));
-          controller.set('midi', new MidiFile(ff.join("")) );
+          var text = _this.responseText || '';
+          text = text.split('')
+                     .map(function(c){
+                       return String.fromCharCode(c.charCodeAt() & 255);})
+                     .join('');
+          window.midi = new Midi(text);
+          controller.set('midi', new Midi(text));
         }
       });
     };

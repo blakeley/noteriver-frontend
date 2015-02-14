@@ -1,16 +1,15 @@
 <h1 id="title">{{title}}</h1>
 <h2 id="artist">{{artist}}</h2>
 
-{{fileUrl}}
-
 <p>
-  {{midi}}
+  {{midi.notes.length}} notes across
+  {{midi.tracks.length}} tracks with
+
+  {{#each midi.tracks as |track|}}
+    {{track.notes.length}} notes,
+  {{/each}}
 </p>
 
-<p>
-{{midi.tracks.length}}
-</p>
 
-{{#each track in midi.tracks}}
-  <p>{{track.length}}</p>
-{{/each}}
+
+
