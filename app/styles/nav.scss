@@ -19,7 +19,11 @@ nav.primary {
 }
 
 .logo {
-  
+  display: block;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }
 
 .remainder {
@@ -31,12 +35,15 @@ nav.primary {
 }
 
 .nav-element {
-  padding: 0 24px;
+  padding: 0 0px;
   height: 100%;
   /* alignment */
   display: flex;
   justify-content: center; /* align horizontal */
-  align-items: center; /* align vertical */  
+  align-items: center; /* align vertical */
+  * {
+    padding: 0 24px;
+  }
 }
 
 #session {
