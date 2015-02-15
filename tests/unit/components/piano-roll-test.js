@@ -3,9 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('midi-player', 'MidiPlayerComponent', {
+moduleForComponent('piano-roll', 'PianoRollComponent', {
   // specify the other units that are required for this test
-  needs: ['component:piano-roll']
+  // needs: ['component:foo', 'helper:bar']
 });
 
 test('it renders', function() {
