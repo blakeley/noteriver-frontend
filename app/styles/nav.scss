@@ -41,6 +41,9 @@ nav.primary {
   display: flex;
   justify-content: center; /* align horizontal */
   align-items: center; /* align vertical */
+  * {
+    padding: 0 24px;
+  }
 }
 
 #session {

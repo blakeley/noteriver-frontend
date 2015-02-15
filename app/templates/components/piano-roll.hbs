@@ -4,7 +4,7 @@
   <text x="20" y="20" fill="red">{{midi.notes.length}} notes</text>
 
   {{#each midi.notes as |note|}}
-    <rect {{bind-attr x=note.pitch}} y="200" rx="2" ry="2" width="4" height="50" style="fill:red;stroke:black;stroke-width:5;opacity:0.5"></rect>
+    {{piano-roll-note note=note}}
   {{/each}}
 
 
