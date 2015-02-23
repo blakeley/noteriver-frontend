@@ -1,4 +1,5 @@
-.wrapper {
+
+.app {
   position: absolute;
   left: 0; top: 0; right: 0; bottom: 0;
   display: flex;
@@ -16,6 +17,13 @@ nav.primary {
   display: flex;
   justify-content: center; /* align horizontal */
   align-items: center; /* align vertical */
+}
+
+.main {
+  background: #F8F8F8;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .logo {
