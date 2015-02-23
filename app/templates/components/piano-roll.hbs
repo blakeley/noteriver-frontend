@@ -1,6 +1,8 @@
 <text x="20" y="20" fill="red">{{midi.notes.length}} notes</text>
+<text x="20" y="50" fill="red">time: {{time}}</text>
 
-{{#each midi.notes as |note|}}
-  {{piano-roll-note note=note}}
-{{/each}}
-
+{{#svg-g translateY=time}}
+  {{#each midi.notes as |note|}}
+    {{piano-roll-note note=note}}
+  {{/each}}
+{{/svg-g}}
