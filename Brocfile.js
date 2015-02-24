@@ -22,6 +22,7 @@ var app = new EmberApp({
 // along with the exports of each module as its value.
 
 app.import('bower_components/jadin/dist/jadin.js')
+app.import('vendor/keyboard/keyboard.js')
 
 
 module.exports = app.toTree();

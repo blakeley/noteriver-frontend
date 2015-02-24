@@ -11,7 +11,7 @@ export default Ember.Component.extend({
   }.property(),
 
   y: function(){
-    return this.get('note.onSecond');
+    return this.get('note.onSecond') * 20;
   }.property(),
 
   rx: 0.25,
@@ -19,19 +19,15 @@ export default Ember.Component.extend({
   width: 1,
 
   height: function(){
-    return (this.note.offSecond - this.note.onSecond);
+    return (this.note.offSecond - this.note.onSecond) * 20;
   }.property(),
 
   fill: function(){
-    if(this.get('isEbony')){
+    if(keyboard.note(this.get('note.pitch')).isEbony()){
       return '#4B76AC';
     } else {
       return '#96B8D9';
     }
-  }.property(),
-
-  isEbony: function(){
-    return EBONIES.indexOf(this.get('note.pitch') % 12) > -1;
   }.property(),
 
   stroke: '#5E5E5E',
