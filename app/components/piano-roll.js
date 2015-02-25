@@ -7,7 +7,7 @@ export default Ember.Component.extend({
 
   // attributes
   viewBox: function(){
-    return "0 0 88 1000";
+    return "0 0 52 1000";
   }.property(),
 
   preserveAspectRatio: function(){
