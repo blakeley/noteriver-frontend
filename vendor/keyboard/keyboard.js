@@ -1,5 +1,4 @@
 
-
 var keyboard = {
   IVORY_WIDTH: 24,
   EBONY_WIDTH: 14,
@@ -11,24 +10,28 @@ var keyboard = {
     69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85,
     86, 87, 88],
 
+
   note: function(pitch) {
     return {
-      isEbony: function(){
+      get isEbony(){
         return !![1,3,6,8,10].contains(pitch % 12);
       },
-      isIvory: function(){
-        return ![1,3,6,8,10].contains(pitch % 12);
+      get isIvory(){
+        return !this.isEbony;
       },
-      width: function(){
-        if(this.isIvory()){
+      get width(){
+        if(this.isIvory){
           return keyboard.IVORY_WIDTH;
         } else {
           return keyboard.EBONY_WIDTH;
         }
       },
-      x: function(){
+      get x(){
         return Math.floor(pitch / 12) * keyboard.IVORY_WIDTH * 7 + keyboard.X_OFFSETS[pitch % 12];
       }
     }
   }
 }
+
+
+
