@@ -5,6 +5,8 @@ export default Ember.Component.extend({
   classNames: ['piano-roll'],
   attributeBindings: ['viewBox', 'preserveAspectRatio'],
 
+  keyboard: keyboard,
+  
   // attributes
   viewBox: function(){
     return "0 0 52 1000";
@@ -13,6 +15,8 @@ export default Ember.Component.extend({
   preserveAspectRatio: function(){
     return "xMidYMin slice";
   }.property(),
+
+
 
 
 });

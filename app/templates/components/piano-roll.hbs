@@ -3,3 +3,8 @@
     {{piano-roll-note note=note}}
   {{/each}}
 {{/svg-g}}
+
+
+{{#each keyboard.PITCHES as |pitch|}}
+  {{piano-key pitch=pitch}}
+{{/each}}
