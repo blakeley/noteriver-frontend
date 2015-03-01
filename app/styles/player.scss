@@ -3,22 +3,22 @@
   width: 100%;
   height: 100%;
   //color: white;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
 
 .control-bar {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100%;
   height: $control-bar-height;
   background: $primary-color;  
 }
 
 .piano-roll {
-  position: absolute;
   background: #303030;
   width: 100%;
-  height: 100%;
+  flex: 1;
+  transform: scaleY(-1);
   svg {
     position: absolute;
     width: 100%;

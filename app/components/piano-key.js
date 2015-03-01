@@ -10,7 +10,7 @@ export default Ember.Component.extend({
 
   y: function(){
     if(keyboard.note(this.get('pitch')).isEbony){
-      return 0;
+      return keyboard.IVORY_HEIGHT - keyboard.EBONY_HEIGHT;
     } else {
       return 0;
     }
