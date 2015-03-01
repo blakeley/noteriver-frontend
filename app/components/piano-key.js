@@ -10,7 +10,7 @@ export default Ember.Component.extend({
 
   y: function(){
     if(keyboard.note(this.get('pitch')).isEbony){
-      return 1;
+      return 0;
     } else {
       return 0;
     }
@@ -22,9 +22,9 @@ export default Ember.Component.extend({
 
   height: function(){
     if(keyboard.note(this.get('pitch')).isEbony){
-      return 3;
+      return keyboard.EBONY_HEIGHT / keyboard.IVORY_WIDTH;
     } else {
-      return 4;
+      return keyboard.IVORY_HEIGHT / keyboard.IVORY_WIDTH;
     }
   }.property(),
 
