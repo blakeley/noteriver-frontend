@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   attributeBindings: ['x','y','rx','ry','width','height','fill','stroke', 'stroke-width'],
 
   x: function(){
-    return keyboard.note(this.get('note.pitch')).x / keyboard.IVORY_WIDTH;
+    return keyboard.note(this.get('note.pitch')).x;
   }.property(),
 
   y: function(){
@@ -23,7 +23,7 @@ export default Ember.Component.extend({
   }.property(),
 
   width: function(){
-    return keyboard.note(this.get('note.pitch')).width / keyboard.IVORY_WIDTH;
+    return keyboard.note(this.get('note.pitch')).width;
   }.property(),
 
   height: function(){
