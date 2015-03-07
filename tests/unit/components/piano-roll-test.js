@@ -6,6 +6,7 @@ import {
 moduleForComponent('piano-roll', 'PianoRollComponent', {
   // specify the other units that are required for this test
   // needs: ['component:foo', 'helper:bar']
+  needs: ['component:piano-roll-notes','component:piano-key']
 });
 
 test('it renders', function() {

@@ -1,3 +1,5 @@
+/* global keyboard */
+
 import Ember from 'ember';
 
 export default Ember.Component.extend({
@@ -15,8 +17,4 @@ export default Ember.Component.extend({
   preserveAspectRatio: function(){
     return "xMidYMin slice";
   }.property(),
-
-
-
-
 });

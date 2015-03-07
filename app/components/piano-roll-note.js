@@ -1,6 +1,6 @@
-import Ember from 'ember';
+/* global keyboard */
 
-var EBONIES = [1,3,6,8,10];
+import Ember from 'ember';
 
 export default Ember.Component.extend({
   tagName: 'rect',
