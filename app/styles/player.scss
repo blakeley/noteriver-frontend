@@ -11,7 +11,9 @@
 .control-bar {
   width: 100%;
   height: $control-bar-height;
-  background: $primary-color-dark;  
+  background: $primary-color-dark;
+  color: white;
+  font-weight: 100;
 }
 
 .piano-roll {
