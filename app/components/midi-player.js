@@ -2,5 +2,5 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   classNames: ['midi-player'],
-  time: 0,
+  time: 15,
 });
