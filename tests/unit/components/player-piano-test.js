@@ -6,7 +6,7 @@ import {
 moduleForComponent('player-piano', 'PlayerPianoComponent', {
   // specify the other units that are required for this test
   // needs: ['component:foo', 'helper:bar']
-  needs: ['component:piano-roll-notes','component:piano-key']
+  needs: ['component:svg-g','component:piano-key']
 });
 
 test('it renders', function() {

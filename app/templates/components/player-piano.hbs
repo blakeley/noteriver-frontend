@@ -1,5 +1,9 @@
 
-{{piano-roll-notes time=time midi=midi}}
+{{#svg-g translateY=noteTranslateY}}
+  {{#each midi.notes as |note|}}
+    {{piano-roll-note note=note}}
+  {{/each}}
+{{/svg-g}}
 
 {{#each keyboard.IVORY_PITCHES as |pitch|}}
   {{piano-key pitch=pitch}}

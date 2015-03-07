@@ -9,6 +9,10 @@ export default Ember.Component.extend({
 
   keyboard: keyboard,
   
+  noteTranslateY: function(){
+    return keyboard.IVORY_HEIGHT - this.get('time');
+  }.property('time'),
+
   // attributes
   viewBox: function(){
     return "0 0 52 1000";
