@@ -1,5 +1,5 @@
 
 <div class="slider-container">
   <strong>{{score.title}}</strong> - {{score.artist}}
-  {{progress-slider value=time step=0.01 max=400}}
+  {{progress-slider value=time step=0.01 min=0 max=score.midi.duration}}
 </div>

@@ -5,6 +5,7 @@ export default Ember.Component.extend(Ember.TextSupport, {
   attributeBindings: ['type','step','max','value','style'],
   type: 'range',
 
+  value: 0,
   min: 0,
   max: 100,
 
@@ -14,7 +15,7 @@ export default Ember.Component.extend(Ember.TextSupport, {
 
   percent: function(){
     return this.get('value') / (this.get('max') - this.get('min')) * 100;
-  }.property('value'),
+  }.property('value', 'max', 'min'),
 
 
 });

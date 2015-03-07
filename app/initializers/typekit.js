@@ -9,7 +9,6 @@ export default {
     var url = "//use.typekit.net/lhc1pwf.js";
     injectScript(url).then(function() {
       Typekit.load();
-      console.log("Typekit loaded");
     });
   }
 };
