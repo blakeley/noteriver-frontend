@@ -5,7 +5,7 @@ import {
 
 moduleForComponent('midi-player', 'MidiPlayerComponent', {
   // specify the other units that are required for this test
-  needs: ['component:piano-roll', 'component:control-bar']
+  needs: ['component:player-piano', 'component:control-bar']
 });
 
 test('it renders', function() {
