@@ -8,10 +8,13 @@ export default Ember.Component.extend({
   attributeBindings: ['viewBox', 'preserveAspectRatio'],
 
   keyboard: keyboard,
-  
+
+  timeScale: 10,
+
   noteTranslateY: function(){
-    return keyboard.IVORY_HEIGHT - this.get('time');
+    return keyboard.IVORY_HEIGHT - this.get('time') * this.get('timeScale');
   }.property('time'),
+
 
   // attributes
   viewBox: function(){

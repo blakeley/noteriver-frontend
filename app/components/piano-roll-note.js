@@ -11,7 +11,7 @@ export default Ember.Component.extend({
   }.property(),
 
   y: function(){
-    return this.get('note.onSecond') * 20;
+    return this.get('note.onSecond') * this.get('timeScale');
   }.property(),
 
   rx: function(){
@@ -27,7 +27,7 @@ export default Ember.Component.extend({
   }.property(),
 
   height: function(){
-    return (this.note.offSecond - this.note.onSecond) * 20;
+    return (this.note.offSecond - this.note.onSecond) * this.get('timeScale');
   }.property(),
 
   fill: function(){
