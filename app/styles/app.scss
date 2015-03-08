@@ -10,6 +10,8 @@
 html {
   box-sizing: border-box;
   font-family: "proxima-nova", "Proxima Nova", helvetica, arial, sans-serif;
+  font-weight: 100;
+  letter-spacing: 1px;
   color: $text-gray;
 }
 
@@ -31,3 +33,20 @@ ul {
 table {
   width: 100%;
 }
+
+
+// flexbox mastery
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.flex-one {
+  flex: 1;
+}
+
