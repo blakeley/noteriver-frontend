@@ -3,6 +3,6 @@
   <strong>{{score.title}}</strong> - {{score.artist}}
   {{progress-slider value=time step=0.01 min=0 max=score.midi.duration}}
 </div>
-<div>
-  <button {{action 'toggleSettingsPanelIsOpen'}}>toggle</button>
-</div>
+<button>
+  <img {{bind-attr class="settingsPanelIsOpen:rotated"}} src="assets/images/gear.svg" {{action 'toggleSettingsPanelIsOpen'}}/>
+</button>

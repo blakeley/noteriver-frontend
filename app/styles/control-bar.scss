@@ -1,12 +1,33 @@
+
 .control-bar {
   display: flex;
   flex-direction: row;
   text-align: center;
+  width: 100%;
+  height: $control-bar-height;
+  background: $primary-color-dark;
+  color: white;
+  fill: white;
+  font-weight: 100;
+  > button {
+    color: white;
+    padding: 20px;
+    height: $control-bar-height;
+    width: $control-bar-height;
+    img {
+      transition: transform 0.5s;
+    }
+    .rotated {
+      transform: rotate(-90deg);
+      webkit-transform: rotate(-90deg);
+      ms-transform: rotate(-90deg);
+    }
+  }
 }
+
 
 .slider-container {
   flex: 1;
   text-align: center;
   padding: 14px;
 }
-
