@@ -1,5 +1,14 @@
 <div class="flex-one flex-row" style="background: red;">
   {{player-piano midi=score.midi time=time}}
-  {{settings-panel isOpen=settingsPanelIsOpen}}
+  <div {{bind-attr class=":settings-panel-container settingsPanelIsOpen:is-open"}}>
+    <div class="settings-panel">
+      <header>
+        Settings
+        <button {{action 'toggleSettingsPanelIsOpen'}}>
+          <img src="assets/images/cancel.svg"/>
+        </button>
+      </header>
+    </div>
+  </div>
 </div>
 {{control-bar score=score time=time settingsPanelIsOpen=settingsPanelIsOpen}}
