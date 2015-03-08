@@ -30,8 +30,13 @@
 
 .settings-panel-container {
   position: relative;
-  width: 325px;
+  width: 50px;
   background: $primary-color-light;
+  transition: width 0.5s;
+}
+
+.settings-panel-container.is-open {
+  width: 325px;
 }
 
 .settings-panel {
