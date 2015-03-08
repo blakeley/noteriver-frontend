@@ -1,5 +1,5 @@
 <div class="flex-one flex-row" style="background: red;">
   {{player-piano midi=score.midi time=time}}
-  {{settings-panel}}
+  {{settings-panel isOpen=settingsPanelIsOpen}}
 </div>
-{{control-bar score=score time=time}}
+{{control-bar score=score time=time settingsPanelIsOpen=settingsPanelIsOpen}}
