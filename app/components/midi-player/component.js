@@ -15,13 +15,13 @@ export default Ember.Component.extend({
 
   lowNumberChanged: function(){
     if(parseInt(this.get('lowNumber')) >= parseInt(this.get('highNumber'))){
-      this.set('highNumber', parseInt(this.get('lowNumber')) + 1)
+      this.set('highNumber', parseInt(this.get('lowNumber')) + 1);
     }
   }.observes('lowNumber'),
 
   highNumberChanged: function(){
     if(parseInt(this.get('lowNumber')) >= parseInt(this.get('highNumber'))){
-      this.set('lowNumber', parseInt(this.get('highNumber')) - 1)
+      this.set('lowNumber', parseInt(this.get('highNumber')) - 1);
     }
   }.observes('highNumber'),
 
