@@ -1,5 +1,5 @@
 <div class="flex-one flex-row" style="background: red;">
-  {{player-piano midi=score.midi time=time}}
+  {{player-piano midi=score.midi time=time lowNumber=lowNumber highNumber=highNumber}}
   <div {{bind-attr class=":settings-panel-container settingsPanelIsOpen:is-open"}}>
     <div class="settings-panel">
       <header>
@@ -8,6 +8,10 @@
           <img src="assets/images/cancel.svg"/>
         </button>
       </header>
+      {{input type="range" value=lowNumber min=0 max=88}}
+      {{input type="range" value=highNumber min=0 max=88}}
+      low: {{lowNumber}}
+      high: {{highNumber}}
     </div>
   </div>
 </div>

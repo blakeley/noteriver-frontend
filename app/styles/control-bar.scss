@@ -14,7 +14,9 @@
     padding: 20px;
     height: $control-bar-height;
     width: $control-bar-height;
+    cursor: pointer;
     img {
+      cursor: pointer;
       transition: transform 0.5s;
     }
     .rotated {
@@ -30,4 +32,9 @@
   flex: 1;
   text-align: center;
   padding: 14px;
+}
+
+
+input[type=range] {
+  background: $primary-color-dark;
 }
