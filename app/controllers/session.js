@@ -9,16 +9,6 @@ export default Ember.Controller.extend({
     this.set('isOpen', false);
   },
 
-  sessionChanged: function(){
-    if(!!this.get('authToken') && !!this.get('currentUserId')){
-      this.get('storage').setItem('authToken', this.get('authToken'));
-      this.get('storage').setItem('currentUserId', this.get('currentUserId'));
-    } else {
-      this.get('storage').removeItem('authToken');
-      this.get('storage').removeItem('currentUserId');
-    }
-  }.observes('authToken','currentUserId'),
-
   isAuthenticated: function(){
     return !!this.get('authToken') && !!this.get('currentUserId');
   }.property('authToken','currentUserId'),
@@ -34,7 +24,9 @@ export default Ember.Controller.extend({
   actions: {
     logout: function() {
       this.set('authToken', null);
+      this.get('storage').removeItem('authToken');
       this.set('currentUserId', null);
+      this.get('storage').removeItem('currentUserId');
     },
 
     toggleOpen: function() {

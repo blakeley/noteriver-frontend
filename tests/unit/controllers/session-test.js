@@ -1,12 +1,17 @@
-import Ember from 'ember';
-
 import {
   moduleFor,
   test
 } from 'ember-qunit';
 
+moduleFor('controller:session', {
+  // Specify the other units that are required for this test.
+  needs: ['service:storage']
+});
+
 var mockStorage = {
-  hash: {},
+  init: function(){
+    this.hash = {};
+  },
   getItem: function(key) {
     return this.hash[key];
   },
@@ -18,32 +23,86 @@ var mockStorage = {
   },
 };
 
-moduleFor('controller:session', 'SessionController', {
-  subject: function(options, klass, container) {
-    return klass.create(Ember.merge({ 
-      storage: mockStorage
-    }, options));
-  },
+// Replace this with your real tests.
+test('it exists', function(assert) {
+  var service = this.subject();
+  assert.ok(service);
 });
 
-test('authToken returns the auth token', function() {
+test('it uses service:storage', function(assert){
+  var session = this.subject();
+  assert.ok(session.get('storage'));
+});
+
+test('it acquires authToken from localStorage', function(assert){
+  mockStorage.init();
   mockStorage.setItem('authToken', 'token');
-  equal('token', this.subject().get('authToken'));
+  var session = this.subject({storage: mockStorage});
+  assert.equal(session.get('authToken'), 'token');
 });
 
-test('isAuthenticated returns true when we have an authToken', function() {
+test('it acquires currentUserId from localStorage', function(assert){
+  mockStorage.init();
+  mockStorage.setItem('currentUserId', 1337);
+  var session = this.subject({storage: mockStorage});
+  assert.equal(session.get('currentUserId'), 1337);
+});
+
+test('#isAuthenticated is true when both currentUserId and authToken are set', function(assert){
+  mockStorage.init();
+  var session = this.subject({storage: mockStorage});
+  session.set('authToken', 'token');
+  session.set('currentUserId', 1337);
+  assert.equal(session.get('isAuthenticated'), true);
+});
+
+test('#isAuthenticated is false when authToken is null', function(assert){
+  mockStorage.init();
+  var session = this.subject({storage: mockStorage});
+  session.set('authToken', 'token');
+  assert.equal(session.get('isAuthenticated'), false);
+});
+
+test('#isAuthenticated is false when currentUserId is null', function(assert){
+  mockStorage.init();
+  var session = this.subject({storage: mockStorage});
+  session.set('currentUserId', 1337);
+  assert.equal(session.get('isAuthenticated'), false);
+});
+
+test('#currentUser returns the current user when isAuthenticated', function(assert){
+  mockStorage.init();
+  var session = this.subject({storage: mockStorage});
+  session.set('authToken', 'token');
+  session.set('currentUserId', 1337);
+  assert.equal(session.get('isAuthenticated'), true);
+});
+
+test('.logout() logs the user out', function(assert){
+  mockStorage.init();
+  var session = this.subject({storage: mockStorage});
+  session.set('authToken', 'token');
+  session.set('currentUserId', 1337);
+  assert.equal(session.get('isAuthenticated'), true);
+  session.send('logout');
+  assert.equal(session.get('isAuthenticated'), false);    
+});
+
+test('.logout() clears the authentication storage', function(assert){
+  mockStorage.init();
   mockStorage.setItem('authToken', 'token');
   mockStorage.setItem('currentUserId', 1337);
-  equal(true, this.subject().get('isAuthenticated'));
+  var session = this.subject({storage: mockStorage});
+  session.send('logout');
+  assert.ok(!mockStorage.getItem('authToken'));
+  assert.ok(!mockStorage.getItem('currentUserId'));
 });
 
-test('isAuthenticated returns false when we do not have an authToken', function() {
-  mockStorage.removeItem('authToken');
-  equal(false, this.subject().get('isAuthenticated'));
-});
 
-test('currentUserId returns the current user\'s ID', function() {
-  mockStorage.setItem('currentUserId', 1337);
-  equal(1337, this.subject().get('currentUserId'));
-});
+
+
+
+
+
+
 
