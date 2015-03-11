@@ -7,6 +7,7 @@ export default Ember.Controller.extend({
     this.set('authToken', this.get('storage').getItem('authToken'));
     this.set('currentUserId', this.get('storage').getItem('currentUserId'));
     this.set('isOpen', false);
+    this.set('session', this.store.createRecord('session'));
   },
 
   isAuthenticated: function(){
@@ -27,6 +28,10 @@ export default Ember.Controller.extend({
       this.get('storage').removeItem('authToken');
       this.set('currentUserId', null);
       this.get('storage').removeItem('currentUserId');
+    },
+
+    login: function() {
+      this.get('session').save();
     },
 
     toggleOpen: function() {
