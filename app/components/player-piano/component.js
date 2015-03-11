@@ -25,7 +25,7 @@ export default Ember.Component.extend({
   }.property('vbx', 'highNumber'),
 
   viewBox: function(){
-    return this.get('vbx') + " 0 "+this.get('vbw')+" 1000";
+    return this.get('vbx') + " 0 " + this.get('vbw') + " 1000";
   }.property('vbx','vbw'),
 
   // Because jQuery disregards case in .attr(), Ember fails to update

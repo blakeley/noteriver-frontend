@@ -1,19 +1,21 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  storage: Ember.inject.service(),
+
   init: function() {
-    this.set('authToken', this.storage.getItem('authToken'));
-    this.set('currentUserId', this.storage.getItem('currentUserId'));
+    this.set('authToken', this.get('storage').getItem('authToken'));
+    this.set('currentUserId', this.get('storage').getItem('currentUserId'));
     this.set('isOpen', false);
   },
 
   sessionChanged: function(){
     if(!!this.get('authToken') && !!this.get('currentUserId')){
-      this.storage.setItem('authToken', this.get('authToken'));
-      this.storage.setItem('currentUserId', this.get('currentUserId'));
+      this.get('storage').setItem('authToken', this.get('authToken'));
+      this.get('storage').setItem('currentUserId', this.get('currentUserId'));
     } else {
-      this.storage.removeItem('authToken');
-      this.storage.removeItem('currentUserId');
+      this.get('storage').removeItem('authToken');
+      this.get('storage').removeItem('currentUserId');
     }
   }.observes('authToken','currentUserId'),
 
