@@ -72,7 +72,64 @@ test('.logout() clears the currentUserId in localStorage', function(assert) {
   assert.ok(!mockStorage.getItem('currentUserId'));
 });
 
+test('.login() with valid credentials acquires an authToken', function(assert) {
+  var controller = this.subject({storage: mockStorage});
+  controller.set('model', Ember.Object.create({
+    email: 'valid@mail.com',
+    password: 'password',
+    save: function(){
+      this.authToken = 'token';
+    }
+  }));
+  controller.send('login');
+  assert.ok(controller.get('model.authToken'));
+});
 
+test('.login() with valid credentials acquires an authToken', function(assert) {
+  var controller = this.subject({storage: mockStorage});
+  controller.set('model', Ember.Object.create({
+    email: 'valid@mail.com',
+    password: 'password',
+    save: function(){
+      this.authToken = 'token';
+      this.user = Ember.Object.create({id: 1337});
+    }
+  }));
+  controller.send('login');
+  assert.ok(controller.get('model.user'));
+});
+
+test('.login() with valid credentials saves the acquired authToken in localStorage', function(assert) {
+  mockStorage.init();
+  var controller = this.subject({storage: mockStorage});
+  controller.set('model', Ember.Object.create({
+    email: 'valid@mail.com',
+    password: 'password',
+    save: function(){
+      this.authToken = 'token';
+      this.user = Ember.Object.create({id: 1337});
+    }
+  }));
+  controller.send('login');
+  assert.ok(mockStorage.getItem('authToken'));
+  assert.equal(mockStorage.getItem('authToken'), 'token');
+});
+
+
+test('.login() with valid credentials saves the acquired user.id in localStorage', function(assert) {
+  mockStorage.init();
+  var controller = this.subject({storage: mockStorage});
+  controller.set('model', Ember.Object.create({
+    email: 'valid@mail.com',
+    password: 'password',
+    save: function(){
+      this.authToken = 'token';
+      this.user = Ember.Object.create({id: 1337});
+    }
+  }));
+  controller.send('login');
+  assert.equal(mockStorage.getItem('currentUserId'), 1337);
+});
 
 
 

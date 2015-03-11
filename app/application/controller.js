@@ -10,6 +10,12 @@ export default Ember.Controller.extend({
       this.get('storage').removeItem('authToken');
       this.get('storage').removeItem('currentUserId');
     },
+
+    login: function(){
+      this.get('model').save();
+      this.get('storage').setItem('authToken', this.get('model.authToken'));
+      this.get('storage').setItem('currentUserId', this.get('model.user.id'));
+    },
   },
 
 });
