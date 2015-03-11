@@ -1,1 +1,38 @@
-{{outlet}}
+
+<div class="app">
+  <nav class="primary">
+    <div class="nav-element">
+      {{#link-to 'application' classNames="logo"}}
+      Noteriver
+      {{/link-to}}
+    </div>
+    <div class="remainder">
+    </div>
+    <div id="session" class="nav-element">
+      {{#if isAuthenticated}}
+        {{#if isOpen}}
+        <div class="menu">
+          <ul>
+            <li>Profile</li>
+            <li>Account</li>
+            <li><button {{action 'logout'}} class="logout">Log out</button></li>
+          </ul>
+        </div>
+        {{/if}}
+        <button id="current-session" class="nav-element" {{action 'toggleOpen'}}>
+          <img {{bind-attr src=currentUser.avatarUrl}} class="avatar"/>
+          <div class="arrow-down"></div>
+        </button>
+      {{else}}
+      <div class="session nav-element">
+        {{partial "register"}}
+        {{partial "log-in"}}
+      </div>
+      {{/if}}
+    </div>
+
+  </nav>
+  <div class="main">
+    {{outlet}}
+  </div>
+</div>
