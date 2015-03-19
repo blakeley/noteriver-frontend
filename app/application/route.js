@@ -8,12 +8,22 @@ export default Ember.Route.extend({
     var authToken = this.get('storage').getItem('authToken');
     if(!!currentUserId && !!authToken) {
       return this.store.createRecord('session', {
-        authToken: this.get('storage').getItem('authToken'),
-        userId: this.store.find('user', this.get('storage').getItem('currentUserId')),
+        authToken: authToken,
+        user: this.store.find('user', currentUserId),
       });
     } else {
-      return this.store.createRecord('session');
+      return this.store.createRecord('session', {
+        user: this.store.createRecord('user')
+      });
     }
+  },
+
+  setupController: function(controller, model){
+    controller.set('session', model);
+  },
+
+  afterModel: function(model){
+    window.mm = model;
   },
 
 });

@@ -38,27 +38,27 @@ test('it uses service:storage', function(assert){
 
 test('.logout() clears the authToken', function(assert) {
   var controller = this.subject();
-  controller.set('model', Ember.Object.create({
+  controller.set('session', Ember.Object.create({
     authToken: 'token',
   }));
   controller.send('logout');
-  assert.ok(!controller.get('model.authToken'));
+  assert.ok(!controller.get('session.authToken'));
 });
 
 test('.logout() disassociates the user', function(assert) {
   var controller = this.subject();
-  controller.set('model', Ember.Object.create({
+  controller.set('session', Ember.Object.create({
     user: Ember.Object.create(),
   }));
   controller.send('logout');
-  assert.ok(!controller.get('model.user'));  
+  assert.ok(!controller.get('session.user'));  
 });
 
 test('.logout() clears the authToken in localStorage', function(assert) {
   mockStorage.init();
   mockStorage.setItem('authToken','token');
   var controller = this.subject({storage: mockStorage});
-  controller.set('model', Ember.Object.create());
+  controller.set('session', Ember.Object.create());
   controller.send('logout');
   assert.ok(!mockStorage.getItem('authToken'));
 });
@@ -67,27 +67,30 @@ test('.logout() clears the currentUserId in localStorage', function(assert) {
   mockStorage.init();
   mockStorage.setItem('currentUserId', 1337);
   var controller = this.subject({storage: mockStorage});
-  controller.set('model', Ember.Object.create());
+  controller.set('session', Ember.Object.create());
   controller.send('logout');
   assert.ok(!mockStorage.getItem('currentUserId'));
 });
 
 test('.login() with valid credentials acquires an authToken', function(assert) {
+  mockStorage.init();
   var controller = this.subject({storage: mockStorage});
-  controller.set('model', Ember.Object.create({
+  controller.set('session', Ember.Object.create({
     email: 'valid@mail.com',
     password: 'password',
     save: function(){
-      this.authToken = 'token';
+      this.set('authToken', 'token');
+      this.user = Ember.Object.create({id: 1337});
     }
   }));
   controller.send('login');
-  assert.ok(controller.get('model.authToken'));
+  assert.ok(controller.get('session.authToken'));
 });
 
-test('.login() with valid credentials acquires an authToken', function(assert) {
+test('.login() with valid credentials associates the current user', function(assert) {
+  mockStorage.init();
   var controller = this.subject({storage: mockStorage});
-  controller.set('model', Ember.Object.create({
+  controller.set('session', Ember.Object.create({
     email: 'valid@mail.com',
     password: 'password',
     save: function(){
@@ -96,13 +99,13 @@ test('.login() with valid credentials acquires an authToken', function(assert) {
     }
   }));
   controller.send('login');
-  assert.ok(controller.get('model.user'));
+  assert.ok(controller.get('session.user'));
 });
 
 test('.login() with valid credentials saves the acquired authToken in localStorage', function(assert) {
   mockStorage.init();
   var controller = this.subject({storage: mockStorage});
-  controller.set('model', Ember.Object.create({
+  controller.set('session', Ember.Object.create({
     email: 'valid@mail.com',
     password: 'password',
     save: function(){
@@ -119,7 +122,7 @@ test('.login() with valid credentials saves the acquired authToken in localStora
 test('.login() with valid credentials saves the acquired user.id in localStorage', function(assert) {
   mockStorage.init();
   var controller = this.subject({storage: mockStorage});
-  controller.set('model', Ember.Object.create({
+  controller.set('session', Ember.Object.create({
     email: 'valid@mail.com',
     password: 'password',
     save: function(){
@@ -130,8 +133,6 @@ test('.login() with valid credentials saves the acquired user.id in localStorage
   controller.send('login');
   assert.equal(mockStorage.getItem('currentUserId'), 1337);
 });
-
-
 
 
 

@@ -15,8 +15,20 @@ module.exports = function(app) {
     } else if(req.body.user.email == '') {
       res.status(422).send({"errors": {"email": ["can't be blank","must be valid"]}})      
     } else {
-      res.send({"session":{"token":"token", "user": "1"}});
+      res.send({
+        "user": {
+          "id": 1,
+          "session": 1,
+          "username": 'beau',
+          "email_md5": '205e460b479e2e5b48aec07710c08d50',
+        },
+        "sessions": [{
+          "id": 1,
+          "auth_token": "token",
+          "user": 1,
+        }],
+      })
     }
-  })
+  });
   app.use('/api/v1/users', usersRouter);
 };

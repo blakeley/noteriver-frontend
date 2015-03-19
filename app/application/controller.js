@@ -5,16 +5,24 @@ export default Ember.Controller.extend({
 
   actions: {
     logout: function() {
-      this.set('model.authToken', null);
-      this.set('model.user', null);
+      this.set('session.authToken', null);
+      this.set('session.user', null);
       this.get('storage').removeItem('authToken');
       this.get('storage').removeItem('currentUserId');
     },
 
     login: function(){
-      this.get('model').save();
-      this.get('storage').setItem('authToken', this.get('model.authToken'));
-      this.get('storage').setItem('currentUserId', this.get('model.user.id'));
+      this.get('session').save();
+      this.get('storage').setItem('authToken', this.get('session.authToken'));
+      this.get('storage').setItem('currentUserId', this.get('session.user.id'));
+    },
+
+    register: function(){
+      this.get('session.user').save().then(() => {
+        this.set('session', this.get('session.user.session'));
+        this.get('storage').setItem('authToken', this.get('session.authToken'));
+        this.get('storage').setItem('currentUserId', this.get('session.user.id'));
+      });
     },
   },
 

@@ -1,22 +1,20 @@
 <button {{action 'open'}} id="new-account-button">Register</button>
-{{#if open}}
-  <div class="fullscreen">
-    <div class="modal">
-      <div class="x" {{action 'close'}}></div>
-      <div class="modal-header">
-        <h1>Signup</h1>
-        <p>Creating an account lets you upload scores and participate in the community. And it's free!</p>
-      </div>
-      <div class="modal-body">
-        {{input value=email action='create' id="new-account-email" name="email" placeholder="Email"}}
-        {{input type="password" value=password action='create' id="new-account-password" placeholder="Password"}}
-        {{#if errorMessages.email}}
-          <div class="errorMessage">Email {{errorMessages.email}}</div>
-        {{/if}}
-      </div>
-      <div class="modal-footer">
-        <button {{action 'create'}} id="create-account-button">Continue</button>
-      </div>
+<div class="fullscreen">
+  <div class="modal">
+    <div class="x" {{action 'close'}}></div>
+    <div class="modal-header">
+      <h1>Signup</h1>
+      <p>Creating an account lets you upload scores and participate in the community. And it's free!</p>
+    </div>
+    <div class="modal-body">
+      {{input value=email action='create' id="new-account-email" name="email" placeholder="Email"}}
+      {{input type="password" value=password action='create' id="new-account-password" placeholder="Password"}}
+      {{#if errorMessages.email}}
+        <div class="errorMessage">Email {{errorMessages.email}}</div>
+      {{/if}}
+    </div>
+    <div class="modal-footer">
+      <button {{action 'register'}} id="create-account-button">Continue</button>
     </div>
   </div>
-{{/if}}
+</div>
