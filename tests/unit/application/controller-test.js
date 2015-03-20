@@ -80,7 +80,7 @@ test('.login() with valid credentials acquires an authToken', function(assert) {
     password: 'password',
     save: function(){
       this.set('authToken', 'token');
-      this.user = Ember.Object.create({id: 1337});
+      this.set('user', Ember.Object.create({id: 1337}));
     }
   }));
   controller.send('login');
@@ -94,8 +94,8 @@ test('.login() with valid credentials associates the current user', function(ass
     email: 'valid@mail.com',
     password: 'password',
     save: function(){
-      this.authToken = 'token';
-      this.user = Ember.Object.create({id: 1337});
+      this.set('authToken', 'token');
+      this.set('user', Ember.Object.create({id: 1337}));
     }
   }));
   controller.send('login');
@@ -109,8 +109,8 @@ test('.login() with valid credentials saves the acquired authToken in localStora
     email: 'valid@mail.com',
     password: 'password',
     save: function(){
-      this.authToken = 'token';
-      this.user = Ember.Object.create({id: 1337});
+      this.set('authToken', 'token');
+      this.set('user', Ember.Object.create({id: 1337}));
     }
   }));
   controller.send('login');
@@ -126,8 +126,8 @@ test('.login() with valid credentials saves the acquired user.id in localStorage
     email: 'valid@mail.com',
     password: 'password',
     save: function(){
-      this.authToken = 'token';
-      this.user = Ember.Object.create({id: 1337});
+      this.set('authToken', 'token');
+      this.set('user', Ember.Object.create({id: 1337}));
     }
   }));
   controller.send('login');
