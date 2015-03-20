@@ -7,14 +7,15 @@ module.exports = function(app) {
     } else {
       res.send({
         "session": {
-          "id": 0,
+          "id": 2,
           "auth_token": "token",
-          "user": 1,
+          "user": 2,
         },
         "users": [{
-          "id": 1,
+          "id": 2,
           "username": 'beau',
           "email_md5": '205e460b479e2e5b48aec07710c08d50',
+          "session": 2,
         }],
       });
     }

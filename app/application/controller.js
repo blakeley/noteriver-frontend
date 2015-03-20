@@ -26,14 +26,15 @@ export default Ember.Controller.extend({
     },
 
     login: function(){
-      this.get('session').save().then(() => {
+      this.get('session').save().then((session) => {
+        this.associateModels(session.get('user'), session)
         this.send('closeModal');
       });
     },
 
     register: function(){
-      this.get('session.user').save().then(() => {
-        this.set('session', this.get('session.user.session'));
+      this.get('user').save().then((user) => {
+        this.associateModels(user, user.get('session'))
         this.send('closeModal');
       });
     },

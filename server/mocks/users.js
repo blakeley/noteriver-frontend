@@ -3,7 +3,7 @@ module.exports = function(app) {
   var usersRouter = express.Router();
   // show
   usersRouter.get('/:id', function(req, res) {
-    res.send({"user":{"id": req.params.id, "emailMd5": '205e460b479e2e5b48aec07710c08d50', "username": "beau"}});
+    res.send({"user":{"id": req.params.id, "email_md5": '205e460b479e2e5b48aec07710c08d50', "username": "beau"}});
   });
   // index
   usersRouter.get('/', function(req, res) {
