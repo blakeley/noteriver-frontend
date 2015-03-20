@@ -3,13 +3,13 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForModel('user', 'User', {
+moduleForModel('score', {
   // Specify the other units that are required for this test.
-  needs: ['model:session']
+  needs: []
 });
 
-test('it exists', function() {
+test('it exists', function(assert) {
   var model = this.subject();
   // var store = this.store();
-  ok(!!model);
+  assert.ok(!!model);
 });
