@@ -6,7 +6,11 @@ export default Ember.Object.extend({
   },
 
   setItem: function(key, value) {
-    localStorage.setItem(key, value);
+    if(value === undefined || value === null){
+      this.removeItem(key);
+    } else {
+      localStorage.setItem(key, value);
+    }
   },
 
   removeItem: function(key) {
