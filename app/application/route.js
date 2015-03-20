@@ -21,13 +21,25 @@ export default Ember.Route.extend({
     }
   },
 
-  setupController: function(controller, model){
-    var user = model['user'];
-    var session = model['session'];
-    session.set('user', user);
-    user.set('session', session);
-    controller.set('session', session);
-    controller.set('user', user);
+  setupController: function(controller, models){
+    var user = models['user'];
+    var session = models['session'];
+    controller.associateModels(user, session);
+  },
+
+  actions: {
+    openModal: function(modalName){
+      return this.render('modals/' + modalName, {
+        into: 'application',
+        outlet: 'modal',
+      });
+    },
+    closeModal: function(){
+      return this.disconnectOutlet({
+        outlet: 'modal',
+        parentView: 'application'
+      });
+    },
   },
 
 });

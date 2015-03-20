@@ -1,5 +1,8 @@
 
 <div class="app">
+
+  {{outlet 'modal'}}
+
   <nav class="primary">
     <div class="nav-element">
       {{#link-to 'application' classNames="logo"}}
@@ -9,7 +12,7 @@
     <div class="remainder">
     </div>
     <div id="session" class="nav-element">
-      {{#if isAuthenticated}}
+      {{#if session.isAuthenticated}}
         {{#if isOpen}}
         <div class="menu">
           <ul>
@@ -19,20 +22,21 @@
           </ul>
         </div>
         {{/if}}
-        <button id="current-session" class="nav-element" {{action 'toggleOpen'}}>
-          <img {{bind-attr src=currentUser.avatarUrl}} class="avatar"/>
+        <button id="current-session" class="nav-element" {{action 'logout'}}>
+          <img {{bind-attr src=user.avatarUrl}} class="avatar"/>
           <div class="arrow-down"></div>
         </button>
       {{else}}
       <div class="session nav-element">
-        {{partial "register"}}
-        {{partial "log-in"}}
+        <button {{action 'openModal' 'new-user'}} id="new-user-button">Register</button>
+        <button {{action 'openModal' 'new-session'}} id="new-session-button">Log in</button>
       </div>
       {{/if}}
     </div>
-
   </nav>
+
   <div class="main">
     {{outlet}}
   </div>
+
 </div>

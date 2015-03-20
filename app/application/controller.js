@@ -4,28 +4,37 @@ export default Ember.Controller.extend({
   storage: Ember.inject.service(),
 
   authTokenChanged: function(){
-    console.log('authTokenChanged: ' + this.get('session.authToken'));
     this.get('storage').setItem('authToken', this.get('session.authToken'));
   }.observes('session.authToken'),
 
   currentUserIdChanged: function(){
-    console.log('currentUserIdChanged: ' + this.get('session.user.id'));
     this.get('storage').setItem('currentUserId', this.get('session.user.id'));
   }.observes('session.user.id'),
 
+  associateModels: function(user, session) {
+    user.set('session', session);
+    session.set('user', user);
+    this.set('user', user);
+    this.set('session', session);
+  },
+
   actions: {
     logout: function() {
-      this.set('session.authToken', null);
-      this.set('session.user', null);
+      var user = this.store.createRecord('user');
+      var session = this.store.createRecord('session');
+      this.associateModels(user, session);
     },
 
     login: function(){
-      this.get('session').save();
+      this.get('session').save().then(() => {
+        this.send('closeModal');
+      });
     },
 
     register: function(){
       this.get('session.user').save().then(() => {
         this.set('session', this.get('session.user.session'));
+        this.send('closeModal');
       });
     },
   },

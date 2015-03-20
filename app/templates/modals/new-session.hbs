@@ -1,0 +1,19 @@
+<div class="fullscreen">
+  <div class="modal">
+    <div class="x" {{action 'closeModal'}}></div>
+    <div class="modal-header">
+      <h1>Log in</h1>
+      <p>Welcome back!</p>
+    </div>
+    <div class="modal-body">
+      {{input value=email action='login' id="new-session-email" name="email" placeholder="Email"}}
+      {{input type="password" value=password action='login' id="new-session-password" placeholder="Password"}}
+      {{#if errorMessages}}
+        <div class="errorMessage">Invalid credentials</div>
+      {{/if}}
+    </div>
+    <div class="modal-footer">
+      <button {{action 'login'}} id="create-session-button">Continue</button>
+    </div>
+  </div>
+</div>
