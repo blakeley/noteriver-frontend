@@ -1,4 +1,12 @@
 
+
+<button {{action 'toggleIsPlaying'}}>
+  {{#if isPlaying}}
+    <img src="assets/images/pause.svg"/>
+  {{else}}
+    <img src="assets/images/play.svg"/>
+  {{/if}}
+</button>
 <div class="slider-container">
   <strong>{{score.title}}</strong> - {{score.artist}}
   {{progress-slider value=time step=0.01 min=0 max=score.midi.duration}}
