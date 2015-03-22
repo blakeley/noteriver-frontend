@@ -19,3 +19,17 @@ test('it renders', function() {
   this.append();
   equal(component._state, 'inDOM');
 });
+
+test('#play begins animation', function(assert){
+  expect(1);
+
+  var component = this.subject({
+    animation: {
+      scheduleFrame: function(){
+        assert.ok(true, 'animation was scheduled!');
+      }
+    }
+  });
+
+  component.play();
+});

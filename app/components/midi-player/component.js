@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  animation: Ember.inject.service(),
+
   classNames: ['midi-player'],
 
   time: 1,
@@ -17,12 +19,11 @@ export default Ember.Component.extend({
         var now = Date.now();
         var deltaTime = (now - lastAnimateTime) / 1000;
         lastAnimateTime = now;
-        console.log(deltaTime);
         component.set('time', parseFloat(component.get('time')) + deltaTime);
-        window.requestAnimationFrame(animate);
+        component.get('animation').scheduleFrame(animate);
       }
     }
-    window.requestAnimationFrame(animate);
+    this.get('animation').scheduleFrame(animate);
   }.observes('isPlaying'),
 
   boundHighNumber: function(){
