@@ -3,28 +3,29 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
-  init: function(){
-    this.set('context', new AudioContext());
-  },
+  context: new AudioContext(),
+  buffers: new Ember.Map(),
 
   getBuffer: function(url){
     var context = this.get('context');
-    return new Ember.RSVP.Promise(function(resolve, reject){
+    var buffers = this.get('buffers');
+    if(buffers.has(url)){
+      return buffers.get(url);
+    }
+    var buffer = new Ember.RSVP.Promise(function(resolve, reject){
       var xhr = new XMLHttpRequest();
       xhr.open('GET', url);
-      xhr.onreadystatechange = handler;
       xhr.responseType = "arraybuffer";
-      xhr.send();
-
-      function handler() {
-        if (this.readyState === this.DONE) {
-          if (this.status === 200) {
-            resolve(this.response);
+      xhr.onreadystatechange = function(){
+        if (xhr.readyState === xhr.DONE) {
+          if (xhr.status === 200) {
+            resolve(xhr.response);
           } else {
-            reject(new Error('Load audio buffer from `' + url + '` failed with status: [' + this.status + ']'));
+            reject(new Error('Load audio buffer from `' + url + '` failed with status: [' + xhr.status + ']'));
           }
-        }
-      }
+        }        
+      };
+      xhr.send();
     }).then(function(audioData){
       return new Ember.RSVP.Promise(function(resolve/*, reject*/){
         context.decodeAudioData(audioData, function(buffer){
@@ -32,6 +33,9 @@ export default Ember.Service.extend({
         });
       });
     });
+
+    buffers.set(url, buffer);
+    return buffer;
   },
 
 
