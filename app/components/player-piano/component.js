@@ -9,6 +9,9 @@ export default Ember.Component.extend({
 
   keyboard: keyboard,
 
+  time: 0,
+  lowNumber: 0,
+  highNumber: 88,
   timeScale: 10,
 
   noteTranslateY: function(){

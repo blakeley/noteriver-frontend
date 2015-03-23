@@ -36,7 +36,6 @@ var mockSession = Ember.Object.create({
   email: 'valid@mail.com',
   password: 'password',
   save: function() {
-    console.log("saving");
     this.set('authToken', 'token');
     this.set('user', Ember.Object.create({id: 1337}));
     return {then: function(callback) {
