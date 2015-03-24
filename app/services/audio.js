@@ -20,7 +20,7 @@ export default Ember.Service.extend({
     var context = this.get('context');
     var buffers = this.get('buffers');
     var buffersA = this.get('buffersA');
-    var _this = this;
+    var service = this;
     if(buffers.has(url)){
       return buffers.get(url);
     } 
@@ -41,7 +41,7 @@ export default Ember.Service.extend({
     }).then(function(audioData){
       return new Ember.RSVP.Promise(function(resolve/*, reject*/){
         context.decodeAudioData(audioData, function(buffer){
-          _this.incrementProperty('totalLoaded');
+          service.incrementProperty('totalLoaded');
           resolve(buffer);
         });
       });
@@ -52,6 +52,17 @@ export default Ember.Service.extend({
 
     return buffer;
   },
+
+  playSound: function(url, secondsDelay) {
+    var context = this.get('context');
+    return this.getBuffer(url).then(function(buffer){
+      var source = context.createBufferSource();
+      source.buffer = buffer;
+      source.connect(context.destination);
+      source.start(context.currentTime + secondsDelay);
+    });
+  },
+
 });
 
 

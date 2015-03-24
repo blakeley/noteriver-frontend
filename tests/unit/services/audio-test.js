@@ -97,6 +97,31 @@ test('#percentLoaded returns the percent of buffers that have loaded', function(
   });
 });
 
+test('#playSound plays a sound', function(assert) {
+  expect(2);
+
+  var service = this.subject();
+  service.set("context", {
+    decodeAudioData: function(audioData, callback){
+      callback();
+    },
+    destination: "AudioDestinationNode",
+    currentTime: 0,
+    createBufferSource: function(){
+      return {
+        connect: function(destination){
+          assert.ok(true, "connected to an output!");
+        },
+        start: function(url, delay){
+          assert.ok(true, "played a sound!");
+        }
+      };
+    }
+  });
+  return service.getBuffer(url).then(function(){
+    return service.playSound(url, 0);
+  });
+});
 
 
 

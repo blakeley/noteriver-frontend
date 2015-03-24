@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   animation: Ember.inject.service(),
+  audio: Ember.inject.service(),
 
   classNames: ['midi-player'],
 
