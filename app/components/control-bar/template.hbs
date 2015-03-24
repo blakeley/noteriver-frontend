@@ -9,7 +9,7 @@
 </button>
 <div class="slider-container">
   <strong>{{score.title}}</strong> - {{score.artist}}
-  {{progress-slider value=time step=0.01 min=0 max=score.midi.duration}}
+  {{progress-slider value=time step=0.01 min=0 max=score.midi.duration isInterrupted=isInterrupted}}
 </div>
 <button {{action 'toggleSettingsPanelIsOpen'}}>
   <img {{bind-attr class="settingsPanelIsOpen:rotated"}} src="assets/images/gear.svg"/>

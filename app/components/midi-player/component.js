@@ -8,6 +8,7 @@ export default Ember.Component.extend({
 
   time: 1,
   isPlaying: false,
+  isInterrupted: false,
   settingsPanelIsOpen: true,
   lowNumber: 0,
   highNumber: 88,
@@ -16,7 +17,7 @@ export default Ember.Component.extend({
     var component = this;
     var lastAnimateTime = Date.now();
     function animate(){
-      if(component.get('isPlaying')){
+      if(component.get('isPlaying') & !component.get('isInterrupted')){
         var now = Date.now();
         var deltaTime = (now - lastAnimateTime) / 1000;
         lastAnimateTime = now;
@@ -25,7 +26,7 @@ export default Ember.Component.extend({
       }
     }
     this.get('animation').scheduleFrame(animate);
-  }.observes('isPlaying'),
+  }.observes('isPlaying','isInterrupted'),
 
   boundHighNumber: function(){
     if(parseInt(this.get('lowNumber')) >= parseInt(this.get('highNumber'))){

@@ -17,5 +17,13 @@ export default Ember.Component.extend(Ember.TextSupport, {
     return this.get('value') / (this.get('max') - this.get('min')) * 100;
   }.property('value', 'max', 'min'),
 
+  mouseDown: function(){
+    this.set('isInterrupted', true);
+  },
+
+  mouseUp: function(){
+    this.set('isInterrupted', false);
+  },
+
 
 });
