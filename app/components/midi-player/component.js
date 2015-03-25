@@ -15,13 +15,12 @@ export default Ember.Component.extend({
 
   play: function(){
     var component = this;
-    var lastAnimateTime = Date.now();
+    var startTime = parseFloat(this.get('time'));
+    var startDateNow = Date.now();
     function animate(){
       if(component.get('isPlaying') & !component.get('isInterrupted')){
-        var now = Date.now();
-        var deltaTime = (now - lastAnimateTime) / 1000;
-        lastAnimateTime = now;
-        component.set('time', parseFloat(component.get('time')) + deltaTime);
+        var deltaTime = (Date.now() - startDateNow) / 1000;
+        component.set('time', startTime + deltaTime);
         component.get('animation').scheduleFrame(animate);
       }
     }
