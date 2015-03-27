@@ -16,10 +16,21 @@ export default Ember.Component.extend({
   play: function(){
     var component = this;
     var startTime = parseFloat(this.get('time'));
-    var startDateNow = Date.now();
+    var initialDateNow = Date.now();
+
+    if(component.get('isPlaying') & !component.get('isInterrupted')){
+      component.get('score.midi.notes').forEach(function(note){
+        var url = `/assets/audios/${note.pitch}.mp3`;
+        var secondsDelay = note.onSecond - startTime;
+        if(secondsDelay >= 0){
+          component.get('audio').playSound(url, secondsDelay);
+        }
+      });
+    }
+
     function animate(){
       if(component.get('isPlaying') & !component.get('isInterrupted')){
-        var deltaTime = (Date.now() - startDateNow) / 1000;
+        var deltaTime = (Date.now() - initialDateNow) / 1000;
         component.set('time', startTime + deltaTime);
         component.get('animation').scheduleFrame(animate);
       }

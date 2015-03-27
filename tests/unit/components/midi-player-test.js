@@ -20,7 +20,7 @@ test('it renders', function() {
   equal(component._state, 'inDOM');
 });
 
-test('#play begins animation', function(assert){
+test('#play begins the animation', function(assert){
   expect(1);
 
   var component = this.subject({
@@ -28,8 +28,35 @@ test('#play begins animation', function(assert){
       scheduleFrame: function(){
         assert.ok(true, 'animation was scheduled!');
       }
-    }
+    },
   });
 
   component.play();
 });
+
+
+test('#play plays a sound', function(assert){
+  expect(1);
+
+  var component = this.subject({
+    animation: {
+      scheduleFrame: function(){}
+    },
+    audio: {
+      playSound: function(){
+        assert.ok(true, 'sound was played!');
+      }
+    },
+    score: {
+      midi: {
+        notes: [{onSecond: 1}],
+      }
+    },
+    time: 0,
+    isPlaying: true,
+  });
+
+  component.play();
+});
+
+
