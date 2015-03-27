@@ -1,5 +1,9 @@
 import Ember from 'ember';
-import startApp from '../helpers/start-app';
+import {
+  module,
+  test
+} from 'qunit';
+import startApp from 'noteriver/tests/helpers/start-app';
 
 var App;
 
@@ -12,11 +16,11 @@ module('Acceptance: Scores', {
   }
 });
 
-test('Visiting /scores and clicking a score', function() {
+test('Visiting /scores and clicking a score', function(assert) {
   visit('/scores');
   click('tr');
 
   andThen(function() {
-    equal(currentPath(), 'score.index');
+    assert.equal(currentPath(), 'score.index');
   });
 });

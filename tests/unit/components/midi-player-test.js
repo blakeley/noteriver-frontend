@@ -8,20 +8,20 @@ moduleForComponent('midi-player', 'MidiPlayerComponent', {
   needs: ['component:player-piano', 'component:control-bar']
 });
 
-test('it renders', function() {
-  expect(2);
+test('it renders', function(assert) {
+  assert.expect(2);
 
   // creates the component instance
   var component = this.subject();
-  equal(component._state, 'preRender');
+  assert.equal(component._state, 'preRender');
 
   // appends the component to the page
   this.render();
-  equal(component._state, 'inDOM');
+  assert.equal(component._state, 'inDOM');
 });
 
 test('#play begins the animation', function(assert){
-  expect(1);
+  assert.expect(1);
 
   var component = this.subject({
     animation: {
@@ -36,7 +36,7 @@ test('#play begins the animation', function(assert){
 
 
 test('#play plays a sound', function(assert){
-  expect(1);
+  assert.expect(1);
 
   var component = this.subject({
     animation: {

@@ -58,7 +58,7 @@ test('#getBuffer memoizes the buffer (promise) for future calls', function(asser
 });
 
 test('successive calls to #getBuffer with the same url returns the same buffer (promise)', function(assert) {
-  expect(2);
+  assert.expect(2);
   var service = this.subject();
   var first = service.getBuffer(url);
   return first.then(function(buffer){
@@ -98,7 +98,7 @@ test('#percentLoaded returns the percent of buffers that have loaded', function(
 });
 
 test('#playSound plays a sound', function(assert) {
-  expect(2);
+  assert.expect(2);
 
   var service = this.subject();
   service.set("context", {
