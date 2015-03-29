@@ -35,6 +35,8 @@ export default Ember.Component.extend({
           component.get('audio').playSound(url, secondsDelay);
         }
       });
+    } else {
+      component.get('audio').stop();
     }
 
     function animate(){
@@ -58,6 +60,10 @@ export default Ember.Component.extend({
       this.set('lowNumber', parseInt(this.get('highNumber')) - 1);
     }
   }.observes('highNumber'),
+
+  willDestroyElement: function(){
+    this.get('audio').stop();
+  },
 
   actions: {
     toggleSettingsPanelIsOpen: function(){

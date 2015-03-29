@@ -12,7 +12,11 @@ test('it renders', function(assert) {
   assert.expect(2);
 
   // creates the component instance
-  var component = this.subject();
+  var component = this.subject({
+    audio: {
+      stop: function(){},
+    }
+  });
   assert.equal(component._state, 'preRender');
 
   // appends the component to the page
@@ -27,11 +31,20 @@ test('#play begins the animation', function(assert){
     animation: {
       scheduleFrame: function(){
         assert.ok(true, 'animation was scheduled!');
+      },
+    },
+    audio: {
+      playSound: function(){},
+    },
+    score: {
+      midi: {
+        notes: [{onSecond: 1}],
       }
     },
+    time: 0,
   });
 
-  component.play();
+  component.set('isPlaying', true);
 });
 
 
@@ -45,7 +58,7 @@ test('#play plays a sound', function(assert){
     audio: {
       playSound: function(){
         assert.ok(true, 'sound was played!');
-      }
+      },
     },
     score: {
       midi: {
@@ -53,10 +66,9 @@ test('#play plays a sound', function(assert){
       }
     },
     time: 0,
-    isPlaying: true,
   });
 
-  component.play();
+  component.set('isPlaying', true);
 });
 
 

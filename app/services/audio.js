@@ -62,8 +62,15 @@ export default Ember.Service.extend({
       source.buffer = buffer;
       source.connect(context.destination);
       source.start(context.currentTime + secondsDelay);
-      sounds.push(source);
+      sounds.pushObject(source);
     });
+  },
+
+  stop: function(){
+    this.get('sounds').forEach(function(sound){
+      sound.stop();
+    });
+    this.get('sounds').clear();
   },
 
 });

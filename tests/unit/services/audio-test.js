@@ -124,7 +124,6 @@ test('#playSound plays a sound', function(assert) {
   });
 });
 
-
 test('#playSound saves played sounds', function(assert) {
   assert.expect(2);
 
@@ -145,7 +144,6 @@ test('#playSound saves played sounds', function(assert) {
     }
   });
 
-
   assert.equal(0, service.get('sounds').length);
   return service.getBuffer(url).then(function(){
     return service.playSound(url, 0).then(function(){
@@ -154,6 +152,28 @@ test('#playSound saves played sounds', function(assert) {
   });
 });
 
+test('#stop stops all sounds', function(assert) {
+  assert.expect(2); // stops both sounds
+  var service = this.subject();
+  var mockAudioBufferSourceNode = {
+    stop: function(){
+      assert.ok(true, "sound was stopped!");
+    }
+  };
+  service.get('sounds').pushObject(mockAudioBufferSourceNode);
+  service.get('sounds').pushObject(mockAudioBufferSourceNode);
+  service.stop();
+});
+
+test('#stop clears the array of saved audio buffer source nodes', function(assert) {
+  assert.expect(2); // stops both sounds
+  var service = this.subject();
+  service.get('sounds').pushObject({stop: function(){}});
+  service.get('sounds').pushObject({stop: function(){}});
+  assert.equal(2, service.get('sounds').length);
+  service.stop();
+  assert.equal(0, service.get('sounds').length);
+});
 
 
 
