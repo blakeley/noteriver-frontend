@@ -6,6 +6,7 @@ export default Ember.Service.extend({
   context: new AudioContext(),
   buffers: new Ember.Map(),
   buffersA: Ember.A([]), // https://github.com/emberjs/ember.js/issues/10209
+  sounds: Ember.A([]),
 
   totalLoaded: 0,
   percentLoaded: function(){
@@ -54,12 +55,14 @@ export default Ember.Service.extend({
   },
 
   playSound: function(url, secondsDelay) {
+    var sounds = this.get('sounds');
     var context = this.get('context');
     return this.getBuffer(url).then(function(buffer){
       var source = context.createBufferSource();
       source.buffer = buffer;
       source.connect(context.destination);
       source.start(context.currentTime + secondsDelay);
+      sounds.push(source);
     });
   },
 

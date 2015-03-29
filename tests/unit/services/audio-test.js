@@ -12,6 +12,7 @@ moduleFor('service:audio', {
   beforeEach: function(){
     this.subject().get('buffers').clear();
     this.subject().get('buffersA').clear();
+    this.subject().get('sounds').clear();
   },
 });
 
@@ -123,6 +124,35 @@ test('#playSound plays a sound', function(assert) {
   });
 });
 
+
+test('#playSound saves played sounds', function(assert) {
+  assert.expect(2);
+
+  var service = this.subject();
+  service.set("context", {
+    decodeAudioData: function(audioData, callback){
+      callback();
+    },
+    destination: "AudioDestinationNode",
+    currentTime: 0,
+    createBufferSource: function(){
+      return {
+        connect: function(){
+          return "source";
+        },
+        start: function(){}
+      };
+    }
+  });
+
+
+  assert.equal(0, service.get('sounds').length);
+  return service.getBuffer(url).then(function(){
+    return service.playSound(url, 0).then(function(){
+      assert.equal(1, service.get('sounds').length);
+    });
+  });
+});
 
 
 
