@@ -9,7 +9,7 @@ import {
 moduleFor('service:audio', {
   // Specify the other units that are required for this test.
   // needs: ['service:foo']
-  setup: function(){
+  beforeEach: function(){
     this.subject().get('buffers').clear();
     this.subject().get('buffersA').clear();
   },

@@ -8,7 +8,7 @@ import {
 moduleFor('controller:application', {
   // Specify the other units that are required for this test.
   needs: ['service:storage'],
-  setup: function(){
+  beforeEach: function(){
     mockStorage.hash = {};
   },
 });

@@ -3,6 +3,9 @@ import Application from '../../app';
 import Router from '../../router';
 import config from '../../config/environment';
 
+// custom test helpers
+import waitForAudioBuffers from 'noteriver/tests/helpers/wait-for-audio-buffers';
+
 export default function startApp(attrs) {
   var application;
 

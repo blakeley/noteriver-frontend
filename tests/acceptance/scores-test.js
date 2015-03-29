@@ -1,3 +1,5 @@
+/* global waitForAudioBuffers */
+
 import Ember from 'ember';
 import {
   module,
@@ -5,21 +7,22 @@ import {
 } from 'qunit';
 import startApp from 'noteriver/tests/helpers/start-app';
 
-var App;
+var application;
 
 module('Acceptance: Scores', {
-  setup: function() {
-    App = startApp();
+  beforeEach: function() {
+    application = startApp();
   },
-  teardown: function() {
-    Ember.run(App, 'destroy');
+
+  afterEach: function() {
+    Ember.run(application, 'destroy');
   }
 });
 
 test('Visiting /scores and clicking a score', function(assert) {
   visit('/scores');
   click('tr');
-
+  waitForAudioBuffers();
   andThen(function() {
     assert.equal(currentPath(), 'score.index');
   });

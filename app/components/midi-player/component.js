@@ -13,6 +13,15 @@ export default Ember.Component.extend({
   lowNumber: 0,
   highNumber: 88,
 
+
+  bufferSounds: function(){
+    var audio = this.get('audio');
+    this.get('score.midi.notes').forEach(function(note){
+      var url = `/assets/audios/${note.pitch}.mp3`;
+      audio.getBuffer(url);
+    });
+  }.observes('score.midi'),
+
   play: function(){
     var component = this;
     var startTime = parseFloat(this.get('time'));
