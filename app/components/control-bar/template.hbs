@@ -1,16 +1,12 @@
 
 
 <button {{action 'toggleIsPlaying'}}>
-  {{#if isPlaying}}
-    <img src="assets/images/pause.svg"/>
-  {{else}}
-    <img src="assets/images/play.svg"/>
-  {{/if}}
+  <img src="assets/images/{{if isPlaying 'pause' 'play'}}.svg"/>
 </button>
 <div class="slider-container">
   <strong>{{score.title}}</strong> - {{score.artist}}
   {{progress-slider value=time step=0.01 min=0 max=score.midi.duration isInterrupted=isInterrupted}}
 </div>
 <button {{action 'toggleSettingsPanelIsOpen'}}>
-  <img {{bind-attr class="settingsPanelIsOpen:rotated"}} src="assets/images/gear.svg"/>
+  <img class="{{if settingsPanelIsOpen 'rotated'}}" src="assets/images/gear.svg"/>
 </button>

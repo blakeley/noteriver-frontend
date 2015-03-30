@@ -23,7 +23,7 @@
         </div>
         {{/if}}
         <button id="current-session" class="nav-element" {{action 'logout'}}>
-          <img {{bind-attr src=user.avatarUrl}} class="avatar"/>
+          <img src="{{user.avatarUrl}}" class="avatar"/>
           <div class="arrow-down"></div>
         </button>
       {{else}}

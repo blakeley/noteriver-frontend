@@ -10,7 +10,11 @@ export default Ember.Component.extend(Ember.TextSupport, {
   max: 100,
 
   style: function(){
-    return 'background: linear-gradient(to right, #F3A42D 0%, #F3A42D '+this.get('percent')+'%, #60516E '+this.get('percent')+'%,#60516E 100%)';
+    return (
+      'background: linear-gradient(to right, #F3A42D 0%, #F3A42D ' + 
+      this.get('percent') + '%, #60516E ' + this.get('percent') +
+      '%,#60516E 100%)'
+    ).htmlSafe();
   }.property('percent'),
 
   percent: function(){
