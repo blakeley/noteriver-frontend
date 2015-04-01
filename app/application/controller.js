@@ -3,6 +3,8 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   storage: Ember.inject.service(),
 
+  sessionMenuIsOpen: false,
+
   authTokenChanged: function(){
     this.get('storage').setItem('authToken', this.get('session.authToken'));
   }.observes('session.authToken'),
@@ -37,6 +39,10 @@ export default Ember.Controller.extend({
         this.associateModels(user, user.get('session'));
         this.send('closeModal');
       });
+    },
+
+    toggleSessionMenuIsOpen: function(){
+      this.toggleProperty('sessionMenuIsOpen');
     },
   },
 

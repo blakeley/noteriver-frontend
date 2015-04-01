@@ -13,8 +13,8 @@ module.exports = function(app) {
         },
         "users": [{
           "id": 2,
-          "username": 'beau',
-          "email_md5": '205e460b479e2e5b48aec07710c08d50',
+          "username": 'brandon',
+          "email_md5": '7e5ad427dbae149a81d3c82c11504b66',
           "session": 2,
         }],
       });

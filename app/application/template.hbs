@@ -13,19 +13,19 @@
     </div>
     <div id="session" class="nav-element">
       {{#if session.isAuthenticated}}
-        {{#if isOpen}}
-        <div class="menu">
-          <ul>
-            <li>Profile</li>
-            <li>Account</li>
-            <li><button {{action 'logout'}} class="logout">Log out</button></li>
-          </ul>
-        </div>
-        {{/if}}
-        <button id="current-session" class="nav-element" {{action 'logout'}}>
+        <button id="current-session" class="nav-element" {{action 'toggleSessionMenuIsOpen'}}>
           <img src="{{user.avatarUrl}}" class="avatar"/>
           <div class="arrow-down"></div>
         </button>
+        {{#if sessionMenuIsOpen}}
+          <div class="menu">
+            <ul>
+              <li>Profile</li>
+              <li>Account</li>
+              <li><button {{action 'logout'}} class="logout">Log out</button></li>
+            </ul>
+          </div>
+        {{/if}}
       {{else}}
       <div class="session nav-element">
         <button {{action 'openModal' 'new-user'}} id="new-user-button">Register</button>

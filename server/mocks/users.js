@@ -3,7 +3,7 @@ module.exports = function(app) {
   var usersRouter = express.Router();
   // show
   usersRouter.get('/:id', function(req, res) {
-    res.send({"user":{"id": req.params.id, "email_md5": '205e460b479e2e5b48aec07710c08d50', "username": "beau"}});
+    res.send({"user":{"id": req.params.id, "email_md5": '7e5ad427dbae149a81d3c82c11504b66', "username": "brandon"}});
   });
   // index
   usersRouter.get('/', function(req, res) {
@@ -19,8 +19,8 @@ module.exports = function(app) {
         "user": {
           "id": 1,
           "session": 1,
-          "username": 'beau',
-          "email_md5": '205e460b479e2e5b48aec07710c08d50',
+          "username": 'brandon',
+          "email_md5": '7e5ad427dbae149a81d3c82c11504b66',
         },
         "sessions": [{
           "id": 1,
