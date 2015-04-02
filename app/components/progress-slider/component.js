@@ -1,32 +1,39 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend(Ember.TextSupport, {
-  tagName: 'input',
-  attributeBindings: ['type','step','max','value','style'],
-  type: 'range',
-
   value: 0,
   min: 0,
   max: 100,
 
-  style: function(){
-    return (
-      'background: linear-gradient(to right, #F3A42D 0%, #F3A42D ' + 
-      this.get('percent') + '%, #60516E ' + this.get('percent') +
-      '%,#60516E 100%)'
-    ).htmlSafe();
-  }.property('percent'),
+  progress: 0,
 
   percent: function(){
-    return this.get('value') / (this.get('max') - this.get('min')) * 100;
+    return this.get('value') / (this.get('max')||100 - this.get('min')) * 100;
   }.property('value', 'max', 'min'),
+
+  progressStyle: function(){
+    return ('width: ' + this.get('percent') + '%').htmlSafe();
+  }.property('percent'),
 
   mouseDown: function(){
     this.set('isInterrupted', true);
-  },
 
-  mouseUp: function(){
-    this.set('isInterrupted', false);
+    var component = this;
+    var element = this.$();
+
+    var progress = (event.pageX - element.offset().left) / element.width();
+    component.set('value', progress * (component.get('max') - component.get('min')));
+
+    Ember.$(document).bind("mousemove.slider", function(event){
+      var progress = (event.pageX - element.offset().left) / element.width();
+      component.set('value', progress * (component.get('max') - component.get('min')));
+      return false; // temporarily disables text selection
+    });
+
+    Ember.$(document).bind("mouseup.slider", function(){
+      component.set('isInterrupted', false);
+      Ember.$(document).unbind(".slider");
+    });
   },
 
 

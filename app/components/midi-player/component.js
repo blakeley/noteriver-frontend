@@ -6,7 +6,7 @@ export default Ember.Component.extend({
 
   classNames: ['midi-player'],
 
-  time: 1,
+  time: 0,
   isPlaying: false,
   isInterrupted: false,
   settingsPanelIsOpen: true,
