@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend(Ember.TextSupport, {
+export default Ember.Component.extend({
   value: 0,
   min: 0,
   max: 100,
@@ -8,7 +8,13 @@ export default Ember.Component.extend(Ember.TextSupport, {
   progress: 0,
 
   percent: function(){
-    return this.get('value') / (this.get('max')||100 - this.get('min')) * 100;
+    var min = this.get('min') || 0;
+    var max = this.get('max') || min + 1;
+    var value = this.get('value') || min;
+    value = Math.max(value, min);
+    value = Math.min(value, max);
+
+    return value / (max - min) * 100;
   }.property('value', 'max', 'min'),
 
   progressStyle: function(){
