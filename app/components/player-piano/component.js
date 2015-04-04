@@ -10,8 +10,8 @@ export default Ember.Component.extend({
   keyboard: keyboard,
 
   time: 0,
-  lowNumber: 0,
-  highNumber: 88,
+  lowNumber: 21,
+  highNumber: 108,
   timeScale: 10,
 
   noteTranslateY: function(){
@@ -20,11 +20,11 @@ export default Ember.Component.extend({
 
   // attributes
   vbx: function(){
-    return keyboard.note(this.get('lowNumber')).x;
+    return keyboard.midiNumber(this.get('lowNumber')).x;
   }.property('lowNumber'),
 
   vbw: function(){
-    return keyboard.note(this.get('highNumber')).x - this.get('vbx') + keyboard.IVORY_WIDTH;
+    return keyboard.midiNumber(this.get('highNumber')).x - this.get('vbx') + keyboard.IVORY_WIDTH;
   }.property('vbx', 'highNumber'),
 
   viewBox: function(){

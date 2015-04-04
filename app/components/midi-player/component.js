@@ -10,14 +10,14 @@ export default Ember.Component.extend({
   isPlaying: false,
   isInterrupted: false,
   settingsPanelIsOpen: true,
-  lowNumber: 0,
-  highNumber: 88,
+  lowNumber: 21,
+  highNumber: 108,
 
 
   bufferSounds: function(){
     var audio = this.get('audio');
     this.get('score.midi.notes').forEach(function(note){
-      var url = `/assets/audios/${note.pitch}.mp3`;
+      var url = `/assets/audios/${note.number}.mp3`;
       audio.getBuffer(url);
     });
   }.observes('score.midi'),
@@ -29,7 +29,7 @@ export default Ember.Component.extend({
 
     if(component.get('isPlaying') & !component.get('isInterrupted')){
       component.get('score.midi.notes').forEach(function(note){
-        var url = `/assets/audios/${note.pitch}.mp3`;
+        var url = `/assets/audios/${note.number}.mp3`;
         var secondsDelay = note.onSecond - startTime;
         if(secondsDelay >= 0){
           component.get('audio').playSound(url, secondsDelay);

@@ -5,11 +5,11 @@
   {{/each}}
 {{/svg-g}}
 
-{{#each keyboard.IVORY_PITCHES as |pitch|}}
-  {{piano-key pitch=pitch}}
+{{#each keyboard.IVORY_MIDI_NUMBERS as |midiNumber|}}
+  {{piano-key midiNumber=midiNumber}}
 {{/each}}
 
-{{#each keyboard.EBONY_PITCHES as |pitch|}}
-  {{piano-key pitch=pitch}}
+{{#each keyboard.EBONY_MIDI_NUMBERS as |midiNumber|}}
+  {{piano-key midiNumber=midiNumber}}
 {{/each}}
 

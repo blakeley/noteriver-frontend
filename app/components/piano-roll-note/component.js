@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   attributeBindings: ['x','y','rx','ry','width','height','fill','stroke', 'stroke-width'],
 
   x: function(){
-    return keyboard.note(this.get('note.pitch')).x;
+    return keyboard.midiNumber(this.get('note.number')).x;
   }.property(),
 
   y: function(){
@@ -23,7 +23,7 @@ export default Ember.Component.extend({
   }.property(),
 
   width: function(){
-    return keyboard.note(this.get('note.pitch')).width;
+    return keyboard.midiNumber(this.get('note.number')).width;
   }.property(),
 
   height: function(){
@@ -31,7 +31,7 @@ export default Ember.Component.extend({
   }.property(),
 
   fill: function(){
-    if(keyboard.note(this.get('note.pitch')).isEbony){
+    if(keyboard.midiNumber(this.get('note.number')).isEbony){
       return '#4B76AC';
     } else {
       return '#96B8D9';
