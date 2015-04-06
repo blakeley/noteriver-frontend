@@ -3,7 +3,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  tagName: 'rect',
+  tagName: 'svg',
   attributeBindings: ['x','y','width','height','fill','stroke', 'stroke-width'],
 
   x: function(){

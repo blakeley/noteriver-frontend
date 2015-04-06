@@ -1,8 +1,8 @@
 function Keyboard() {
   this.IVORY_WIDTH = 24 / 24;
   this.EBONY_WIDTH = 14 / 24;
-  this.IVORY_HEIGHT = 118 / 24;
-  this.EBONY_HEIGHT = 69 / 24;
+  this.IVORY_HEIGHT = 132 / 24; // IVORY_WIDTH * 5.5
+  this.EBONY_HEIGHT = 77 / 24; // EBONY_WIDTH * 5.5
   this.X_OFFSETS = [0, 15, 24, 44, 48, 72, 85, 96, 113, 120, 141, 144].map(function(x){return x / 24;});
   this.MIDI_NUMBERS = [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33,
     34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
