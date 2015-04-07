@@ -1,0 +1,25 @@
+
+<div class="new-score-container">
+
+  <h2>New score</h2>
+
+  <p class="form-field">
+    <label>Title</label>
+    {{input id='new-score-title' value=model.title}}
+  </p>
+
+  <p class="form-field">
+    <label>Artist</label>
+    {{input id='new-score-artist' value=model.artist}}
+  </p>
+
+
+  {{#if score.midi}}
+    Midi preview
+  {{else}}
+    {{input id='new-score-file' type='file'}}
+  {{/if}}
+
+
+</div>
+

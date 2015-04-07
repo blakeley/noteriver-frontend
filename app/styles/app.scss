@@ -2,6 +2,7 @@
 @import 'nav.scss';
 @import 'modal.scss';
 @import 'users.scss';
+@import 'scores.scss';
 @import 'menu.scss';
 @import 'player.scss';
 @import 'slider.scss';
@@ -13,7 +14,7 @@ html {
   font-family: "proxima-nova", "Proxima Nova", helvetica, arial, sans-serif;
   font-weight: 100;
   letter-spacing: 1px;
-  color: $text-gray;
+  color: black;
 }
 
 *, *:before, *:after {
@@ -51,3 +52,14 @@ table {
   flex: 1;
 }
 
+
+h1, h2, h3, h4, h5, h6 {
+  font: 400 16px/22px "freight-display-pro", serif;
+}
+
+h2 {
+  font-size: 34px;
+  line-height: 36px;
+}
+
+:focus {outline:none;}

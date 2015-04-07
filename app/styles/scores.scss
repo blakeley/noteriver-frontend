@@ -1,0 +1,46 @@
+
+
+.new-score-container {
+  margin: auto;
+  width: 550px;
+  float: none;
+  h2 {
+    text-align: center;
+    margin: 55px 0 33px;
+  }
+
+  h2::after {
+    content: "";
+    width: 170px;
+    display: block;
+    margin: auto;
+    padding: 22px 0 11px;
+    border-bottom: 1px solid #ccc;
+  }
+
+}
+
+.form-field {
+  position: relative;
+  width: 100%;
+
+  input {
+    font: inherit;
+    font-family: 'freight-text-pro';
+    font-size: 1.5rem;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 2rem .75rem .75rem;
+  }
+
+  label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #8b878d;
+    position: absolute;
+    left: 0.75rem;
+    top: 0.75rem;
+  }
+}
+

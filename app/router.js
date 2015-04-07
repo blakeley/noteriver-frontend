@@ -7,6 +7,7 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('scores', function() {});
+  this.route('scores/new', function() {});
   this.route('score', {path: '/scores/:score_id'}, function(){});
 });
 

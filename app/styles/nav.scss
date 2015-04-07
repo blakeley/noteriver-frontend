@@ -10,7 +10,7 @@
 nav.primary {
   height: $nav-height;
   color: $text-gray;
-  border-bottom: 2px solid $separator-gray;
+  border-bottom: 1px solid $separator-gray;
   display: flex;
   flex-direction: row;
   /* alignment */
@@ -20,7 +20,7 @@ nav.primary {
 }
 
 .main {
-  background: #F8F8F8;
+  //background: #F8F8F8;
   position: relative;
   width: 100%;
   height: 100%;
@@ -99,3 +99,4 @@ nav.primary {
   border-right: 5px solid transparent;
   border-top: 8px solid $text-gray;
 }
+
