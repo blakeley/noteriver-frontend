@@ -3,23 +3,34 @@
 
   <h2>New score</h2>
 
-  <p class="form-field">
+  <p class="form-field form-field-text">
     <label>Title</label>
     {{input id='new-score-title' value=model.title}}
   </p>
 
-  <p class="form-field">
+  <p class="form-field form-field-text">
     <label>Artist</label>
     {{input id='new-score-artist' value=model.artist}}
   </p>
 
 
-  {{#if score.midi}}
-    Midi preview
-  {{else}}
-    {{input id='new-score-file' type='file'}}
-  {{/if}}
-
+  <p class="form-field form-field-file">
+    {{#if model.midi}}
+      Midi preview
+      {{model.midi.tracks.length}} tracks
+      {{model.midi.notes.length}} notes
+    {{else if isReadingFile}}
+      Reading...
+    {{else}}
+      {{file-input
+        id='new-score-file'
+        accept='.mid,.midi'
+        fileChanged='fileChanged'}}
+      <label for='new-score-file'>
+        <p>MIDI</p>
+      </label>
+    {{/if}}
+  </p>
 
 </div>
 

@@ -35,6 +35,7 @@ test('Visiting /scores/new', function(assert) {
     assert.equal($('#new-score-title').length, 1);
     assert.equal($('#new-score-artist').length, 1);
     assert.equal($('#new-score-file').length, 1);
+    assert.ok($('#new-score-file').is(":hidden"));
   });
 });
 
