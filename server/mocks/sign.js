@@ -1,3 +1,5 @@
+var crypto = require('crypto')
+
 module.exports = function(app) {
   var express = require('express');
 
@@ -12,11 +14,16 @@ module.exports = function(app) {
     }
 
     var policy = new Buffer(JSON.stringify(policyDocument)).toString('base64')
+    var signature = crypto
+      .createHmac('sha1',process.env.NOTERIVER_AWS_SECRET_ACCESS_KEY)
+      .update(policy)
+      .digest('base64')
 
     res.send({
       "bucket": "noteriver-dev",
       "key": "${filename}",
       "policy": policy,
+      "signature": signature,
     });
   });
 };

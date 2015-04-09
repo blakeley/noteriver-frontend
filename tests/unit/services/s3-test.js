@@ -1,4 +1,4 @@
-/* global File, atob */
+/* global File, atob, CryptoJS */
 
 import {
   moduleFor,
@@ -93,6 +93,15 @@ test('#sign resolves to json for which "policy.conditions[1]" is a key rule', fu
   });
 });
 
+test('#sign resolves to json with a valid "signature" property', function(assert) {
+  var service = this.subject();
+  return service.sign(file).then(function(json){
+    var hash = CryptoJS.HmacSHA1(json.policy, ENV.AWS_SECRET_ACCESS_KEY);
+    var signature = hash.toString(CryptoJS.enc.Base64);
+
+    assert.equal(json.signature, signature);
+  });
+});
 
 
 
