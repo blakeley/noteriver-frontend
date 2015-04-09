@@ -48,7 +48,7 @@ export default Ember.Service.extend({
         xhr.onreadystatechange = function(){
           if (xhr.readyState === xhr.DONE) {
             if (xhr.status === 204) {
-              resolve(xhr.response);
+              resolve(xhr.getResponseHeader('location'));
             } else {
               window.xhr = xhr;
               reject(new Error('Upload file `' + file.name + '` failed with status: [' + xhr.status + ']'));

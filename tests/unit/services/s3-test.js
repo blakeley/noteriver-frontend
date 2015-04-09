@@ -109,11 +109,17 @@ test('#upload returns a promise', function(assert) {
 
 test('#upload successfully uploads a file to s3', function(assert) {
   var service = this.subject();
-  return service.upload(file).then(function(response){
+  return service.upload(file).then(function(){
     assert.ok(true);
   });
 });
 
+test('#upload resolves to the URL of the uploaded file', function(assert) {
+  var service = this.subject();
+  return service.upload(file).then(function(url){
+    assert.equal(`http://noteriver-test.s3.amazonaws.com/${file.name}`, url);
+  });
+});
 
 
 
