@@ -4,7 +4,6 @@ module.exports = function(app) {
   app.get('/sign', function(req, res){
     res.send({
       "key": "${filename}",
-      "bucket": "noteriver-dev",
     });
   });
 };

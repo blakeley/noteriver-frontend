@@ -37,12 +37,6 @@ test('#sign resolves to json with "key" property', function(assert) {
   });
 });
 
-test('#sign resolves to json with "bucket" property', function(assert) {
-  var service = this.subject();
-  return service.sign(file).then(function(json){
-    assert.ok(json.bucket);
-  });
-});
 
 
 

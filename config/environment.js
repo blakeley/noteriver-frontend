@@ -19,6 +19,9 @@ module.exports = function(environment) {
   };
 
   if (environment === 'development') {
+    ENV.AWS_ACCESS_KEY_ID = process.env.NOTERIVER_AWS_ACCESS_KEY_ID;
+    ENV.AWS_BUCKET = 'noteriver-dev';
+
     // ENV.APP.LOG_RESOLVER = true;
     ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
@@ -27,6 +30,9 @@ module.exports = function(environment) {
   }
 
   if (environment === 'test') {
+    ENV.AWS_ACCESS_KEY_ID = process.env.NOTERIVER_AWS_ACCESS_KEY_ID;
+    ENV.AWS_BUCKET = 'noteriver-test';
+
     // Testem prefers this...
     ENV.locationType = 'none';
 
@@ -38,7 +44,8 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.AWS_ACCESS_KEY_ID = process.env.NOTERIVER_AWS_ACCESS_KEY_ID;
+    ENV.AWS_BUCKET = 'noteriver';
   }
 
   return ENV;

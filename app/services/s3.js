@@ -1,3 +1,4 @@
+//import ENV from 'noteriver/config/environment';
 import Ember from 'ember';
 
 export default Ember.Service.extend({
