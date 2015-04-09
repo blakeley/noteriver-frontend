@@ -1,4 +1,4 @@
-/* global File */
+/* global File, atob */
 
 import {
   moduleFor,
@@ -36,6 +36,35 @@ test('#sign resolves to json with "key" property', function(assert) {
     assert.ok(json.key);
   });
 });
+
+test('#sign resolves to json with a "policy" property', function(assert) {
+  var service = this.subject();
+  return service.sign(file).then(function(json){
+    assert.ok(json.policy);
+  });
+});
+
+test('#sign resolves to json with a "policy" property with an "expiration" property', function(assert) {
+  var service = this.subject();
+  return service.sign(file).then(function(json){
+    var policyDocument = JSON.parse(atob(json.policy));
+    assert.ok(policyDocument.expiration);
+  });
+});
+
+test('#sign resolves to json with a "policy" with an "expiration" representing a future ISO timestamp', function(assert) {
+  var service = this.subject();
+  return service.sign(file).then(function(json){
+    var policyDocument = JSON.parse(atob(json.policy));
+    var expiresAt = Date.parse(policyDocument.expiration);
+    assert.ok(expiresAt > Date.now(), "Signature has already expired");
+  });
+});
+
+
+
+
+
 
 
 
