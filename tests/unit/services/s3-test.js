@@ -11,7 +11,7 @@ moduleFor('service:s3', {
   // needs: ['service:foo']
 });
 
-var file = new File(["MThd"], "sample.mid");
+var file = new File(["MThd"], "s3-test-file.mid");
 
 // Replace this with your real tests.
 test('it exists', function(assert) {
@@ -98,10 +98,22 @@ test('#sign resolves to json with a valid "signature" property', function(assert
   return service.sign(file).then(function(json){
     var hash = CryptoJS.HmacSHA1(json.policy, ENV.AWS_SECRET_ACCESS_KEY);
     var signature = hash.toString(CryptoJS.enc.Base64);
-
     assert.equal(json.signature, signature);
   });
 });
+
+test('#upload returns a promise', function(assert) {
+  var service = this.subject();
+  assert.ok(service.upload(file).then);
+});
+
+test('#upload successfully uploads a file to s3', function(assert) {
+  var service = this.subject();
+  return service.upload(file).then(function(response){
+    assert.ok(true);
+  });
+});
+
 
 
 
