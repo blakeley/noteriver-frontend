@@ -40,17 +40,13 @@ export default Ember.Service.extend({
         data.append('AWSAccessKeyId', ENV.AWS_ACCESS_KEY_ID);
         data.append('file', file);
 
-        var uploadUrl = `//${json.bucket}.s3.amazonaws.com`;
-
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', uploadUrl);
-        //xhr.responseType = "json";
+        xhr.open('POST', `//${json.bucket}.s3.amazonaws.com`);
         xhr.onreadystatechange = function(){
           if (xhr.readyState === xhr.DONE) {
             if (xhr.status === 204) {
               resolve(xhr.getResponseHeader('location'));
             } else {
-              window.xhr = xhr;
               reject(new Error('Upload file `' + file.name + '` failed with status: [' + xhr.status + ']'));
             }
           }
