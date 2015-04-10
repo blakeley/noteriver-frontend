@@ -39,3 +39,11 @@ test('Visiting /scores/new', function(assert) {
   });
 });
 
+test('Visiting /scores/new and creating a score transitions to that score\'s show route', function(assert) {
+  visit('/scores/new');
+  click('#create-score');
+  andThen(function() {
+    assert.equal(currentPath(), 'score.index');
+  });
+});
+

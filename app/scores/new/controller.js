@@ -29,6 +29,13 @@ export default Ember.Controller.extend({
       });
     },
 
+    createScore: function(){
+      var controller = this;
+      this.get('model').save().then(function(score){
+        controller.transitionToRoute('score', score);
+      });
+    },
+
   },
 
 });

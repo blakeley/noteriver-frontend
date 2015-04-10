@@ -6,11 +6,24 @@ var SCORES = [
 module.exports = function(app) {
   var express = require('express');
   var scoresRouter = express.Router();
+
   scoresRouter.get('/', function(req, res) {
     res.send({"scores": SCORES});
   });
+
   scoresRouter.get('/:id', function(req, res) {
     res.send({"score": SCORES[req.params.id - 1]});
   });
+
+
+  scoresRouter.post('/', function(req, res) {
+    res.send({
+      "score": {
+        "id": Date.now(),
+        "user": 1,
+      },
+    });
+  });
+
   app.use('/api/v1/scores', scoresRouter);
 };

@@ -32,7 +32,7 @@
     {{/if}}
   </p>
 
-  <button class="primary">
+  <button {{action 'createScore'}} id="create-score" class="primary">
     {{#if isProcessingFile}}
       ...
     {{else}}
