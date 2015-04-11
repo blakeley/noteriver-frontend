@@ -8,8 +8,8 @@ module.exports = function(app) {
     var policyDocument = {
       expiration: new Date(Date.now() + 60*60*1000).toISOString(),
       conditions: [
-        {"bucket": "noteriver-test"},
-        ["starts-with", "$key", ""]
+        {"bucket": "noteriver-dev"},
+        ["starts-with", "$key", "localhost:4200"]
       ],
     }
 
@@ -20,8 +20,8 @@ module.exports = function(app) {
       .digest('base64')
 
     res.send({
-      "bucket": "noteriver-test",
-      "key": "${filename}",
+      "bucket": "noteriver-dev",
+      "key": "localhost:4200/${filename}",
       "policy": policy,
       "signature": signature,
     });

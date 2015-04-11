@@ -9,7 +9,7 @@ export default Ember.Component.extend({
   time: 0,
   isPlaying: false,
   isInterrupted: false,
-  settingsPanelIsOpen: true,
+  settingsPanelIsOpen: false,
   lowNumber: 21,
   highNumber: 108,
 
