@@ -29,6 +29,7 @@ export default Ember.Controller.extend({
 
     login: function(){
       this.get('session').save().then((session) => {
+        this.set('sessionMenuIsOpen', false);
         this.associateModels(session.get('user'), session);
         this.send('closeModal');
       });
@@ -36,6 +37,7 @@ export default Ember.Controller.extend({
 
     register: function(){
       this.get('user').save().then((user) => {
+        this.set('sessionMenuIsOpen', false);
         this.associateModels(user, user.get('session'));
         this.send('closeModal');
       });

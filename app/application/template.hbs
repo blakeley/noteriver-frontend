@@ -3,36 +3,43 @@
 
   {{outlet 'modal'}}
 
+
   <nav class="primary">
     <div class="nav-element">
       {{#link-to 'application' classNames="logo"}}
-      Noteriver
+        Noteriver
       {{/link-to}}
     </div>
-    <div class="remainder">
-    </div>
-    <div id="session" class="nav-element">
-      {{#if session.isAuthenticated}}
-        <button id="current-session" class="nav-element" {{action 'toggleSessionMenuIsOpen'}}>
+
+    <div class="remainder"></div>
+
+    {{#if session.isAuthenticated}}
+      <div class="nav-element">
+        <button {{action 'toggleSessionMenuIsOpen'}} class="current-session-button">
           <img src="{{user.avatarUrl}}" class="avatar"/>
-          <div class="arrow-down"></div>
-        </button>
-        {{#if sessionMenuIsOpen}}
-          <div class="menu">
-            <ul>
-              <li>Profile</li>
-              <li>Account</li>
-              <li><button {{action 'logout'}} class="logout">Log out</button></li>
-            </ul>
+          <div class="arrow-down">
+            <div class="menu {{if sessionMenuIsOpen 'faded-in' 'faded-out'}}">
+              <ul>
+                <li><button>Profile</button></li>
+                <li><button>Account</button></li>
+                <li><button class='logout' {{action 'logout'}} class="logout">Log out</button></li>
+              </ul>
+            </div>
           </div>
-        {{/if}}
-      {{else}}
-      <div class="session nav-element">
-        <button {{action 'openModal' 'new-user'}} id="new-user-button">Register</button>
-        <button {{action 'openModal' 'new-session'}} id="new-session-button">Log in</button>
+        </button>
       </div>
-      {{/if}}
-    </div>
+    {{else}}
+      <div class="nav-element">
+        <button {{action 'openModal' 'new-session'}} id="new-session-button" class="nav-button">
+          Log in
+        </button>
+      </div>
+      <div class="nav-element">
+        <button {{action 'openModal' 'new-user'}} id="new-user-button" class="nav-button">
+          Register
+        </button>
+      </div>
+    {{/if}}
   </nav>
 
   <div class="main">

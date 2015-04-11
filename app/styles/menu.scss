@@ -1,37 +1,46 @@
-.menu-container {
-  position: relative;
-}
+$menu-triangle-offset: 12px;
+$menu-triangle-length: 9px;
 
 .menu {
   padding: 0;
   z-index: 1000;
   position: absolute;
-  top: 100%;
+  right: -$menu-triangle-length - $menu-triangle-offset;
+  top: $menu-triangle-length * 2;
   margin-top: 0px;
-  right: 1rem;
   width: 12rem;
   box-shadow: 0 1px 5px #999;
   border-radius: 0.5rem;
   background: white;
   ul {
-    padding: 1rem;
+    border-radius: inherit;
+    overflow: hidden;
     list-style-type: none;
-    * {
-      padding: 0;
+    li {
       font-size: 1rem;
-      width: 100%;
-      text-align: left;
       color: $text-gray;
-    }
-    *:hover {
-      color: $primary-color;
+      button {
+        color: #3B3346;
+        text-align: left;
+        line-height: 1.5rem;
+        padding: .3rem 1.4rem .3rem 2.5rem;
+        width: 100%;
+      }
+      button:hover {
+        color: white;
+        background-color: #2a80b9;
+        //border-bottom: 1px solid #2a80b9;
+      }
+      button.logout {
+        border-top: 1px solid $separator-gray;
+      }
     }
   }
 }
 
 .menu:after, .menu:before {
   bottom: 100%;
-  right: 24px;
+  right: $menu-triangle-offset;
   border: solid transparent;
   content: " ";
   height: 0;
@@ -42,11 +51,11 @@
 
 .menu:after {
   border-bottom-color: white;
-  border-width: 10px;
+  border-width: $menu-triangle-length - 2px;
   margin-right: 2px;
 }
 .menu:before {
   border-bottom-color: $separator-gray;
-  border-width: 12px;
+  border-width: $menu-triangle-length;
 }
 
