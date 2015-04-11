@@ -49,6 +49,7 @@ nav.primary {
 }
 
 .nav-button {
+  text-decoration: none;
   margin-right: 17px;
   padding: 12px;
   text-transform: uppercase;
@@ -69,6 +70,12 @@ nav.primary {
 
 #new-user-button:hover {
   background: $primary-color-light;
+}
+
+#new-score-button {
+  border-radius: 3px;
+  background: $primary-color;
+  color: white;  
 }
 
 .current-session-button {

@@ -15,6 +15,11 @@
 
     {{#if session.isAuthenticated}}
       <div class="nav-element">
+        {{#link-to 'scores/new' id='new-score-button' class='nav-button'}}
+          Upload
+        {{/link-to}}
+      </div>
+      <div class="nav-element">
         <button {{action 'toggleSessionMenuIsOpen'}} class="current-session-button">
           <img src="{{user.avatarUrl}}" class="avatar"/>
           <div class="arrow-down">
