@@ -1,3 +1,5 @@
+/* global unescape */
+
 import ENV from 'noteriver/config/environment';
 import Ember from 'ember';
 
@@ -45,7 +47,7 @@ export default Ember.Service.extend({
         xhr.onreadystatechange = function(){
           if (xhr.readyState === xhr.DONE) {
             if (xhr.status === 204) {
-              resolve(xhr.getResponseHeader('location'));
+              resolve(unescape(xhr.getResponseHeader('location')));
             } else {
               reject(new Error('Upload file `' + file.name + '` failed with status: [' + xhr.status + ']'));
             }

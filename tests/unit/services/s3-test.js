@@ -117,7 +117,7 @@ test('#upload successfully uploads a file to s3', function(assert) {
 test('#upload resolves to the URL of the uploaded file', function(assert) {
   var service = this.subject();
   return service.upload(file).then(function(url){
-    assert.equal(`http://noteriver-test.s3.amazonaws.com/${file.name}`, url);
+    assert.equal(`http://noteriver-dev.s3.amazonaws.com/localhost:4200/${file.name}`, url);
   });
 });
 
