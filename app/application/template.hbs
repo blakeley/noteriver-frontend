@@ -7,7 +7,7 @@
   <nav class="primary">
     <div class="nav-element">
       {{#link-to 'application' classNames="logo"}}
-        Noteriver
+        {{partial 'svg/logo'}}
       {{/link-to}}
     </div>
 
@@ -15,7 +15,7 @@
 
     {{#if session.isAuthenticated}}
       <div class="nav-element">
-        {{#link-to 'scores/new' id='new-score-button' class='nav-button'}}
+        {{#link-to 'scores/new' id='new-score-button' class='nav-button primary-button'}}
           Upload
         {{/link-to}}
       </div>
@@ -27,7 +27,7 @@
               <ul>
                 <li><button>Profile</button></li>
                 <li><button>Account</button></li>
-                <li><button class='logout' {{action 'logout'}} class="logout">Log out</button></li>
+                <li><button {{action 'logout'}}>Log out</button></li>
               </ul>
             </div>
           </div>
@@ -40,7 +40,7 @@
         </button>
       </div>
       <div class="nav-element">
-        <button {{action 'openModal' 'new-user'}} id="new-user-button" class="nav-button">
+        <button {{action 'openModal' 'new-user'}} id="new-user-button" class="nav-button primary-button">
           Register
         </button>
       </div>

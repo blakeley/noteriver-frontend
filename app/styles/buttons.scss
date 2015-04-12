@@ -1,0 +1,30 @@
+
+.form-button {
+  padding: 8px 24px;
+  min-width: 100px;
+}
+
+.nav-button {
+  text-decoration: none;
+  margin-right: 12px;
+  padding: 12px 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.nav-button:hover {
+  text-decoration: underline;
+}
+
+.primary-button {
+  border-radius: 4px;
+  color: white;
+  background-color: $primary-color;
+}
+
+.primary-button:hover {
+  text-decoration: none;
+  background-color: $primary-color-dark;
+}

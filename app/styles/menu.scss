@@ -20,7 +20,7 @@ $menu-triangle-length: 9px;
       font-size: 1rem;
       color: $text-gray;
       button {
-        color: #3B3346;
+        color: $text-gray;
         text-align: left;
         line-height: 1.5rem;
         padding: .3rem 1.4rem .3rem 2.5rem;
@@ -28,12 +28,11 @@ $menu-triangle-length: 9px;
       }
       button:hover {
         color: white;
-        background-color: #2a80b9;
-        //border-bottom: 1px solid #2a80b9;
+        background-color: $primary-color-dark;
       }
-      button.logout {
-        border-top: 1px solid $separator-gray;
-      }
+    }
+    li:last-child {
+      border-top: 1px solid $separator-gray;
     }
   }
 }

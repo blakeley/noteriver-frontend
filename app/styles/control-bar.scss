@@ -5,7 +5,7 @@
   text-align: center;
   width: 100%;
   height: $control-bar-height;
-  background: $primary-color-dark;
+  background: $mute-color-darker;
   color: white;
   fill: white;
   font-weight: 100;
@@ -27,7 +27,6 @@
   }
 }
 
-
 .slider-container {
   flex: 1;
   text-align: center;
@@ -36,5 +35,5 @@
 
 
 input[type=range] {
-  background: $primary-color-dark;
+  background: $mute-color;
 }

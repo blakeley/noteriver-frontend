@@ -8,14 +8,14 @@
 @import 'slider.scss';
 @import 'control-bar.scss';
 @import 'settings-panel.scss';
-@import 'forms.scss';
+@import 'buttons.scss';
 
 html {
   box-sizing: border-box;
   font-family: "proxima-nova", "Proxima Nova", helvetica, arial, sans-serif;
   font-weight: 100;
   //letter-spacing: 1px;
-  color: black;
+  color: $darkest-gray;
 }
 
 *, *:before, *:after {
@@ -56,10 +56,6 @@ table {
   flex: 1;
 }
 
-
-h1, h2, h3, h4, h5, h6 {
-  font: 400 16px/22px "freight-display-pro", serif;
-}
 
 h2 {
   font-size: 34px;

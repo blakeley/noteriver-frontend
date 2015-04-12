@@ -1,7 +1,7 @@
 .settings-panel-container {
   position: relative;
   width: 0px;
-  background: $primary-color-light;
+  background: $mute-color-dark;
   transition: width 0.5s;
 }
 
@@ -15,9 +15,9 @@
   top: 0;
   width: 325px;
   height: 100%;
-  background: $primary-color-light;
+  background: $mute-color-dark;
   header {
-    background: $primary-color-dark;
+    background: $mute-color-darker;
     vertical-align: middle;
     color: white;
     text-transform: uppercase;

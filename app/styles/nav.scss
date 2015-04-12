@@ -16,7 +16,7 @@
 }
 
 nav.primary {
-  height: $nav-height;
+  height: $nav-height + 1px;
   color: $text-gray;
   border-bottom: 1px solid $separator-gray;
   /* alignment */
@@ -36,46 +36,21 @@ nav.primary {
 }
 
 .logo {
-  display: block;
-  display: flex;
-  align-items: center;
   height: 100%;
-  width: 100%;
-  padding: 0px 24px;
+  padding: 24px;
+  svg {
+    .note {fill: $logo-gray;}
+    .river {fill: $primary-color;}
+    height: 100%;
+  }
+}
+.logo:hover {
+  .note {fill: $darkest-gray;}
+  .river {fill: $primary-color-dark;}
 }
 
 .remainder {
   flex: 1;
-}
-
-.nav-button {
-  text-decoration: none;
-  margin-right: 17px;
-  padding: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-size: 14px;
-  font-weight: 400;
-}
-
-#new-session-button:hover {
-  text-decoration: underline;
-}
-
-#new-user-button {
-  border-radius: 3px;
-  background: $primary-color;
-  color: white;
-}
-
-#new-user-button:hover {
-  background: $primary-color-light;
-}
-
-#new-score-button {
-  border-radius: 3px;
-  background: $primary-color;
-  color: white;  
 }
 
 .current-session-button {
@@ -96,12 +71,11 @@ nav.primary {
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
   border-top: 8px solid $text-gray;
-  transition: border 150ms;
 }
 
 .current-session-button:hover {
   .arrow-down {
-    border-top-color: $primary-color;
+    border-top-color: $darkest-gray;
   }
 }
 

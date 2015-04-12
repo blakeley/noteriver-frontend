@@ -1,5 +1,4 @@
 
-
 .new-score-container {
   margin: auto;
   width: 550px;
@@ -15,7 +14,7 @@
     display: block;
     margin: auto;
     padding: 22px 0 11px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid $separator-gray;
   }
 
 }
@@ -26,18 +25,32 @@
   label {
     font-size: 12px;
     font-weight: 600;
-    color: #888;
+    color: $text-gray-light;
+  }
+
+  input:hover {
+    border-color: $separator-gray-dark;
+  }
+
+  input:focus {
+    border-color: $primary-color-light;
+  }
+
+}
+
+.form-field:hover {
+  label {
+    color: $text-gray;
   }
 }
 
 .form-field-text {
   input {
-    color: #444;
+    color: $text-gray-dark;
     font: inherit;
-    font-family: 'freight-text-pro';
     font-size: 1.5rem;
     width: 100%;
-    border: 1px solid #ccc;
+    border: 1px solid $separator-gray;
     border-radius: 4px;
     padding: 2rem .75rem .75rem;
   }
@@ -49,12 +62,19 @@
   }
 }
 
+.form-field-text:hover {
+  label {
+    color: $text-gray;
+  }
+}
+
+
 .form-field-file {
   height: 10rem;
   display: table;
   vertical-align: middle;
   label {
-    border: 2px dashed #ccc;
+    border: 2px dashed $separator-gray;
     cursor: pointer;
     margin: auto;
     width: 100%;
@@ -63,10 +83,12 @@
     vertical-align: middle;
     text-align: center;
   }
-  label:hover {
-    color: #666;
-    border: 2px dashed #999;    
-  }
+}
+
+.form-field-file:hover {
+  label {
+    border-color: $separator-gray-dark;
+  }  
 }
 
 

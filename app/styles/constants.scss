@@ -1,11 +1,25 @@
-$primary-color: #3B3346;
-$primary-color-light: #60516E;
-$primary-color-dark: #3B3346;
+$primary-color: #729FCF;
+$primary-color-dark: darken($primary-color, 15%);
+$primary-color-darker: darken($primary-color, 40%);
+$primary-color-light: lighten($primary-color, 15%);
+
+$muteness: 25%;
+$mute-color: desaturate($primary-color, $muteness);
+$mute-color-dark: desaturate($primary-color-dark, $muteness);
+$mute-color-darker: desaturate($primary-color-darker, $muteness);
+$mute-color-light: desaturate($primary-color-light, $muteness);
 
 $accent-color: #F3A42D;
+$mute-accent-color: desaturate($accent-color, $muteness);
+
+$text-gray-light: #808080;
+$text-gray: #606060;
+$text-gray-dark: #404040;
+$darkest-gray: #101010;
+$logo-gray: #303030;
+$separator-gray: #C0C0C0;
+$separator-gray-dark: #909090;
+$cool-gray: #BECEDE;
 
 $nav-height: 72px;
-$text-gray: #666;
-$separator-gray: #E0E0E0;
-
 $control-bar-height: 72px;

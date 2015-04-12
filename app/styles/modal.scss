@@ -34,12 +34,12 @@
   font-weight: 300;
   margin-top: 16px;
   margin-bottom: -4px;
-  color: #999;
+  color: $text-gray-light;
   text-align: center;
 }
 
 .modal-header h1 {
-  color: #333;
+  color: $text-gray;
   font-size: 20px;
   text-align: center;
   font-weight: normal;
@@ -70,8 +70,8 @@
 
 .modal-footer button {
   width: 100%;
-  background: $primary-color-light;
-  border: 1px solid $primary-color;
+  background: $primary-color;
+  //border: 1px solid $primary-color-dark;
   color: white;
   padding: 1rem;
   font-size: 14px;
@@ -84,5 +84,5 @@
 }
 
 .modal button:hover {
-  background: $primary-color;
+  background: $primary-color-dark;
 }
