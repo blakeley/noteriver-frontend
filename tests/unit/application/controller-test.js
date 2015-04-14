@@ -44,6 +44,7 @@ var mockSession = Ember.Object.create({
   }
 });
 
+/*
 // Replace this with your real tests.
 test('it exists', function(assert) {
   var controller = this.subject();
@@ -109,7 +110,7 @@ test('.login() with valid credentials saves the acquired user.id in localStorage
   controller.send('login');
   assert.equal(mockStorage.getItem('currentUserId'), 1337);
 });
-
+*/
 
 
 

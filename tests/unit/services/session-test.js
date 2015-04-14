@@ -33,6 +33,9 @@ var mockStore = {
   find: function(name, id){
     return Ember.Object.create({id: id});
   },
+  push: function(name, params){
+    return Ember.Object.create(params);
+  },
 };
 
 // Replace this with your real tests.
@@ -58,9 +61,27 @@ test('it sets currentUserId from localStorage on initialization', function(asser
   assert.equal(service.get('currentUserId'), 1337);
 });
 
+test('it updates authToken in localStorage whenever authToken changes', function(assert){
+  assert.expect(2);
+  var service = this.subject({storage: mockStorage});
+  service.set('authToken', 'token');
+  assert.equal(mockStorage.getItem('authToken'), 'token');
+  service.set('authToken', null);
+  assert.equal(mockStorage.getItem('authToken'), null);
+});
+
+test('it updates currentUserId in localStorage whenever currentUserId changes', function(assert){
+  assert.expect(2);
+  var service = this.subject({storage: mockStorage});
+  service.set('currentUserId', 1337);
+  assert.equal(mockStorage.getItem('currentUserId'), 1337);
+  service.set('currentUserId', null);
+  assert.equal(mockStorage.getItem('currentUserId'), null);
+});
+
 test('#isAuthenticated is false when authToken is undefined', function(assert){
   var service = this.subject({storage: mockStorage});
-  service.set('token', 1337);
+  service.set('currentUserId', 1337);
   assert.ok(!service.get('isAuthenticated'));
 });
 
@@ -93,14 +114,6 @@ test('.logout() clears the authToken', function(assert){
   assert.ok(!service.get('authToken'));
 });
 
-test('.logout() clears the authToken in localStorage', function(assert){
-  mockStorage.setItem('authToken', 'token');
-  mockStorage.setItem('currentUserId', 1337);
-  var service = this.subject({storage: mockStorage, store: mockStore});
-  service.logout();
-  assert.ok(!mockStorage.getItem('authToken'));
-});
-
 test('.logout() clears the currentUserId', function(assert){
   mockStorage.setItem('authToken', 'token');
   mockStorage.setItem('currentUserId', 1337);
@@ -109,13 +122,33 @@ test('.logout() clears the currentUserId', function(assert){
   assert.ok(!service.get('currentUserId'));
 });
 
-test('.logout() clears the currentUserId in localStorage', function(assert){
-  mockStorage.setItem('authToken', 'token');
-  mockStorage.setItem('currentUserId', 1337);
+test('.login() returns a promise', function(assert){
   var service = this.subject({storage: mockStorage, store: mockStore});
-  service.logout();
-  assert.ok(!mockStorage.getItem('currentUserId'));
+  assert.ok(!!service.login().then);
 });
+
+test('.login() with valid credentials sets authToken', function(assert){
+  var service = this.subject({storage: mockStorage, store: mockStore});
+  return service.login('valid@mail.com', 'password').then(function(){
+    assert.equal(service.get('authToken'), 'token');
+  });
+});
+
+test('.login() with valid credentials sets currentUserId', function(assert){
+  var service = this.subject({storage: mockStorage, store: mockStore});
+  return service.login('valid@mail.com', 'password').then(function(){
+    assert.equal(service.get('currentUserId'), 1);
+  });
+});
+
+test('.login() resolves to the current user', function(assert){
+  var service = this.subject({storage: mockStorage, store: mockStore});
+  return service.login('valid@mail.com', 'password').then(function(user){
+    assert.equal(user.id, 1);
+  });
+});
+
+
 
 
 

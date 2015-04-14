@@ -4,6 +4,8 @@ export default Ember.Service.extend({
   store: Ember.inject.service(),
   storage: Ember.inject.service(),
 
+  loginUrl: '/api/v1/sessions',
+
   init: function(){
     this.set('authToken', this.get('storage').getItem('authToken'));
     this.set('currentUserId', this.get('storage').getItem('currentUserId'));
@@ -25,9 +27,40 @@ export default Ember.Service.extend({
     return this.get('store').find('user', this.get('currentUserId'));
   }.property('currentUserId'),
 
+
   logout: function(){
     this.set('authToken', null);
     this.set('currentUserId', null);
   },
+
+  login: function(email, password){
+    var service = this;
+
+    return new Ember.RSVP.Promise(function(resolve, reject){
+      var xhr = new XMLHttpRequest();
+
+      var data = new FormData();
+      data.append('email', email);
+      data.append('password', password);
+
+      xhr.open('POST', service.get('loginUrl'));
+      xhr.responseType = "json";
+      xhr.onreadystatechange = function(){
+        if (xhr.readyState === xhr.DONE) {
+          if (xhr.status === 200) {
+            var user = service.store.push('user', xhr.response.user);
+            service.set('currentUserId', user.id);
+            service.set('authToken', xhr.response.authToken);
+            resolve(user);
+          } else {
+            reject(new Error('Login [' + email + ', ' + password + '] failed with status: [' + xhr.status + ']'));
+          }
+        }
+      };
+
+      xhr.send(data);
+    });
+  },
+
 
 });
