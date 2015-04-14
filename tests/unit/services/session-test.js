@@ -85,6 +85,37 @@ test('#currentUser returns the user currently authenticated', function(assert){
   assert.equal(service.get('currentUser.id'), 1337);
 });
 
+test('.logout() clears the authToken', function(assert){
+  mockStorage.setItem('authToken', 'token');
+  mockStorage.setItem('currentUserId', 1337);
+  var service = this.subject({storage: mockStorage, store: mockStore});
+  service.logout();
+  assert.ok(!service.get('authToken'));
+});
+
+test('.logout() clears the authToken in localStorage', function(assert){
+  mockStorage.setItem('authToken', 'token');
+  mockStorage.setItem('currentUserId', 1337);
+  var service = this.subject({storage: mockStorage, store: mockStore});
+  service.logout();
+  assert.ok(!mockStorage.getItem('authToken'));
+});
+
+test('.logout() clears the currentUserId', function(assert){
+  mockStorage.setItem('authToken', 'token');
+  mockStorage.setItem('currentUserId', 1337);
+  var service = this.subject({storage: mockStorage, store: mockStore});
+  service.logout();
+  assert.ok(!service.get('currentUserId'));
+});
+
+test('.logout() clears the currentUserId in localStorage', function(assert){
+  mockStorage.setItem('authToken', 'token');
+  mockStorage.setItem('currentUserId', 1337);
+  var service = this.subject({storage: mockStorage, store: mockStore});
+  service.logout();
+  assert.ok(!mockStorage.getItem('currentUserId'));
+});
 
 
 
