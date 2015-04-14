@@ -1,6 +1,7 @@
 module.exports = function(app) {
   var express = require('express');
   var sessionsRouter = express.Router();
+
   sessionsRouter.post('/', function(req, res) {
     res.send({
       "user": {
@@ -11,5 +12,6 @@ module.exports = function(app) {
       "authToken": 'token',
     })
   })
+
   app.use('/api/v1/sessions', sessionsRouter);
 };

@@ -148,7 +148,31 @@ test('.login() resolves to the current user', function(assert){
   });
 });
 
+test('.register() returns a promise', function(assert){
+  var service = this.subject({storage: mockStorage, store: mockStore});
+  assert.ok(!!service.register().then);
+});
 
+test('.register() with valid credentials sets authToken', function(assert){
+  var service = this.subject({storage: mockStorage, store: mockStore});
+  return service.register('valid@mail.com', 'password').then(function(){
+    assert.equal(service.get('authToken'), 'token');
+  });
+});
+
+test('.register() with valid credentials sets currentUserId', function(assert){
+  var service = this.subject({storage: mockStorage, store: mockStore});
+  return service.register('valid@mail.com', 'password').then(function(){
+    assert.equal(service.get('currentUserId'), 1);
+  });
+});
+
+test('.register() resolves to the current user', function(assert){
+  var service = this.subject({storage: mockStorage, store: mockStore});
+  return service.register('valid@mail.com', 'password').then(function(user){
+    assert.equal(user.id, 1);
+  });
+});
 
 
 

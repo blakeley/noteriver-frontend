@@ -1,34 +1,31 @@
 module.exports = function(app) {
   var express = require('express');
   var usersRouter = express.Router();
-  // show
+
   usersRouter.get('/:id', function(req, res) {
-    res.send({"user":{"id": req.params.id, "email_md5": '7e5ad427dbae149a81d3c82c11504b66', "username": "brandon"}});
+    res.send({
+      "user": {
+        "id": req.params.id,
+        "username": "brandon",
+        "email_md5": '7e5ad427dbae149a81d3c82c11504b66',
+      },
+    });
   });
-  // index
+
   usersRouter.get('/', function(req, res) {
     res.send({"users":[]});
   });
+
   usersRouter.post('/', function(req, res) {
-    if(req.body.user.email == 'exists@mail.com'){
-      res.status(422).send({"errors": {"email": ["has already been taken"]}})
-    } else if(req.body.user.email == '') {
-      res.status(422).send({"errors": {"email": ["can't be blank","must be valid"]}})      
-    } else {
-      res.send({
-        "user": {
-          "id": 1,
-          "session": 1,
-          "username": 'brandon',
-          "email_md5": '7e5ad427dbae149a81d3c82c11504b66',
-        },
-        "sessions": [{
-          "id": 1,
-          "auth_token": "token",
-          "user": 1,
-        }],
-      })
-    }
+    res.send({
+      "user": {
+        "id": 1,
+        "username": 'brandon',
+        "email_md5": '7e5ad427dbae149a81d3c82c11504b66',
+      },
+      "authToken": 'token',
+    });
   });
+
   app.use('/api/v1/users', usersRouter);
 };
