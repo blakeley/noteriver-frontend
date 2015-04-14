@@ -13,5 +13,8 @@ export default Ember.Service.extend({
     return !!this.get('authToken') && !!this.get('currentUserId');
   }.property('authToken', 'currentUserId'),
 
+  currentUser: function(){
+    return this.get('store').find('user', this.get('currentUserId'));
+  }.property('currentUserId'),
 
 });
