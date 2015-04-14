@@ -31,7 +31,7 @@ var mockStore = {
     return Ember.Object.create({});
   }
 };
-  
+
 // Replace this with your real tests.
 test('it exists', function(assert) {
   var service = this.subject();
@@ -43,7 +43,36 @@ test('it uses service:storage', function(assert){
   assert.ok(service.get('storage'));
 });
 
+test('it sets authToken from localStorage on initialization', function(assert){
+  mockStorage.setItem('authToken','token');
+  var service = this.subject({storage: mockStorage});
+  assert.equal(service.get('authToken'), 'token');
+});
 
+test('it sets currentUserId from localStorage on initialization', function(assert){
+  mockStorage.setItem('currentUserId',1337);
+  var service = this.subject({storage: mockStorage});
+  assert.equal(service.get('currentUserId'), 1337);
+});
+
+test('#isAuthenticated is false when authToken is undefined', function(assert){
+  var service = this.subject({storage: mockStorage});
+  service.set('token', 1337);
+  assert.ok(!service.get('isAuthenticated'));
+});
+
+test('#isAuthenticated is false when currentUserId is undefined', function(assert){
+  var service = this.subject({storage: mockStorage});
+  service.set('authToken', 'token');
+  assert.ok(!service.get('isAuthenticated'));
+});
+
+test('#isAuthenticated is true when both authToken and currentUserId are defined', function(assert){
+  var service = this.subject({storage: mockStorage});
+  service.set('authToken', 'token');
+  service.set('currentUserId', 1337);
+  assert.ok(service.get('isAuthenticated'));
+});
 
 
 
