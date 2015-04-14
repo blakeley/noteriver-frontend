@@ -53,7 +53,7 @@ nav.primary {
   flex: 1;
 }
 
-.current-session-button {
+#current-session-button {
   display: flex;
   flex-direction: row;
   justify-content: center; /* align horizontal */
@@ -73,7 +73,7 @@ nav.primary {
   border-top: 8px solid $text-gray;
 }
 
-.current-session-button:hover {
+#current-session-button:hover {
   .arrow-down {
     border-top-color: $darkest-gray;
   }

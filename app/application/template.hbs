@@ -20,14 +20,14 @@
         {{/link-to}}
       </div>
       <div class="nav-element">
-        <button {{action 'toggleSessionMenuIsOpen'}} class="current-session-button">
-          <img src="{{user.avatarUrl}}" class="avatar"/>
+        <button {{action 'toggleSessionMenuIsOpen'}} id="current-session-button">
+          <img src="{{session.currentUser.avatarUrl}}" class="avatar"/>
           <div class="arrow-down">
             <div class="menu {{if sessionMenuIsOpen 'faded-in' 'faded-out'}}">
               <ul>
                 <li><button>Profile</button></li>
                 <li><button>Account</button></li>
-                <li><button {{action 'logout'}}>Log out</button></li>
+                <li><button {{action 'logout'}} id="destroy-session-button">Log out</button></li>
               </ul>
             </div>
           </div>

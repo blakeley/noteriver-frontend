@@ -5,7 +5,6 @@ import {
 
 moduleForModel('user', {
   // Specify the other units that are required for this test.
-  needs: ['model:session']
 });
 
 test('it exists', function(assert) {

@@ -25,7 +25,9 @@ export default Ember.Service.extend({
   }.property('authToken', 'currentUserId'),
 
   currentUser: function(){
-    return this.get('store').find('user', this.get('currentUserId'));
+    if(this.get('isAuthenticated')){
+      return this.get('store').find('user', this.get('currentUserId'));
+    }
   }.property('currentUserId'),
 
 
@@ -47,16 +49,18 @@ export default Ember.Service.extend({
       xhr.open('POST', service.get('loginUrl'));
       xhr.responseType = "json";
       xhr.onreadystatechange = function(){
-        if (xhr.readyState === xhr.DONE) {
-          if (xhr.status === 200) {
-            var user = service.store.push('user', xhr.response.user);
-            service.set('currentUserId', user.id);
-            service.set('authToken', xhr.response.authToken);
-            resolve(user);
-          } else {
-            reject(new Error('Login [' + email + ', ' + password + '] failed with status: [' + xhr.status + ']'));
+        Ember.run(function(){
+          if (xhr.readyState === xhr.DONE) {
+            if (xhr.status === 200) {
+              service.get('store').pushPayload('user', {user: xhr.response.user});
+              service.set('currentUserId', xhr.response.user.id);
+              service.set('authToken', xhr.response.authToken);
+              resolve();
+            } else {
+              reject(new Error('Login [' + email + ', ' + password + '] failed with status: [' + xhr.status + ']'));
+            }
           }
-        }
+        });
       };
 
       xhr.send(data);
@@ -76,16 +80,18 @@ export default Ember.Service.extend({
       xhr.open('POST', service.get('registerUrl'));
       xhr.responseType = "json";
       xhr.onreadystatechange = function(){
-        if (xhr.readyState === xhr.DONE) {
-          if (xhr.status === 200) {
-            var user = service.store.push('user', xhr.response.user);
-            service.set('currentUserId', user.id);
-            service.set('authToken', xhr.response.authToken);
-            resolve(user);
-          } else {
-            reject(new Error('Register [' + email + ', ' + password + '] failed with status: [' + xhr.status + ']'));
+        Ember.run(function(){
+          if (xhr.readyState === xhr.DONE) {
+            if (xhr.status === 200) {
+              service.get('store').pushPayload('user', {user: xhr.response.user});
+              service.set('currentUserId', xhr.response.user.id);
+              service.set('authToken', xhr.response.authToken);
+              resolve();
+            } else {
+              reject(new Error('Register [' + email + ', ' + password + '] failed with status: [' + xhr.status + ']'));
+            }
           }
-        }
+        });
       };
 
       xhr.send(data);

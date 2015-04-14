@@ -2,43 +2,25 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   storage: Ember.inject.service(),
+  session: Ember.inject.service(),
 
   sessionMenuIsOpen: false,
 
-  authTokenChanged: function(){
-    this.get('storage').setItem('authToken', this.get('session.authToken'));
-  }.observes('session.authToken'),
-
-  currentUserIdChanged: function(){
-    this.get('storage').setItem('currentUserId', this.get('session.user.id'));
-  }.observes('session.user.id'),
-
-  associateModels: function(user, session) {
-    user.set('session', session);
-    session.set('user', user);
-    this.set('user', user);
-    this.set('session', session);
-  },
-
   actions: {
     logout: function() {
-      var user = this.store.createRecord('user');
-      var session = this.store.createRecord('session');
-      this.associateModels(user, session);
+      this.get('session').logout();
     },
 
     login: function(){
-      this.get('session').save().then((session) => {
+      this.get('session').login().then(() => {
         this.set('sessionMenuIsOpen', false);
-        this.associateModels(session.get('user'), session);
         this.send('closeModal');
       });
     },
 
     register: function(){
-      this.get('user').save().then((user) => {
+      this.get('session').register().then(() => {
         this.set('sessionMenuIsOpen', false);
-        this.associateModels(user, user.get('session'));
         this.send('closeModal');
       });
     },

@@ -9,7 +9,7 @@
     </div>
     <div class="modal-body">
       {{input value=email action='login' id="new-session-email" name="email" placeholder="Email"}}
-      {{input type="password" value=password action='login' id="new-session-password" placeholder="Password"}}
+      {{input value=password action='login' id="new-session-password" type="password" placeholder="Password"}}
       {{#if errorMessages}}
         <div class="errorMessage">Invalid credentials</div>
       {{/if}}

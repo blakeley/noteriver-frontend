@@ -5,6 +5,7 @@ import config from '../../config/environment';
 
 // custom test helpers
 import waitForAudioBuffers from 'noteriver/tests/helpers/wait-for-audio-buffers';
+import waitForSession from 'noteriver/tests/helpers/wait-for-session';
 
 export default function startApp(attrs) {
   var application;
