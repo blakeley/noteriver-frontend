@@ -1,25 +1,41 @@
-/* global unescape */
-
 import ENV from 'noteriver/config/environment';
 import Ember from 'ember';
 
 export default Ember.Service.extend({
-  signUrl: '/sign',
+  signatureUrl: '/api/v1/signatures',
+  bucket: ENV.AWS_BUCKET,
+  s3Key: function(file){
+    return 'localhost:4200/' + file.name;
+  },
 
-  sign: function(file){
-    var signUrl = this.get('signUrl');
+  policyDocument: function(file){
+    return {
+      expiration: new Date(Date.now() + 60*60*1000).toISOString(),
+      conditions: [
+        {"bucket": this.bucket},
+        {"key": this.s3Key(file)},
+      ],
+    };
+  },
+
+  policy: function(file){
+    return btoa(JSON.stringify(this.policyDocument(file)));
+  },
+
+  sign: function(policy){
+    var service = this;
 
     return new Ember.RSVP.Promise(function(resolve, reject){
       var xhr = new XMLHttpRequest();
 
-      xhr.open('GET', signUrl);
-      xhr.responseType = "json";
+      xhr.open('GET', service.get('signatureUrl') + '/' + policy);
+      xhr.responseType = "string";
       xhr.onreadystatechange = function(){
         if (xhr.readyState === xhr.DONE) {
           if (xhr.status === 200) {
             resolve(xhr.response);
           } else {
-            reject(new Error('Sign file `' + file.name + '` failed with status: [' + xhr.status + ']'));
+            reject(new Error('Sign policy failed with status: [' + xhr.status + ']'));
           }
         }
       };
@@ -29,25 +45,24 @@ export default Ember.Service.extend({
   },
 
   upload: function(file) {
-    return this.sign(file).then(function(json){
+    var service = this;
+    var policy = service.policy(file);
+
+    return this.sign(policy).then(function(signature){
       return new Ember.RSVP.Promise(function(resolve, reject){
         var data = new FormData();
-
-        for(var field in json) {
-          if (json.hasOwnProperty(field)) {
-            data.append(field, json[field]);
-          }
-        }
-
+        data.append('key', service.s3Key(file));
         data.append('AWSAccessKeyId', ENV.AWS_ACCESS_KEY_ID);
+        data.append('signature', signature);
+        data.append('policy', policy);
         data.append('file', file);
 
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', `//${json.bucket}.s3.amazonaws.com`);
+        xhr.open('POST', `//${service.bucket}.s3.amazonaws.com`);
         xhr.onreadystatechange = function(){
           if (xhr.readyState === xhr.DONE) {
             if (xhr.status === 204) {
-              resolve(unescape(xhr.getResponseHeader('location')));
+              resolve(service.s3Key(file));
             } else {
               reject(new Error('Upload file `' + file.name + '` failed with status: [' + xhr.status + ']'));
             }

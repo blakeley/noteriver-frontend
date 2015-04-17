@@ -19,92 +19,61 @@ test('it exists', function(assert) {
   assert.ok(service);
 });
 
-test('#signatureUrl defaults to /sign', function(assert) {
+test('#signatureUrl defaults to /api/v1/signatures', function(assert) {
   var service = this.subject();
-  assert.equal(service.get('signUrl'), '/sign');
+  assert.equal(service.signatureUrl, '/api/v1/signatures');
+});
+
+test('#bucket defaults to ENV.AWS_BUCKET', function(assert) {
+  var service = this.subject();
+  assert.ok(service.bucket);
+  assert.equal(service.bucket, ENV.AWS_BUCKET);
+});
+
+test('#s3Key returns the S3 key for the given file', function(assert) {
+  var service = this.subject();
+  assert.ok(service.s3Key(file));  
+});
+
+test('#policyDocument.expiration is a future ISO timestamp', function(assert) {
+  var service = this.subject();
+  var expiresAt = Date.parse(service.policyDocument(file).expiration);
+  assert.ok(expiresAt > Date.now(), "Signature has already expired");
+});
+
+test('#policyDocument.conditions[0] is a bucket rule', function(assert) {
+  var service = this.subject();
+  assert.ok(service.policyDocument(file).conditions[0].bucket);
+  assert.equal(service.policyDocument(file).conditions[0].bucket, service.bucket);
+});
+
+test('#policyDocument.conditions[1] is a key rule', function(assert) {
+  var service = this.subject();
+  assert.ok(service.policyDocument(file).conditions[1].key);
+  assert.equal(service.policyDocument(file).conditions[1].key, service.s3Key(file));
 });
 
 test('#sign returns a promise', function(assert) {
   var service = this.subject();
-  return service.sign(file).then(function(){
-    assert.ok(true, 'returned a promise!');
+  var policy = service.policy(file);
+  return service.sign(policy).then(function(){
+    assert.ok(true);
   });
 });
 
-test('#sign resolves to json with "bucket" property', function(assert) {
+test('#sign resolves to a valid signature', function(assert) {
   var service = this.subject();
-  return service.sign(file).then(function(json){
-    assert.ok(json.bucket);
-  });
-});
-
-test('#sign resolves to json with "key" property', function(assert) {
-  var service = this.subject();
-  return service.sign(file).then(function(json){
-    assert.ok(json.key);
-  });
-});
-
-test('#sign resolves to json with a "policy" property', function(assert) {
-  var service = this.subject();
-  return service.sign(file).then(function(json){
-    assert.ok(json.policy);
-  });
-});
-
-test('#sign resolves to json with a "policy.expiration"', function(assert) {
-  var service = this.subject();
-  return service.sign(file).then(function(json){
-    var policyDocument = JSON.parse(atob(json.policy));
-    assert.ok(policyDocument.expiration);
-  });
-});
-
-test('#sign resolves to json for which "policy.expiration" is a future ISO timestamp', function(assert) {
-  var service = this.subject();
-  return service.sign(file).then(function(json){
-    var policyDocument = JSON.parse(atob(json.policy));
-    var expiresAt = Date.parse(policyDocument.expiration);
-    assert.ok(expiresAt > Date.now(), "Signature has already expired");
-  });
-});
-
-test('#sign resolves to json with a "policy.conditions" property', function(assert) {
-  var service = this.subject();
-  return service.sign(file).then(function(json){
-    var policyDocument = JSON.parse(atob(json.policy));
-    assert.ok(policyDocument.conditions);
-  });
-});
-
-test('#sign resolves to json for which "policy.conditions[0]" is a bucket rule', function(assert) {
-  var service = this.subject();
-  return service.sign(file).then(function(json){
-    var policyDocument = JSON.parse(atob(json.policy));
-    assert.ok(policyDocument.conditions[0].bucket);
-  });
-});
-
-test('#sign resolves to json for which "policy.conditions[1]" is a key rule', function(assert) {
-  var service = this.subject();
-  return service.sign(file).then(function(json){
-    var policyDocument = JSON.parse(atob(json.policy));
-    assert.equal(policyDocument.conditions[1][1], "$key");
-  });
-});
-
-test('#sign resolves to json with a valid "signature" property', function(assert) {
-  var service = this.subject();
-  return service.sign(file).then(function(json){
-    var hash = CryptoJS.HmacSHA1(json.policy, ENV.AWS_SECRET_ACCESS_KEY);
-    var signature = hash.toString(CryptoJS.enc.Base64);
-    assert.equal(json.signature, signature);
+  var policy = service.policy(file);
+  var hash = CryptoJS.HmacSHA1(policy, ENV.AWS_SECRET_ACCESS_KEY);
+  var expected_signature = hash.toString(CryptoJS.enc.Base64);
+  return service.sign(policy).then(function(signature){
+    assert.equal(signature, expected_signature);
   });
 });
 
 test('#upload returns a promise', function(assert) {
   var service = this.subject();
-  assert.ok(service.upload(file).then);
+  assert.ok(!!service.upload(file).then);
 });
 
 test('#upload successfully uploads a file to s3', function(assert) {
@@ -114,10 +83,10 @@ test('#upload successfully uploads a file to s3', function(assert) {
   });
 });
 
-test('#upload resolves to the URL of the uploaded file', function(assert) {
+test('#upload resolves to the S3 key of the uploaded file', function(assert) {
   var service = this.subject();
-  return service.upload(file).then(function(url){
-    assert.equal(`http://noteriver-dev.s3.amazonaws.com/localhost:4200/${file.name}`, url);
+  return service.upload(file).then(function(s3Key){
+    assert.equal(s3Key, service.s3Key(file));
   });
 });
 
