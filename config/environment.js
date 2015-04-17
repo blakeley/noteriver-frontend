@@ -32,7 +32,7 @@ module.exports = function(environment) {
   if (environment === 'test') {
     ENV.AWS_ACCESS_KEY_ID = process.env.NOTERIVER_AWS_ACCESS_KEY_ID;
     ENV.AWS_SECRET_ACCESS_KEY = process.env.NOTERIVER_AWS_SECRET_ACCESS_KEY;
-    ENV.AWS_BUCKET = 'noteriver-test';
+    ENV.AWS_BUCKET = 'noteriver-dev';
 
     // Testem prefers this...
     ENV.locationType = 'none';

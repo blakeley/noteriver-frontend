@@ -22,9 +22,10 @@ export default Ember.Controller.extend({
       };
       fileReader.readAsBinaryString(file);
 
+      // TODO: upload only after reading & validating file contents
       controller.set('isUploadingFile', true);
-      this.get('s3').upload(file).then(function(fileUrl){
-        model.set('fileUrl', fileUrl);
+      this.get('s3').upload(file).then(function(s3Key){
+        model.set('s3Key', s3Key);
         controller.set('isUploadingFile', false);
       });
     },

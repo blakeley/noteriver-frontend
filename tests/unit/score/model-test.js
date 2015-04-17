@@ -18,6 +18,16 @@ test('it exists', function(assert) {
   assert.ok(!!model);
 });
 
+test('#fileUrl is undefined when #s3Key is undefined', function(assert) {
+  var model = this.subject({s3Key: undefined});
+  assert.ok(!model.get('fileUrl'));
+});
+
+test('#fileUrl is a computed property depending on #s3Key', function(assert) {
+  var model = this.subject({s3Key: 's3-test-file.mid'});
+  assert.ok(model.get('fileUrl').indexOf(model.get('s3Key')) > 0);
+});
+
 test('#promise returns a promise', function(assert) {
   var model = this.subject({fileUrl: fileUrl});
   assert.ok(model.get('promise').then);
