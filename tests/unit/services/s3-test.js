@@ -8,7 +8,10 @@ import ENV from 'noteriver/config/environment';
 
 moduleFor('service:s3', {
   // Specify the other units that are required for this test.
-  // needs: ['service:foo']
+  // needs: ['service:foo'],
+  beforeEach: function(){
+    this.subject().set('session', {currentUser: {id: 7357}});
+  },
 });
 
 var file = new File(["MThd"], "s3-test-file.mid");
@@ -30,9 +33,9 @@ test('#bucket defaults to ENV.AWS_BUCKET', function(assert) {
   assert.equal(service.bucket, ENV.AWS_BUCKET);
 });
 
-test('#s3Key returns the S3 key for the given file', function(assert) {
+test('#s3Key includes currentUser.id as a subdirectory', function(assert) {
   var service = this.subject();
-  assert.ok(service.s3Key(file));  
+  assert.ok(service.s3Key(file).indexOf('7357/') > 0);
 });
 
 test('#policyDocument.expiration is a future ISO timestamp', function(assert) {

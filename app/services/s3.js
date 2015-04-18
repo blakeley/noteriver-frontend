@@ -2,10 +2,12 @@ import ENV from 'noteriver/config/environment';
 import Ember from 'ember';
 
 export default Ember.Service.extend({
+  session: Ember.inject.service(),
+
   signatureUrl: '/api/v1/signatures',
   bucket: ENV.AWS_BUCKET,
   s3Key: function(file){
-    return 'localhost:4200/' + file.name;
+    return `uploads/${this.get('session.currentUser.id')}/${file.name}`;
   },
 
   policyDocument: function(file){
