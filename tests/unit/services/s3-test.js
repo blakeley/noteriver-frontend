@@ -13,7 +13,7 @@ moduleFor('service:s3', {
 
 var file = new File(["MThd"], "s3-test-file.mid");
 var mockSession = {
-  currentUserId: 7537,
+  currentUserId: 7357,
   authToken: 'token'
 };
 
@@ -43,6 +43,11 @@ test('#s3Key includes currentUserId as a subdirectory', function(assert) {
   assert.ok(service.s3Key(file).indexOf('7357/') > 0);
 });
 
+test('#acl is "public-read"', function(assert) {
+  var service = this.subject();
+  assert.equal(service.acl, 'public-read');
+});
+
 test('#policyDocument.expiration is a future ISO timestamp', function(assert) {
   var service = this.subject();
   var expiresAt = Date.parse(service.policyDocument(file).expiration);
@@ -59,6 +64,12 @@ test('#policyDocument.conditions[1] is a key rule', function(assert) {
   var service = this.subject();
   assert.ok(service.policyDocument(file).conditions[1].key);
   assert.equal(service.policyDocument(file).conditions[1].key, service.s3Key(file));
+});
+
+test('#policyDocument.conditions[2] is an acl rule', function(assert) {
+  var service = this.subject();
+  assert.ok(service.policyDocument(file).conditions[2].acl);
+  assert.equal(service.policyDocument(file).conditions[2].acl, service.acl);
 });
 
 test('#sign returns a promise', function(assert) {

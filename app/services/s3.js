@@ -9,6 +9,7 @@ export default Ember.Service.extend({
   s3Key: function(file){
     return `uploads/${this.get('session.currentUserId')}/${file.name}`;
   },
+  acl: 'public-read',
 
   policyDocument: function(file){
     return {
@@ -16,6 +17,7 @@ export default Ember.Service.extend({
       conditions: [
         {"bucket": this.bucket},
         {"key": this.s3Key(file)},
+        {"acl": this.acl},
       ],
     };
   },
@@ -55,6 +57,7 @@ export default Ember.Service.extend({
       return new Ember.RSVP.Promise(function(resolve, reject){
         var data = new FormData();
         data.append('key', service.s3Key(file));
+        data.append('acl', service.acl);
         data.append('AWSAccessKeyId', ENV.AWS_ACCESS_KEY_ID);
         data.append('signature', signature);
         data.append('policy', policy);
