@@ -72,6 +72,13 @@ test('#policyDocument.conditions[2] is an acl rule', function(assert) {
   assert.equal(service.policyDocument(file).conditions[2].acl, service.acl);
 });
 
+test('#policyDocument.conditions[3] is a content-length-range rule', function(assert) {
+  var service = this.subject();
+  assert.equal(service.policyDocument(file).conditions[3][0], "content-length-range");
+  assert.equal(service.policyDocument(file).conditions[3][1], file.size);
+  assert.equal(service.policyDocument(file).conditions[3][2], file.size);
+});
+
 test('#sign returns a promise', function(assert) {
   var service = this.subject({session: mockSession});
   var policy = service.policy(file);

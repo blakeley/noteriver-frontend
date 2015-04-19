@@ -18,6 +18,7 @@ export default Ember.Service.extend({
         {"bucket": this.bucket},
         {"key": this.s3Key(file)},
         {"acl": this.acl},
+        ["content-length-range", file.size, file.size],
       ],
     };
   },
