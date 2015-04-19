@@ -7,7 +7,7 @@ export default Ember.Service.extend({
   signatureUrl: '/api/v1/signatures',
   bucket: ENV.AWS_BUCKET,
   s3Key: function(file){
-    return `uploads/${this.get('session.currentUser.id')}/${file.name}`;
+    return `uploads/${this.get('session.currentUserId')}/${file.name}`;
   },
 
   policyDocument: function(file){
@@ -31,6 +31,7 @@ export default Ember.Service.extend({
       var xhr = new XMLHttpRequest();
 
       xhr.open('GET', service.get('signatureUrl') + '/' + policy);
+      xhr.setRequestHeader('AUTHORIZATION', service.get('session.authToken'));
       xhr.responseType = "string";
       xhr.onreadystatechange = function(){
         if (xhr.readyState === xhr.DONE) {

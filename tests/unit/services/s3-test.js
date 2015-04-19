@@ -9,12 +9,13 @@ import ENV from 'noteriver/config/environment';
 moduleFor('service:s3', {
   // Specify the other units that are required for this test.
   // needs: ['service:foo'],
-  beforeEach: function(){
-    this.subject().set('session', {currentUser: {id: 7357}});
-  },
 });
 
 var file = new File(["MThd"], "s3-test-file.mid");
+var mockSession = {
+  currentUserId: 7537,
+  authToken: 'token'
+};
 
 // Replace this with your real tests.
 test('it exists', function(assert) {
@@ -33,8 +34,12 @@ test('#bucket defaults to ENV.AWS_BUCKET', function(assert) {
   assert.equal(service.bucket, ENV.AWS_BUCKET);
 });
 
-test('#s3Key includes currentUser.id as a subdirectory', function(assert) {
-  var service = this.subject();
+test('#s3Key includes currentUserId as a subdirectory', function(assert) {
+  var service = this.subject({
+    session: {
+      currentUserId: 7357
+    }
+  });
   assert.ok(service.s3Key(file).indexOf('7357/') > 0);
 });
 
@@ -57,15 +62,15 @@ test('#policyDocument.conditions[1] is a key rule', function(assert) {
 });
 
 test('#sign returns a promise', function(assert) {
-  var service = this.subject();
+  var service = this.subject({session: mockSession});
   var policy = service.policy(file);
   return service.sign(policy).then(function(){
     assert.ok(true);
   });
 });
 
-test('#sign resolves to a valid signature', function(assert) {
-  var service = this.subject();
+test('#sign resolves to a valid signature when authenticated', function(assert) {
+  var service = this.subject({session: mockSession});
   var policy = service.policy(file);
   var hash = CryptoJS.HmacSHA1(policy, ENV.AWS_SECRET_ACCESS_KEY);
   var expected_signature = hash.toString(CryptoJS.enc.Base64);
@@ -74,20 +79,32 @@ test('#sign resolves to a valid signature', function(assert) {
   });
 });
 
+
+test('#sign rejects when not authenticated', function(assert) {
+  var service = this.subject({session: {}});
+  var policy = service.policy(file);
+
+  return service.sign(policy).then(function(){
+    assert.ok(false, '#sign did not reject');
+  }).catch(function(){
+    assert.ok(true);
+  });
+});
+
 test('#upload returns a promise', function(assert) {
-  var service = this.subject();
+  var service = this.subject({session: mockSession});
   assert.ok(!!service.upload(file).then);
 });
 
 test('#upload successfully uploads a file to s3', function(assert) {
-  var service = this.subject();
+  var service = this.subject({session: mockSession});
   return service.upload(file).then(function(){
     assert.ok(true);
   });
 });
 
 test('#upload resolves to the S3 key of the uploaded file', function(assert) {
-  var service = this.subject();
+  var service = this.subject({session: mockSession});
   return service.upload(file).then(function(s3Key){
     assert.equal(s3Key, service.s3Key(file));
   });
