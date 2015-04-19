@@ -18,6 +18,7 @@ export default Ember.Service.extend({
         {"bucket": this.bucket},
         {"key": this.s3Key(file)},
         {"acl": this.acl},
+        {"Content-Type": file.type},
         ["content-length-range", file.size, file.size],
       ],
     };
@@ -59,6 +60,7 @@ export default Ember.Service.extend({
         var data = new FormData();
         data.append('key', service.s3Key(file));
         data.append('acl', service.acl);
+        data.append('Content-Type', file.type);
         data.append('AWSAccessKeyId', ENV.AWS_ACCESS_KEY_ID);
         data.append('signature', signature);
         data.append('policy', policy);
