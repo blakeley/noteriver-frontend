@@ -8,10 +8,25 @@
       <p>Welcome back!</p>
     </div>
     <div class="modal-body">
-      {{input value=email action='login' id="new-session-email" name="email" placeholder="Email"}}
-      {{input value=password action='login' id="new-session-password" type="password" placeholder="Password"}}
-      {{#if errorMessages}}
-        <div class="errorMessage">Invalid credentials</div>
+      <p>
+        {{input value=session.newSessionEmail action='login' id="new-session-email" name="email" placeholder="Email"}}
+      </p>
+      {{#if session.newSessionEmailError}}
+        <p>
+          <div class="error-message">
+            {{session.newSessionEmailError}}
+          </div>
+        </p>
+      {{/if}}
+      <p>
+        {{input value=session.newSessionPassword action='login' id="new-session-password" type="password" placeholder="Password"}}
+      </p>
+      {{#if session.newSessionPasswordError}}
+        <p>
+          <div class="error-message">
+            {{session.newSessionPasswordError}}
+          </div>
+        </p>
       {{/if}}
     </div>
     <div class="modal-footer">

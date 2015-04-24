@@ -27,8 +27,8 @@ test('logging in', function(assert) {
   fillIn('#new-session-email', 'valid@mail.com');
   fillIn('#new-session-password', 'password');
   click('#create-session-button');
-
-  waitForSession().then(function(){
+  waitForSession();
+  andThen(function(){
     assert.equal($('#current-session-button').length, 1);
   });
 });
@@ -39,7 +39,7 @@ test('registering', function(assert) {
   fillIn('#new-user-email', 'valid@mail.com');
   fillIn('#new-user-password', 'password');
   click('#create-user-button');
-
+  waitForSession();
   andThen(function() {
     assert.equal($('#current-session-button').length, 1);
   });

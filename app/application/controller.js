@@ -12,14 +12,14 @@ export default Ember.Controller.extend({
     },
 
     login: function(){
-      this.get('session').login().then(() => {
+      return this.get('session').login().then(() => {
         this.set('sessionMenuIsOpen', false);
         this.send('closeModal');
       });
     },
 
     register: function(){
-      this.get('session').register().then(() => {
+      return this.get('session').register().then(() => {
         this.set('sessionMenuIsOpen', false);
         this.send('closeModal');
       });

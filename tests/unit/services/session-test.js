@@ -128,15 +128,37 @@ test('.login() returns a promise', function(assert){
 
 test('.login() with valid credentials sets authToken', function(assert){
   var service = this.subject({storage: mockStorage, store: mockStore});
-  return service.login('valid@mail.com', 'password').then(function(){
+  service.set('newSessionEmail', 'valid@mail.com');
+  service.set('newSessionPassword', 'password');
+  return service.login().then(function(){
     assert.equal(service.get('authToken'), 'token');
   });
 });
 
 test('.login() with valid credentials sets currentUserId', function(assert){
   var service = this.subject({storage: mockStorage, store: mockStore});
-  return service.login('valid@mail.com', 'password').then(function(){
+  service.set('newSessionEmail', 'valid@mail.com');
+  service.set('newSessionPassword', 'password');
+  return service.login().then(function(){
     assert.equal(service.get('currentUserId'), 1);
+  });
+});
+
+test('.login() with unknown email sets newSessionEmailError', function(assert){
+  var service = this.subject({storage: mockStorage, store: mockStore});
+  service.set('newSessionEmail', 'unknown');
+  service.set('newSessionPassword', 'password');
+  return service.login().catch(function(){
+    assert.ok(service.get('newSessionEmailError'));
+  });
+});
+
+test('.login() with incorrect password sets newSessionPasswordError', function(assert){
+  var service = this.subject({storage: mockStorage, store: mockStore});
+  service.set('newSessionEmail', 'valid@mail.com');
+  service.set('newSessionPassword', 'incorrect');
+  return service.login().catch(function(){
+    assert.ok(service.get('newSessionPasswordError'));
   });
 });
 
@@ -147,15 +169,37 @@ test('.register() returns a promise', function(assert){
 
 test('.register() with valid credentials sets authToken', function(assert){
   var service = this.subject({storage: mockStorage, store: mockStore});
-  return service.register('valid@mail.com', 'password').then(function(){
+  service.set('newUserEmail', 'valid@mail.com');
+  service.set('newUserPassword', 'password');
+  return service.register().then(function(){
     assert.equal(service.get('authToken'), 'token');
   });
 });
 
 test('.register() with valid credentials sets currentUserId', function(assert){
   var service = this.subject({storage: mockStorage, store: mockStore});
-  return service.register('valid@mail.com', 'password').then(function(){
+  service.set('newUserEmail', 'valid@mail.com');
+  service.set('newUserPassword', 'password');
+  return service.register().then(function(){
     assert.equal(service.get('currentUserId'), 1);
+  });
+});
+
+test('.register() with invalid email sets newUserEmailError', function(assert){
+  var service = this.subject({storage: mockStorage, store: mockStore});
+  service.set('newUserEmail', 'invalid');
+  service.set('newUserPassword', 'password');
+  return service.register().catch(function(){
+    assert.ok(service.get('newUserEmailError'));
+  });
+});
+
+test('.register() with blank password sets newUserPasswordError', function(assert){
+  var service = this.subject({storage: mockStorage, store: mockStore});
+  service.set('newUserEmail', 'valid@mail.com');
+  service.set('newUserPassword', 'blank');
+  return service.register().catch(function(){
+    assert.ok(service.get('newUserPasswordError'));
   });
 });
 

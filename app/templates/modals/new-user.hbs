@@ -8,10 +8,25 @@
       <p>Creating an account lets you upload scores and participate in the community. And it's free!</p>
     </div>
     <div class="modal-body">
-      {{input value=email action='register' id="new-user-email" name="email" placeholder="Email"}}
-      {{input value=password action='register' id="new-user-password" type="password" placeholder="Password"}}
-      {{#if errorMessages.email}}
-        <div class="errorMessage">Email {{errorMessages.email}}</div>
+      <p>
+        {{input value=session.newUserEmail action='register' id="new-user-email" name="email" placeholder="Email"}}
+      </p>
+      {{#if session.newUserEmailError}}
+        <p>
+          <div class="error-message">
+            {{session.newUserEmailError}}
+          </div>
+        </p>
+      {{/if}}
+      <p>
+        {{input value=session.newUserPassword action='register' id="new-user-password" type="password" placeholder="Password"}}
+      </p>
+      {{#if session.newUserPasswordError}}
+        <p>
+          <div class="error-message">
+            {{session.newUserPasswordError}}
+          </div>
+        </p>
       {{/if}}
     </div>
     <div class="modal-footer">
