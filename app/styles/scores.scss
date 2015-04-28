@@ -3,12 +3,14 @@
   margin: auto;
   width: 550px;
   float: none;
-  h2 {
+  h1 {
     text-align: center;
     margin: 55px 0 33px;
+    font-size: 34px;
+    line-height: 36px;
   }
 
-  h2::after {
+  h1::after {
     content: "";
     width: 170px;
     display: block;

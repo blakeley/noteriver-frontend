@@ -1,6 +1,8 @@
 @import 'constants.scss';
+@import 'reset.scss';
 @import 'nav.scss';
 @import 'modal.scss';
+@import 'index.scss';
 @import 'users.scss';
 @import 'scores.scss';
 @import 'menu.scss';
@@ -22,20 +24,6 @@ html {
   box-sizing: inherit;
 }
 
-button {
-  color: inherit;
-  padding: 0;
-  font: inherit;
-  outline: 0;
-  background: none;
-  border: 0;
-  cursor: pointer;
-}
-
-ul {
-  margin: 0; padding: 0;
-}
-
 table {
   width: 100%;
 }
@@ -55,14 +43,6 @@ table {
 .flex-one {
   flex: 1;
 }
-
-
-h2 {
-  font-size: 34px;
-  line-height: 36px;
-}
-
-:focus {outline:none;}
 
 .hidden {
   display: none;

@@ -1,22 +1,20 @@
-Welcome to noteriver!
+<section class="intro">
+  <h1>MIDI, evolved</h1>
+  <p>A better way to share your MIDIs online</p>
 
-
-<p>
-  {{#link-to 'score' firstScore}}
-    {{firstScore.title}} - {{firstScore.artist}}
-  {{/link-to}}
-</p>
-
-<p>
-  {{#link-to 'score' secondScore}}
-    {{secondScore.title}} - {{secondScore.artist}}
-  {{/link-to}}
-</p>
-
-<p>
-  {{#link-to 'score' thirdScore}}
-    {{thirdScore.title}} - {{thirdScore.artist}}
-  {{/link-to}}
-</p>
-
+  <div class="demo-width">
+    <div class="demo-window">
+      <div class="window-bar">
+        <ul>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
+      <div class="demo">
+        {{midi-player score=firstScore}}
+      </div>
+    </div>
+  </div>
+</section>
 

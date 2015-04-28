@@ -1,5 +1,7 @@
+// color constants
+
 $primary-color: #729FCF;
-$primary-color-dark: darken($primary-color, 15%);
+$primary-color-dark: darken($primary-color, 25%);
 $primary-color-darker: darken($primary-color, 40%);
 $primary-color-light: lighten($primary-color, 15%);
 
@@ -23,3 +25,6 @@ $cool-gray: #BECEDE;
 
 $nav-height: 72px;
 $control-bar-height: 72px;
+
+// semantic constants
+$piano-background-color: $dark-gray;
