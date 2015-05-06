@@ -1,35 +1,55 @@
 {{! background }}
-<rect x='0' width='14' y='0' height='69' fill='#141414'/>
+<rect x='0'
+      width='1'
+      y='.020'
+      height='5.5625'
+      fill='{{fill}}'
+      stroke="#202020"
+      stroke-opacity="0.5"
+      stroke-width="0.0625"
+      />
 
 {{! sides }}
 <rect x="-0.0625"
-      width="0.1625" 
-      y="0" 
-      height="5.5625" 
+      width="0.1625"
+      y="0"
+      height="5.5625"
       fill="url(#gradient-ebony-key-side)"
-      stroke="rgba(14,14,14,0.5)" stroke-width="0.0625"/>
+      stroke="{{fill}}"
+      stroke-opacity="0.35"
+      stroke-width="0.0625"
+      />
 
 <rect x="0.9"
-      width="0.1625" 
-      y="0" 
-      height="5.5625" 
+      width="0.1625"
+      y="0"
+      height="5.5625"
       fill="url(#gradient-ebony-key-side)"
-      stroke="rgba(14,14,14,0.5)" stroke-width="0.0625"/>
+      stroke="{{fill}}"
+      stroke-opacity="0.35"
+      stroke-width="0.0625"
+      />
 
 {{! front slope }}
-<path d="M 0,0 
+<path d="M 0,0
          C 0,0.5,    0.1,0.75 0.5,0.75
          C 0.9,0.75, 1.0,0.5  1,0
          L 1,0
          Z"
       fill="url(#gradient-ebony-key-front)"
-      stroke="rgba(14,14,14,0.25)" stroke-width="0.0625"/>
+      stroke="{{fill}}"
+      stroke-opacity="0.35"
+      stroke-width="0.0625"
+      />
 
 {{! top }}
 <rect x="0.1" rx="0.2" ry="0.2"
-      width="0.8" 
-      y="0.8" 
-      height="5" 
+      width="0.8"
+      y="0.8"
+      height="5"
       fill="url(#gradient-ebony-key-top)"
-      stroke="rgba(14,14,14,0.5)" stroke-width="0.0625"/>
+      stroke="{{fill}}"
+      stroke-opacity="0.35"
+      stroke-width="0.0625"
+      />
 

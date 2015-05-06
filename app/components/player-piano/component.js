@@ -14,6 +14,20 @@ export default Ember.Component.extend({
   highNumber: 108,
   timeScale: 10,
 
+  notesOn: function(){
+    var h = {};
+
+    if(this.get('midi')){
+      this.get('midi').notesOnDuring(this.get('time')).forEach((note) => {
+        if(note.onSecond < this.get('time') && this.get('time') + 0.016 < note.offSecond){
+          h[note.number] = note;
+        }
+      });
+    }
+
+    return h;
+  }.property('time','midi'),
+
   noteTranslateY: function(){
     return keyboard.IVORY_HEIGHT - this.get('time') * this.get('timeScale');
   }.property('time'),
@@ -30,12 +44,6 @@ export default Ember.Component.extend({
   viewBox: function(){
     return this.get('vbx') + " 0 " + this.get('vbw') + " 1000";
   }.property('vbx','vbw'),
-
-  // Because jQuery disregards case in .attr(), Ember fails to update
-  // the viewBox attribute correctly. This workaround fixes this issue.
-  viewBoxChanged: function(){
-    this.$().get(0).setAttribute('viewBox', this.get('viewBox'));
-  }.observes('viewBox'),
 
   preserveAspectRatio: "xMidYMin slice",
 });

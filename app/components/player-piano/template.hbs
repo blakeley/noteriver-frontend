@@ -7,10 +7,10 @@
 {{/svg-g}}
 
 {{#each keyboard.IVORY_MIDI_NUMBERS as |midiNumber|}}
-  {{ivory-key midiNumber=midiNumber}}
+  {{ivory-key midiNumber=midiNumber notesOn=notesOn}}
 {{/each}}
 
 {{#each keyboard.EBONY_MIDI_NUMBERS as |midiNumber|}}
-  {{ebony-key midiNumber=midiNumber}}
+  {{ebony-key midiNumber=midiNumber notesOn=notesOn}}
 {{/each}}
 

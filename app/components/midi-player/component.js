@@ -6,13 +6,12 @@ export default Ember.Component.extend({
 
   classNames: ['midi-player'],
 
-  time: 0,
+  time: 0.0,
   isPlaying: false,
   isInterrupted: false,
   settingsPanelIsOpen: false,
   lowNumber: 21,
   highNumber: 108,
-
 
   bufferSounds: function(){
     var audio = this.get('audio');

@@ -32,9 +32,9 @@ export default Ember.Component.extend({
 
   fill: function(){
     if(keyboard.midiNumber(this.get('note.number')).isEbony){
-      return '#4B76AC';
+      return keyboard.EBONY_NOTE_COLORS[this.get('note.track.index') % keyboard.EBONY_NOTE_COLORS.length];
     } else {
-      return '#96B8D9';
+      return keyboard.IVORY_NOTE_COLORS[this.get('note.track.index') % keyboard.IVORY_NOTE_COLORS.length];
     }
   }.property(),
 
