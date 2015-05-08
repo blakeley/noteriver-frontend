@@ -15,24 +15,24 @@ $menu-triangle-length: 9px;
   ul {
     border-radius: inherit;
     overflow: hidden;
-    list-style-type: none;
     li {
       font-size: 1rem;
       color: $text-gray;
-      button {
+      button, a {
+        display: block;
         color: $text-gray;
         text-align: left;
         line-height: 1.5rem;
         padding: .3rem 1.4rem .3rem 2.5rem;
         width: 100%;
+        &:hover{
+          color: white;
+          background-color: $primary-color-dark;
+        }
       }
-      button:hover {
-        color: white;
-        background-color: $primary-color-dark;
+      &:last-child {
+        border-top: 1px solid $separator-gray;
       }
-    }
-    li:last-child {
-      border-top: 1px solid $separator-gray;
     }
   }
 }
@@ -54,6 +54,7 @@ $menu-triangle-length: 9px;
   margin-right: 2px;
 }
 .menu:before {
+  opacity: 0.25;
   border-bottom-color: $separator-gray;
   border-width: $menu-triangle-length;
 }

@@ -5,6 +5,6 @@ export default DS.Model.extend({
   username: DS.attr('string'),
 
   avatarUrl: function(){
-    return 'http://www.gravatar.com/avatar/' + this.get('emailMd5') + '?d=identicon';
-  }.property('emailMd5'),  
+    return 'http://www.gravatar.com/avatar/' + this.get('emailMd5') + '?d=identicon&s=256';
+  }.property('emailMd5'),
 });

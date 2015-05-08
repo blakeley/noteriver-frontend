@@ -14,7 +14,7 @@
 
 html {
   box-sizing: border-box;
-  font-family: "proxima-nova", "Proxima Nova", helvetica, arial, sans-serif;
+  font-family: "proxima-nova", "Proxima Nova", "Open Sans", helvetica, arial, sans-serif;
   font-weight: 100;
   //letter-spacing: 1px;
   color: $darkest-gray;
@@ -46,6 +46,14 @@ table {
 
 .hidden {
   display: none;
+}
+
+.fill-width {
+  width: 100%;
+}
+
+.fill-height {
+  height: 100%;
 }
 
 .faded-in {

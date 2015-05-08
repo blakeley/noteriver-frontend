@@ -60,7 +60,7 @@ nav.primary {
   align-items: center; /* align vertical */
 
   height: 100%;
-  padding: 0px 24px;
+  padding: 10px 24px;
 }
 
 .arrow-down {
@@ -71,6 +71,7 @@ nav.primary {
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
   border-top: 8px solid $text-gray;
+  margin-left: 12px;
 }
 
 #current-session-button:hover {
