@@ -23,6 +23,10 @@ module.exports = function(app) {
     }
   });
 
+  usersRouter.put('/:id', function(req, res) {
+    res.status(204);
+  });
+
   usersRouter.get('/', function(req, res) {
     res.send({"users":[]});
   });
