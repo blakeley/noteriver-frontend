@@ -24,8 +24,8 @@
           <div class="arrow-down">
             <div class="menu {{if sessionMenuIsOpen 'faded-in' 'faded-out'}}">
               <ul>
-                <li>{{#link-to 'user' session.currentUser.id}} Profile {{/link-to}}</li>
-                <li><button>Account</button></li>
+                <li>{{#link-to 'user' session.currentUser.id}} {{session.currentUser.username}}'s profile {{/link-to}}</li>
+                <li>{{#link-to 'settings'}}Account settings{{/link-to}}</li>
                 <li><button {{action 'logout'}} id="destroy-session-button">Log out</button></li>
               </ul>
             </div>
