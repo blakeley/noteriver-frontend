@@ -9,6 +9,7 @@ module.exports = function(app) {
           "id": 1,
           "username": "brandon",
           "email_md5": '7e5ad427dbae149a81d3c82c11504b66',
+          "score_ids": [1,2,3,4],
         },
       });
     } else {

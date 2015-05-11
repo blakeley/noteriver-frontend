@@ -3,12 +3,13 @@
   border-radius: 25%;
 }
 
-.profile-column {
+.user-profile {
   width: 18rem;
   text-align: center;
-  padding: 0 1rem;
-  h2 {
-    padding: 1rem 0;
-  }
+  padding: 1rem;
 }
 
+.user-profile-page {
+  padding: 1rem 1rem 0 0;
+  flex: 1;
+}

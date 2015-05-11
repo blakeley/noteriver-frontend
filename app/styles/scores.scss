@@ -22,6 +22,7 @@
 }
 
 .form-field {
+  background: white;
   position: relative;
   width: 100%;
   label {
@@ -93,11 +94,34 @@
   }  
 }
 
+ul.scores {
+  li.score {
+    font-weight: 400;
+    color: white;
+    background-color: $primary-color;
+    width: 100%;
+    margin: 0.5rem;
+    border-radius: 0.25rem;
+    a {
+      display: flex;
+      padding: 0.5rem;
+    }
+    &:first-of-type {
+      margin-top: 0;
+    }
+    &:hover {
+      background-color: $primary-color-dark;
+    }
+    .title {
+      flex: 1;
+    }
+    .artist {
+      min-width: 12rem;
+      width: 25%;
+    }
 
-
-
-
-
+  }
+}
 
 
 

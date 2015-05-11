@@ -1,8 +1,8 @@
 var SCORES = [
-  {"id": 1, "title": "Indiana Jones", "artist": "John Williams", "s3_key": "fixtures/jones.mid"},
-  {"id": 2, "title": "Canon in D", "artist": "Pachelbel", "s3_key": "fixtures/pachelbel.mid"},
-  {"id": 3, "title": "Ode to Joy", "artist": "Beethoven", "s3_key": "fixtures/ode.mid"},
-  {"id": 4, "title": "chromatic Scale", "artist": "George P. Burdell", "s3_key": "fixtures/chromatic.mid"},
+  {"id": 1, "user_id": 1, "title": "Indiana Jones", "artist": "John Williams", "s3_key": "fixtures/jones.mid"},
+  {"id": 2, "user_id": 1, "title": "Canon in D", "artist": "Pachelbel", "s3_key": "fixtures/pachelbel.mid"},
+  {"id": 3, "user_id": 1, "title": "Ode to Joy", "artist": "Beethoven", "s3_key": "fixtures/ode.mid"},
+  {"id": 4, "user_id": 1, "title": "chromatic Scale", "artist": "George P. Burdell", "s3_key": "fixtures/chromatic.mid"},
 ]
 
 module.exports = function(app) {

@@ -6,7 +6,7 @@ import {
 
 moduleForModel('score', {
   // Specify the other units that are required for this test.
-  needs: []
+  needs: ['model:user']
 });
 
 // shortest MIDI data URL I could create
