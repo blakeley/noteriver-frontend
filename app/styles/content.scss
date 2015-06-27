@@ -1,0 +1,20 @@
+.content-container {
+  margin: auto;
+  max-width: 550px;
+  float: none;
+  h1 {
+    text-align: center;
+    margin: 55px 0 33px;
+    font-size: 34px;
+    line-height: 36px;
+  }
+
+  h1::after {
+    content: "";
+    width: 170px;
+    display: block;
+    margin: auto;
+    padding: 22px 0 11px;
+    border-bottom: 1px solid $separator-gray;
+  }
+}
