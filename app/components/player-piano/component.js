@@ -17,7 +17,7 @@ export default Ember.Component.extend({
   notesOn: function(){
     var h = {};
 
-    if(this.get('midi')){
+    if(!!this.get('midi') && this.get('midi').notesOnDuring){
       this.get('midi').notesOnDuring(this.get('time')).forEach((note) => {
         if(note.onSecond < this.get('time') && this.get('time') + 0.016 < note.offSecond){
           h[note.number] = note;
