@@ -1,5 +1,3 @@
-/* global waitForSession */
-
 import Ember from 'ember';
 import {
   module,

@@ -1,4 +1,4 @@
-/* global File, atob, CryptoJS */
+/* global File, CryptoJS */
 
 import {
   moduleFor,

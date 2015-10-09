@@ -38,7 +38,7 @@ test('#getBuffer returns a promise', function(assert) {
 
 test('#getBuffer rejects with a bad URL', function(assert) {
   var service = this.subject();
-  return service.getBuffer().then(function(){}, function(err){
+  return service.getBuffer().catch(function(){
     assert.ok(true, 'promise rejected!');
   });
 });
@@ -83,16 +83,20 @@ test('#totalLoaded returns the number of buffers that have loaded', function(ass
 test('#percentLoaded returns the percent of buffers that have loaded', function(assert) {
   var service = this.subject();
   var resolved = Ember.RSVP.resolve();
-  var resolved2 = Ember.RSVP.resolve();
   var unresolved = new Ember.RSVP.Promise(function(){});
+
   assert.equal(service.get('percentLoaded'), 0);
+
   service.buffersA.pushObject(resolved);
   service.incrementProperty('totalLoaded');
   assert.equal(service.get('percentLoaded'), 1);
+
   service.buffersA.pushObject(unresolved);
   assert.equal(service.get('percentLoaded'), 0.5);
+
   var promise = service.getBuffer(url);
   assert.equal(service.get('percentLoaded'), 1/3);
+
   return promise.then(function(buffer){
     assert.equal(service.get('percentLoaded'), 2/3);
   });

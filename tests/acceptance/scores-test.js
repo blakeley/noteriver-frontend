@@ -1,5 +1,3 @@
-/* global waitForAudioBuffers */
-
 import Ember from 'ember';
 import {
   module,

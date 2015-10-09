@@ -26,7 +26,7 @@ export default Ember.Service.extend({
 
   currentUser: function(){
     if(this.get('isAuthenticated')){
-      return this.get('store').find('user', this.get('currentUserId'));
+      return this.get('store').findRecord('user', this.get('currentUserId'));
     }
   }.property('currentUserId'),
 

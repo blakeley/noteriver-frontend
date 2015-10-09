@@ -9,7 +9,7 @@
     </div>
     <div class="modal-body">
       <p>
-        {{input value=session.newUserEmail action='register' id="new-user-email" name="email" placeholder="Email"}}
+        {{input value=session.newUserEmail enter='register' id="new-user-email" name="email" placeholder="Email"}}
       </p>
       {{#if session.newUserEmailError}}
         <p>
@@ -19,7 +19,7 @@
         </p>
       {{/if}}
       <p>
-        {{input value=session.newUserPassword action='register' id="new-user-password" type="password" placeholder="Password"}}
+        {{input value=session.newUserPassword enter='register' id="new-user-password" type="password" placeholder="Password"}}
       </p>
       {{#if session.newUserPasswordError}}
         <p>
