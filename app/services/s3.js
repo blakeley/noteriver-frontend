@@ -36,7 +36,7 @@ export default Ember.Service.extend({
 
       xhr.open('GET', service.get('signatureUrl') + '/' + policy);
       xhr.setRequestHeader('AUTHORIZATION', service.get('session.authToken'));
-      xhr.responseType = "string";
+      xhr.responseType = "text";
       xhr.onreadystatechange = function(){
         if (xhr.readyState === xhr.DONE) {
           if (xhr.status === 200) {
