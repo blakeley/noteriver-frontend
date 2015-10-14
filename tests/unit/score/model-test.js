@@ -1,4 +1,5 @@
 /* global Midi */
+
 import {
   moduleForModel,
   test
@@ -11,58 +12,76 @@ moduleForModel('score', {
 
 // shortest MIDI data URL I could create
 var fileUrl = 'data:audio/midi;base64,TVRoZAAAAAYAAQADAAFNVHJrAAAACwD/UQMHoSAA/y8ATVRyawAAAA8AwQAAkTRfAYE0AAH/LwBNVHJrAAAABAD/LwA=';
+var badFileUrl = 'http://noteriver-dev.s3.amazonaws.com/fail.mid';
 
 test('it exists', function(assert) {
-  var model = this.subject();
+  var score = this.subject();
   // var store = this.store();
-  assert.ok(!!model);
-});
-
-test('#fileUrl is undefined when #s3Key is undefined', function(assert) {
-  var model = this.subject({s3Key: undefined});
-  assert.ok(!model.get('fileUrl'));
+  assert.ok(!!score);
 });
 
 test('#fileUrl is a computed property depending on #s3Key', function(assert) {
-  var model = this.subject({s3Key: 's3-test-file.mid'});
-  assert.ok(model.get('fileUrl').indexOf(model.get('s3Key')) > 0);
+  var score = this.subject({s3Key: 's3-test-file.mid'});
+
+  assert.ok(score.get('fileUrl').indexOf(score.get('s3Key')) > 0);
 });
 
-test('#promise returns a promise', function(assert) {
-  var model = this.subject({fileUrl: fileUrl});
-  assert.ok(model.get('promise').then);
+test('#loadMidi returns a promise', function(assert) {
+  var score = this.subject({fileUrl: fileUrl});
+
+  return score.loadMidi().then(function(midi){
+    assert.ok(true, 'returned a promise!');
+  });
 });
 
-test('#promise returns a promise when fileUrl is undefined', function(assert) {
-  var model = this.subject();
-  assert.ok(model.get('promise').then);
-});
+test('#loadMidi resolves to a Midi object', function(assert) {
+  var score = this.subject({fileUrl: fileUrl});
 
-test('#promise resolves to a Midi object', function(assert) {
-  var model = this.subject({fileUrl: fileUrl});
-
-  return model.get('promise').then(function(midi){
+  return score.loadMidi().then(function(midi){
     assert.ok(midi instanceof Midi);
   });
 });
 
-test('#promise sets midi to the Midi object it resolves to', function(assert) {
-  var model = this.subject({fileUrl: fileUrl});
+test('#loadMidi rejects with a bad fileUrl', function(assert) {
+  var score = this.subject({fileUrl: badFileUrl});
 
-  return model.get('promise').then(function(midi){
-    assert.equal(model.get('midi'), midi);
+  return score.loadMidi().catch(function(){
+    assert.ok(true, 'promise rejected!');
   });
 });
 
-test('#midi is undefined until #promise resolves', function(assert) {
-  var model = this.subject({fileUrl: fileUrl});
+test('#loadMidi caches the Midi (promise) for future calls', function(assert) {
+  assert.expect(2);
+  var score = this.subject({fileUrl: fileUrl});
 
-  assert.ok(!model.get('midi'));
-  return model.get('promise').then(function(midi){
-    assert.ok(!!model.get('midi'));
+  assert.ok(!score.get('promise'));
+  return score.loadMidi().then(function(midi){
+    assert.ok(score.get('promise'));
   });
 });
 
+test('successive calls to #loadMidi return the same Midi (promise)', function(assert) {
+  var score = this.subject({fileUrl: fileUrl});
+
+  var first = score.loadMidi();
+  var second = score.loadMidi();
+  return first.then(function(){
+    return second.then(function(){
+      assert.equal(first, second);
+    });
+  });
+});
+
+test('#loadMidi retries following a rejected attempt', function(assert) {
+  var score = this.subject({fileUrl: badFileUrl});
+
+  return score.loadMidi().catch(function(reason){
+    score.set('fileUrl', fileUrl);
+    return score.loadMidi().then(function(midi){
+      assert.ok(true, 'Retried following a rejected attempt!');
+    });
+  });
+});
 
 
 

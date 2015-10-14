@@ -20,7 +20,7 @@ module('Acceptance: Sessions', {
 });
 
 test('logging in', function(assert) {
-  visit('/');
+  visit('/scores');
   click('#new-session-button');
   fillIn('#new-session-email', 'valid@mail.com');
   fillIn('#new-session-password', 'password');
@@ -32,7 +32,7 @@ test('logging in', function(assert) {
 });
 
 test('registering', function(assert) {
-  visit('/');
+  visit('/scores');
   click('#new-user-button');
   fillIn('#new-user-email', 'valid@mail.com');
   fillIn('#new-user-password', 'password');
@@ -43,11 +43,10 @@ test('registering', function(assert) {
   });
 });
 
-
 test('logging out', function(assert) {
   localStorage.setItem('currentUserId', 1);
   localStorage.setItem('authToken', 'token');
-  visit('/');
+  visit('/scores');
   click('#current-session-button');
   click('#destroy-session-button');
 
@@ -55,7 +54,5 @@ test('logging out', function(assert) {
     assert.equal($('#current-session-button').length, 0);
   });
 });
-
-
 
 

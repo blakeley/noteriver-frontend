@@ -1,7 +1,7 @@
 /* global Midi */
 
-import ENV from 'noteriver/config/environment';
 import Ember from 'ember';
+import ENV from 'noteriver/config/environment';
 import DS from 'ember-data';
 
 export default DS.Model.extend({
@@ -10,51 +10,59 @@ export default DS.Model.extend({
   title: DS.attr('string'),
   artist: DS.attr('string'),
 
-  fileUrl: function(){
-    if(this.get('s3Key')){
-      return `https://s3.amazonaws.com/${ENV.AWS_BUCKET}/${this.get('s3Key')}`;
-    } else {
-      return undefined;
-    }
-  }.property('s3Key'),
+  midi: null,
+  promise: null,
 
-  midi: function(){
-    // slightly hackish: when promise resolves, it sets midi
-    // so this just ensures promise settles following get('midi')
-    this.get('promise');
-  }.property('promise'),
+  fileUrl: Ember.computed('s3Key', function(){
+    return `https://s3.amazonaws.com/${ENV.AWS_BUCKET}/${this.get('s3Key')}`;
+  }),
 
-  promise: function(){
+  loadMidi: function() {
     var score = this;
 
-    if(score.get('fileUrl')){
-      return new Ember.RSVP.Promise(function(resolve/*, reject*/){
+    if(!this.get('promise')){ // don't try multiple times simultaneously
+      var promise = new Ember.RSVP.Promise(function(resolve, reject){
         var xhr = new XMLHttpRequest();
 
         xhr.open('GET', score.get('fileUrl'));
         xhr.overrideMimeType("text/plain; charset=x-user-defined");
         xhr.onreadystatechange = function() {
           Ember.run(function() {
-            if(xhr.readyState === 4 && xhr.status === 200) {
-              /* munge response into a binary string */
-              var text = xhr.responseText || '';
-              text = text.split('')
-                         .map(function(c){
-                           return String.fromCharCode(c.charCodeAt() & 255);})
-                         .join('');
+            if(xhr.readyState === 4){
+              if(xhr.status === 200){
+                /* munge response into a binary string */
+                var text = xhr.responseText || '';
+                text = text.split('')
+                           .map(function(c){
+                             return String.fromCharCode(c.charCodeAt() & 255);})
+                           .join('');
 
-              var midi = new Midi(text);
-              score.set('midi', midi);
-              resolve(midi);
+                var midi = new Midi(text);
+                Ember.run(function() {
+                  score.set('midi', midi);
+                });
+
+                resolve(midi);
+              } else {
+                Ember.run(function() {
+                  score.set('promise', null);
+                });
+
+                reject(new Error(`Request MIDI file from ${score.get('fileUrl')} failed with status: [${xhr.status}]`));
+              }
             }
           });
         };
+
         xhr.send();
       });
-    } else {
-      return new Ember.RSVP.resolve();
+
+      score.set('promise', promise);
     }
-  }.property('fileUrl'),
+
+    return score.get('promise');
+  },
+
 
 
 });

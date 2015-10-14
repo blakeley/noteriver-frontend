@@ -24,7 +24,8 @@
     "currentRouteName",
     "localStorage",
     "waitForAudioBuffers",
-    "waitForSession"
+    "waitForSession",
+    "waitForMidi"
   ],
   "node": false,
   "browser": false,

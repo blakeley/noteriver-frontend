@@ -10,16 +10,9 @@ export default Ember.Component.extend({
   isPlaying: false,
   isInterrupted: false,
   settingsPanelIsOpen: false,
+  midiLoadFailed: false,
   lowNumber: 21,
   highNumber: 108,
-
-  bufferSounds: function(){
-    var audio = this.get('audio');
-    this.get('score.midi.notes').forEach(function(note){
-      var url = `/assets/audios/${note.number}.mp3`;
-      audio.getBuffer(url);
-    });
-  }.observes('score.midi'),
 
   play: function(){
     var component = this;
@@ -60,11 +53,42 @@ export default Ember.Component.extend({
     }
   }.observes('highNumber'),
 
+  willInsertElement: function(){
+    var component = this;
+    var audio = this.get('audio');
+
+    component.get('score').loadMidi().then(function(midi){
+      midi.notes.forEach(function(note){
+        audio.getBuffer(`/assets/audios/${note.number}.mp3`);
+      });
+    }).catch(function(reason){
+      component.set('midiLoadFailed', true);
+    });
+  },
+
   willDestroyElement: function(){
     this.get('audio').stop();
   },
 
   actions: {
+    loadMidi: function(){
+      var component = this;
+      var audio = this.get('audio');
+
+      this.set('midiLoadFailed', false);
+      component.get('score').loadMidi().then(function(midi){
+        midi.notes.forEach(function(note){
+          audio.getBuffer(`/assets/audios/${note.number}.mp3`);
+        });
+      }).catch(function(reason){
+        component.set('midiLoadFailed', true);
+      });
+    },
+
+    toggleIsPlaying: function(){
+      this.toggleProperty('isPlaying');
+    },
+
     toggleSettingsPanelIsOpen: function(){
       this.toggleProperty('settingsPanelIsOpen');
     },

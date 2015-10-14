@@ -1,4 +1,4 @@
-/* exported waitForSession, waitForAudioBuffers */
+/* exported waitForSession, waitForAudioBuffers, waitForMidi */
 
 import Ember from 'ember';
 import Application from '../../app';
@@ -7,6 +7,7 @@ import config from '../../config/environment';
 // custom test helpers
 import waitForAudioBuffers from 'noteriver/tests/helpers/wait-for-audio-buffers';
 import waitForSession from 'noteriver/tests/helpers/wait-for-session';
+import waitForMidi from 'noteriver/tests/helpers/wait-for-midi';
 
 export default function startApp(attrs) {
   var application;
