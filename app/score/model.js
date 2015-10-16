@@ -9,6 +9,7 @@ export default DS.Model.extend({
   s3Key: DS.attr('string'),
   title: DS.attr('string'),
   artist: DS.attr('string'),
+  createdAt: DS.attr('date'),
 
   midi: null,
   promise: null,

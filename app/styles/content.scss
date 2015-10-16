@@ -1,3 +1,10 @@
+.form-page {
+  background: #F8F8F8;  
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
 .content-container {
   margin: auto;
   max-width: 550px;
@@ -17,4 +24,14 @@
     padding: 22px 0 11px;
     border-bottom: 1px solid $separator-gray;
   }
+}
+
+.main-container {
+  margin: auto;
+  float: none;
+  &.content-container {
+    max-width: 1104px;
+  }
+
+
 }

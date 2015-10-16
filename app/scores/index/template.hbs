@@ -1,29 +1,9 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Artist</th>
-      <th>Uploader</th>
-      <th>Date</th>
-    </tr>
-  </thead>
+<div class="main-container content-container">
+  <h1>Public scores</h1>
 
-  <tbody>
+  <ul class="scores">
   {{#each model as |score|}}
-  {{#link-to 'score' score.id tagName='tr'}}
-    <td>{{score.title}}</td>
-    <td>{{score.artist}}</td>
-    <td> - </td>
-    <td> - </td>
-  {{/link-to}}
+    {{li-score score=score}}
   {{/each}}
-  </tbody>
-
-  <tfoot>
-    <tr>
-      <td colspan="100">
-        More
-      </td>
-    </tr>
-  </tfoot>
-</table> 
+  </ul>
+</div>

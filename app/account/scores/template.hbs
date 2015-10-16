@@ -1,11 +1,9 @@
-<div class="content-container">
-  {{model.length}} scores
+<div class="main-container content-container">
+  <h1>Your scores</h1>
 
-  <ul class="account-scores">
+  <ul class="scores">
   {{#each model as |score|}}
-    <li class="account-score">
-      {{score.artist}} - {{score.title}}
-    </li>
+    {{li-score score=score}}
   {{/each}}
   </ul>
 </div>

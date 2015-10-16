@@ -1,7 +1,7 @@
 // color constants
 
 $primary-color: #729FCF;
-$primary-color-dark: darken($primary-color, 25%);
+$primary-color-dark: darken($primary-color, 20%);
 $primary-color-darker: darken($primary-color, 40%);
 $primary-color-light: lighten($primary-color, 15%);
 
@@ -21,6 +21,8 @@ $darkest-gray: #101010;
 $dark-gray: #303030;
 $separator-gray: #C0C0C0;
 $separator-gray-dark: #909090;
+$separator-gray-light: #E0E0E0;
+$background-gray-light: #FBFCFF;
 $cool-gray: #BECEDE;
 
 $nav-height: 72px;
@@ -28,7 +30,6 @@ $control-bar-height: 72px;
 
 // semantic constants
 $piano-background-color: $dark-gray;
-
 
 // debugging constants
 $css-bug-color: #F92672;

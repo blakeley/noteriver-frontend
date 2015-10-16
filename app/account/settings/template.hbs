@@ -1,12 +1,14 @@
-<div class="content-container">
-  <h1>Your account settings</h1>
+<div class="form-page">
+  <div class="content-container">
+    <h1>Your account settings</h1>
 
-  <p class="form-field form-field-text">
-    <label>Username</label>
-    {{input id='edit-user-username' value=editUserUsername}}
-  </p>
+    <p class="form-field form-field-text">
+      <label>Username</label>
+      {{input id='edit-user-username' value=editUserUsername}}
+    </p>
 
-  <button {{action 'updateUserUsername'}} id="update-user-username" class="primary-button form-button">
-    Change username
-  </button>
+    <button {{action 'updateUserUsername'}} id="update-user-username" class="primary-button form-button">
+      Change username
+    </button>
+  </div>
 </div>

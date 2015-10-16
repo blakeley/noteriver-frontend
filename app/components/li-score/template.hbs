@@ -1,0 +1,8 @@
+<li class="score">
+  {{#link-to 'score' score class="name"}}
+    {{score.title}} - {{score.artist}}
+  {{/link-to}}
+  {{#link-to 'score' score class="date"}}
+    {{moment-from-now score.createdAt}}
+  {{/link-to}}
+</li>

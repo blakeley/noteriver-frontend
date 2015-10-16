@@ -1,39 +1,41 @@
-<div class="content-container">
-  <h1>New score</h1>
+<div class="form-page">
+  <div class="content-container container-for-forms">
+    <h1>New score</h1>
 
-  <p class="form-field form-field-text">
-    <label>Title</label>
-    {{input id='new-score-title' value=model.title}}
-  </p>
+    <p class="form-field form-field-text">
+      <label>Title</label>
+      {{input id='new-score-title' value=model.title}}
+    </p>
 
-  <p class="form-field form-field-text">
-    <label>Artist</label>
-    {{input id='new-score-artist' value=model.artist}}
-  </p>
+    <p class="form-field form-field-text">
+      <label>Artist</label>
+      {{input id='new-score-artist' value=model.artist}}
+    </p>
 
-  <p class="form-field form-field-file">
-    {{#if model.midi}}
-      Midi preview
-      {{model.midi.tracks.length}} tracks
-      {{model.midi.notes.length}} notes
-    {{else if isReadingFile}}
-      Reading...
-    {{else}}
-      {{file-input
-        id='new-score-file'
-        accept='.mid,.midi'
-        fileChanged='fileChanged'}}
-      <label for='new-score-file'>
-        <p>MIDI</p>
-      </label>
-    {{/if}}
-  </p>
+    <p class="form-field form-field-file">
+      {{#if model.midi}}
+        Midi preview
+        {{model.midi.tracks.length}} tracks
+        {{model.midi.notes.length}} notes
+      {{else if isReadingFile}}
+        Reading...
+      {{else}}
+        {{file-input
+          id='new-score-file'
+          accept='.mid,.midi'
+          fileChanged='fileChanged'}}
+        <label for='new-score-file'>
+          <p>MIDI</p>
+        </label>
+      {{/if}}
+    </p>
 
-  <button {{action 'createScore'}} id="create-score" class="primary-button form-button">
-    {{#if isProcessingFile}}
-      ...
-    {{else}}
-      Save
-    {{/if}}
-  </button>
+    <button {{action 'createScore'}} id="create-score" class="primary-button form-button">
+      {{#if isProcessingFile}}
+        ...
+      {{else}}
+        Save
+      {{/if}}
+    </button>
+  </div>
 </div>

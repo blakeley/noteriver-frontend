@@ -13,7 +13,7 @@ Router.map(function() {
   this.route('user', {path: '/users/:user_id'}, function(){});
 
   this.route('account', function() {
-    this.route('scores');
+    this.route('scores', function() {});
     this.route('settings');
   });
 });
