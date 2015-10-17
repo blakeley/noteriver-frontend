@@ -1,6 +1,7 @@
 .intro {
   background-color: $primary-color-darker;
-  background-image: radial-gradient(circle at bottom, $accent-color 30%, $mute-color-dark 70%, $mute-color-darker);
+  //background-image: radial-gradient(circle at bottom, $primary-color 30%, $primary-color-darker 70%, $mute-color-darker);
+  background: linear-gradient(-15deg, $mute-color-dark 0, $primary-color-darker 100%);
   color: white;
   font-weight: 100;
   text-align: center;

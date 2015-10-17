@@ -1,13 +1,10 @@
 
-<div class="flex-row">
-  <div class="user-profile">
-    <img src="{{model.avatarUrl}}" class="avatar fill-width"/>
-    <h2>{{model.username}}</h2>
-  </div>
-  <div class="user-profile-page">
-    {{outlet}}
-  </div>
+<header class="user-profile">
+  <img src="{{model.avatarUrl}}" class="avatar"/>
+  <h1>{{model.username}}</h1>
+  {{!-- <p>{{model.bio}}</p> --}}
+</header>
+
+<div class="main-container content-container">
+  {{outlet}}
 </div>
-
-
-

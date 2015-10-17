@@ -19,7 +19,7 @@ html {
   font-family: "proxima-nova", "Proxima Nova", "Open Sans", helvetica, arial, sans-serif;
   font-weight: 100;
   //letter-spacing: 1px;
-  color: $darkest-gray;
+  color: $dark-gray;
 }
 
 *, *:before, *:after {
@@ -30,8 +30,8 @@ table {
   width: 100%;
 }
 
-
 // flexbox mastery
+
 .flex-row {
   display: flex;
   flex-direction: row;
@@ -45,6 +45,8 @@ table {
 .flex-one {
   flex: 1;
 }
+
+// convenience classes
 
 .hidden {
   display: none;

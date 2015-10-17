@@ -33,5 +33,10 @@
     max-width: 1104px;
   }
 
-
+  .message {
+    text-align: center;
+    color: $text-gray;
+    font-size: 1.3rem;
+    margin: 2rem;
+  }
 }

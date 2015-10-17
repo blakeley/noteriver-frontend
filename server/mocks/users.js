@@ -1,3 +1,5 @@
+var md5 = require('md5');
+
 module.exports = function(app) {
   var express = require('express');
   var usersRouter = express.Router();
@@ -17,7 +19,7 @@ module.exports = function(app) {
         "user": {
           "id": req.params.id,
           "username": "user" + req.params.id,
-          "email_md5": "md5" + req.params.id,
+          "email_md5": md5(req.params.id),
         },
       });
     }
