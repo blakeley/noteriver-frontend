@@ -1,12 +1,17 @@
 .intro {
-  background-color: $primary-color-darker;
+  //background-color: $primary-color-darker;
   //background-image: radial-gradient(circle at bottom, $primary-color 30%, $primary-color-darker 70%, $mute-color-darker);
-  background: linear-gradient(-15deg, $mute-color-dark 0, $primary-color-darker 100%);
+  //background-image: url(assets/images/hero.svg);
+  //background: linear-gradient(-15deg, $mute-color-dark 0, $primary-color-darker 100%);
   color: white;
   font-weight: 100;
   text-align: center;
   height: 700px;
   position: relative;
+
+  * {
+    z-index: 1;
+  }
 
   h1 {
     padding-top: 25px;
@@ -54,5 +59,21 @@
       position: relative;
       flex: 1;
     }
+  }
+}
+
+.hero-layer {
+  z-index: -1;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-image: radial-gradient(circle at bottom, $primary-color 0%, $primary-color-darker);
+  > img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
   }
 }
