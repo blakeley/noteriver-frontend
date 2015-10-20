@@ -4,30 +4,30 @@
 
     <p class="form-field form-field-text">
       <label>Title</label>
-      {{input id='new-score-title' value=model.title}}
+      {{input id='new-score-title' value=score.title}}
     </p>
 
     <p class="form-field form-field-text">
       <label>Artist</label>
-      {{input id='new-score-artist' value=model.artist}}
+      {{input id='new-score-artist' value=score.artist}}
     </p>
 
     <p class="form-field form-field-file">
-      {{#if model.midi}}
-        Midi preview
-        {{model.midi.tracks.length}} tracks
-        {{model.midi.notes.length}} notes
+      {{file-input
+        id='new-score-file'
+        accept='.mid,.midi'
+        fileChanged='fileChanged'}}
+      <label for='new-score-file'>
+      {{#if score.midi}}
+          <p>{{filename}}</p>
+          <p>{{score.midi.tracks.length}} tracks</p>
+          <p>{{score.midi.notes.length}} notes</p>
       {{else if isReadingFile}}
-        Reading...
+          <p>Reading...</p>
       {{else}}
-        {{file-input
-          id='new-score-file'
-          accept='.mid,.midi'
-          fileChanged='fileChanged'}}
-        <label for='new-score-file'>
           <p>MIDI</p>
-        </label>
       {{/if}}
+      </label>
     </p>
 
     <button {{action 'createScore'}} id="create-score" class="primary-button form-button">

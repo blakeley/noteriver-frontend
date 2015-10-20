@@ -10,7 +10,9 @@ Router.map(function() {
   this.route('scores/new');
   this.route('score', {path: '/scores/:score_id'});
   this.route('scores/edit', {path: '/scores/:score_id/edit'});
-  this.route('user', {path: '/users/:user_id'});
+  this.route('user', {path: '/users/:user_id'}, function() {
+    // index = user's scores
+  });
 
   this.route('account', function() {
     this.route('scores');

@@ -1,6 +1,9 @@
 /* global Midi */
 import Ember from 'ember';
 
+const { computed } = Ember;
+const { alias } = computed;
+
 export default Ember.Controller.extend({
   s3: Ember.inject.service(),
 
@@ -8,16 +11,19 @@ export default Ember.Controller.extend({
   isUploadingFile: false,
   isProcessingFile: Ember.computed.or('isReadingFile','isUploadingFile'),
 
+  score: alias('model'),
+
   actions: {
     fileChanged: function(file){
       var controller = this;
-      var model = this.get('model');
+      var score = this.get('score');
 
       controller.set('isReadingFile', true);
       var fileReader = new FileReader();
-      fileReader.onload = function(/* e */){
+      fileReader.onload = function(e){
         let midi = new Midi(fileReader.result);
-        model.set('midi', midi);
+        controller.set('filename', file.name);
+        score.set('midi', midi);
         controller.set('isReadingFile', false);
       };
       fileReader.readAsBinaryString(file);
@@ -25,18 +31,16 @@ export default Ember.Controller.extend({
       // TODO: upload only after reading & validating file contents
       controller.set('isUploadingFile', true);
       this.get('s3').upload(file).then(function(s3Key){
-        model.set('s3Key', s3Key);
+        score.set('s3Key', s3Key);
         controller.set('isUploadingFile', false);
       });
     },
 
     createScore: function(){
       var controller = this;
-      this.get('model').save().then(function(score){
+      this.get('score').save().then(function(score){
         controller.transitionToRoute('score', score);
       });
     },
-
   },
-
 });
