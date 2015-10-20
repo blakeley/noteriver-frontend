@@ -1,9 +1,11 @@
-<div class="main-container content-container">
-  <h1>Public scores</h1>
+<div class="content-page">
+  <div class="main-container content-container">
+    <h1>Public scores</h1>
 
-  <ul class="scores">
-  {{#each model as |score|}}
-    {{li-score score=score}}
-  {{/each}}
-  </ul>
+    <ul class="scores">
+    {{#each model as |score|}}
+      {{li-score score=score}}
+    {{/each}}
+    </ul>
+  </div>
 </div>

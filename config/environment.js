@@ -4,7 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'noteriver',
     environment: environment,
-    baseURL: '/',
+    // baseURL: '/', // necessary for SVG defs URL references
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
@@ -36,7 +36,7 @@ module.exports = function(environment) {
     ENV.AWS_BUCKET = 'noteriver-dev';
 
     // Testem prefers this...
-    ENV.baseURL = '/';
+    // ENV.baseURL = '/'; // necessary to match the above
     ENV.locationType = 'none';
 
     // keep test console output quieter
