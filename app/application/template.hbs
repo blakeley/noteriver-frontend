@@ -27,7 +27,7 @@
                 <li>{{#link-to 'user' session.currentUser.id}} {{session.currentUser.username}}'s profile {{/link-to}}</li>
                 <li>{{#link-to 'account.settings'}}Account settings{{/link-to}}</li>
                 <li>{{#link-to 'account.scores'}}Score manager{{/link-to}}</li>
-                <li><button {{action 'logout'}} id="destroy-session-button">Log out</button></li>
+                <li><button {{action 'logout'}} id="destroy-session-button">Sign out</button></li>
               </ul>
             </div>
           </div>
@@ -36,7 +36,7 @@
     {{else}}
       <div class="nav-element">
         <button {{action 'openModal' 'new-session'}} id="new-session-button" class="nav-button">
-          Log in
+          Sign in
         </button>
       </div>
       <div class="nav-element">

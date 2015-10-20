@@ -181,7 +181,7 @@ test('.register() with valid credentials sets currentUserId', function(assert){
   service.set('newUserEmail', 'valid@mail.com');
   service.set('newUserPassword', 'password');
   return service.register().then(function(){
-    assert.equal(service.get('currentUserId'), 1);
+    assert.ok(Number.isInteger(service.get('currentUserId'), 1));
   });
 });
 

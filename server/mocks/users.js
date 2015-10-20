@@ -47,11 +47,13 @@ module.exports = function(app) {
         }
       });
     } else {
+      var id = Date.now();
+
       res.send({
         "user": {
-          "id": 1,
-          "username": 'brandon',
-          "email_md5": '7e5ad427dbae149a81d3c82c11504b66',
+          "id": id,
+          "username": 'user' + id,
+          "email_md5": md5(id),
         },
         "authToken": 'token',
       });

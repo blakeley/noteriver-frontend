@@ -18,7 +18,7 @@ test('Visiting /scores and clicking a score', function(assert) {
   waitForMidi();
   waitForAudioBuffers();
   andThen(function() {
-    assert.equal(currentPath(), 'score.index');
+    assert.equal(currentPath(), 'score');
   });
 });
 
@@ -26,7 +26,7 @@ test('Visiting /scores and clicking a score', function(assert) {
 test('Visiting /scores/new', function(assert) {
   visit('/scores/new');
   andThen(function() {
-    assert.equal(currentPath(), 'scores/new.index');
+    assert.equal(currentPath(), 'scores/new');
     assert.equal($('#new-score-title').length, 1);
     assert.equal($('#new-score-artist').length, 1);
     assert.equal($('#new-score-file').length, 1);
