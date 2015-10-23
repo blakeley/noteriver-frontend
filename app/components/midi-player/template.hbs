@@ -25,7 +25,14 @@
   {{else}}
     {{#if score.midi.notes}}
       <button {{action 'toggleIsPlaying'}}>
-        <img src="/assets/images/{{if isPlaying 'pause' 'play'}}.svg"/>
+        {{!-- Replace with this once broccoli-asset-rev infers dynamic paths
+          <img src="/assets/images/{{if isPlaying 'pause' 'play'}}.svg"/>
+        --}}
+        {{#if isPlaying}}
+          <img src="/assets/images/pause.svg"/>
+        {{else}}
+          <img src="/assets/images/play.svg"/>
+        {{/if}}
       </button>
     {{else}}
       <button>
