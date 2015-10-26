@@ -5,7 +5,7 @@ import {
 
 moduleForComponent('midi-player', 'MidiPlayerComponent', {
   // specify the other units that are required for this test
-  needs: ['component:player-piano', 'component:progress-slider']
+  needs: ['component:player-piano', 'component:progress-slider', 'service:synthesizer']
 });
 
 var loadMidi = function(){

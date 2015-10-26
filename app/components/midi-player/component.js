@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   animation: Ember.inject.service(),
   audio: Ember.inject.service(),
+  synthesizer: Ember.inject.service(),
 
   classNames: ['midi-player'],
 
@@ -21,7 +22,8 @@ export default Ember.Component.extend({
 
     if(component.get('isPlaying') & !component.get('isInterrupted')){
       component.get('score.midi.notes').forEach(function(note){
-        var url = `/assets/audios/${note.number}.mp3`;
+        var url = component.get('synthesizer').noteToURL(note);
+
         var secondsDelay = note.onSecond - startTime;
         if(secondsDelay >= 0){
           component.get('audio').playSound(url, secondsDelay);
@@ -59,7 +61,8 @@ export default Ember.Component.extend({
 
     component.get('score').loadMidi().then(function(midi){
       midi.notes.forEach(function(note){
-        audio.getBuffer(`/assets/audios/${note.number}.mp3`);
+        var url = component.get('synthesizer').noteToURL(note);
+        audio.getBuffer(url);
       });
     }).catch(function(reason){
       component.set('midiLoadFailed', true);
@@ -78,7 +81,8 @@ export default Ember.Component.extend({
       this.set('midiLoadFailed', false);
       component.get('score').loadMidi().then(function(midi){
         midi.notes.forEach(function(note){
-          audio.getBuffer(`/assets/audios/${note.number}.mp3`);
+          var url = component.get('synthesizer').noteToURL(note);
+          audio.getBuffer(url);
         });
       }).catch(function(reason){
         component.set('midiLoadFailed', true);
