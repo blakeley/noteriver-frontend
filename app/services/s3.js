@@ -4,7 +4,6 @@ import Ember from 'ember';
 export default Ember.Service.extend({
   session: Ember.inject.service(),
 
-  signatureUrl: '/api/v1/signatures',
   bucket: ENV.AWS_BUCKET,
   s3Key: function(file){
     return `uploads/${this.get('session.currentUserId')}/${file.name}`;
@@ -28,19 +27,23 @@ export default Ember.Service.extend({
     return btoa(JSON.stringify(this.policyDocument(file)));
   },
 
+  policyUrl: function(policy){
+    return `/api/v1/policies/${policy}`;
+  },
+
   sign: function(policy){
     var service = this;
 
     return new Ember.RSVP.Promise(function(resolve, reject){
       var xhr = new XMLHttpRequest();
 
-      xhr.open('GET', service.get('signatureUrl') + '/' + policy);
+      xhr.open('GET', service.policyUrl(policy));
       xhr.setRequestHeader('AUTHORIZATION', service.get('session.authToken'));
-      xhr.responseType = "text";
+      xhr.responseType = "json";
       xhr.onreadystatechange = function(){
         if (xhr.readyState === xhr.DONE) {
           if (xhr.status === 200) {
-            resolve(xhr.response);
+            resolve(xhr.response.data.attributes.signature);
           } else {
             reject(new Error('Sign policy failed with status: [' + xhr.status + ']'));
           }

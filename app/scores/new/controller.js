@@ -6,6 +6,7 @@ const { alias } = computed;
 
 export default Ember.Controller.extend({
   s3: Ember.inject.service(),
+  session: Ember.inject.service(),
 
   isReadingFile: false,
   isUploadingFile: false,
@@ -39,6 +40,7 @@ export default Ember.Controller.extend({
     createScore: function(){
       var controller = this;
       this.get('score').save().then(function(score){
+        score.set('user', controller.get('session.currentUser'));
         controller.transitionToRoute('score', score);
       });
     },

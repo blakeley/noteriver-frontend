@@ -23,11 +23,6 @@ test('it exists', function(assert) {
   assert.ok(service);
 });
 
-test('#signatureUrl defaults to /api/v1/signatures', function(assert) {
-  var service = this.subject();
-  assert.equal(service.signatureUrl, '/api/v1/signatures');
-});
-
 test('#bucket defaults to ENV.AWS_BUCKET', function(assert) {
   var service = this.subject();
   assert.ok(service.bucket);

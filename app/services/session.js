@@ -47,18 +47,20 @@ export default Ember.Service.extend({
       xhr.onreadystatechange = function(){
         Ember.run(function(){
           if (xhr.readyState === xhr.DONE) {
-            if (xhr.status === 200) {
+            if (xhr.status === 201) {
               service.clearFields();
-              service.get('store').pushPayload('user', {user: xhr.response.user});
-              service.set('currentUserId', xhr.response.user.id);
-              service.set('authToken', xhr.response.authToken);
+              var currentUser = service.get('store').push(xhr.response);
+              service.set('currentUserId', currentUser.id);
+              service.set('authToken', xhr.response.meta.authToken);
               resolve();
             } else {
               service.clearErrors();
-              if(xhr.response.errors.email && xhr.response.errors.email[0] === 'is unknown') {
-                service.set('newSessionEmailError', "We don't know that email address.");
-              } else if (xhr.response.errors.password && xhr.response.errors.password[0] === 'is incorrect') {
-                service.set('newSessionPasswordError', "Wrong pasword - try again.");
+              for(let error of xhr.response.errors){
+                if(error.title === 'Unknown email'){
+                  service.set('newSessionEmailError', "We don't know that email address.");
+                } else if(error.title === 'Incorrect password') {
+                  service.set('newSessionPasswordError', "Wrong pasword - try again.");
+                }
               }
               reject();
             }
@@ -67,9 +69,12 @@ export default Ember.Service.extend({
       };
 
       xhr.send(JSON.stringify({
-        session: {
-          email: service.get('newSessionEmail'),
-          password: service.get('newSessionPassword'),
+        data: {
+          type: 'sessions',
+          attributes: {
+            email: service.get('newSessionEmail'),
+            password: service.get('newSessionPassword'),
+          }
         }
       }));
     });
@@ -87,18 +92,20 @@ export default Ember.Service.extend({
       xhr.onreadystatechange = function(){
         Ember.run(function(){
           if (xhr.readyState === xhr.DONE) {
-            if (xhr.status === 200) {
+            if (xhr.status === 201) {
               service.clearFields();
-              service.get('store').pushPayload('user', {user: xhr.response.user});
-              service.set('currentUserId', xhr.response.user.id);
-              service.set('authToken', xhr.response.authToken);
+              var currentUser = service.get('store').push(xhr.response);
+              service.set('currentUserId', currentUser.id);
+              service.set('authToken', xhr.response.meta.authToken);
               resolve();
             } else {
               service.clearErrors();
-              if(xhr.response.errors.email && xhr.response.errors.email[0] === 'is invalid') {
-                service.set('newUserEmailError', "Enter a valid email address.");
-              } else if (xhr.response.errors.password && xhr.response.errors.password[0] === "can't be blank") {
-                service.set('newUserPasswordError', "Password can't be blank!");
+              for(let error of xhr.response.errors){
+                if(error.title === 'Invalid email'){
+                  service.set('newUserEmailError', "Enter a valid email address.");
+                } else if(error.title === 'Password is blank') {
+                  service.set('newUserPasswordError', "Password can't be blank!");
+                }
               }
               reject();
             }
@@ -107,9 +114,12 @@ export default Ember.Service.extend({
       };
 
       xhr.send(JSON.stringify({
-        user: {
-          email: service.get('newUserEmail'),
-          password: service.get('newUserPassword'),
+        data: {
+          type: 'user',
+          attributes: {
+            email: service.get('newUserEmail'),
+            password: service.get('newUserPassword'),
+          }
         }
       }));
     });

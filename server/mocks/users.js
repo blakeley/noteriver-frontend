@@ -5,21 +5,19 @@ module.exports = function(app) {
   var usersRouter = express.Router();
 
   usersRouter.get('/:id', function(req, res) {
-    if(req.params.id == 1){
-      res.send({
-        "user": {
-          "id": 1,
-          "username": "brandon",
-          "email_md5": '7e5ad427dbae149a81d3c82c11504b66',
-          "score_ids": [1,2,3,4],
-        },
+    if(req.params.id === '1'){
+      console.log(true);
+      res.send({"data":{"id":"1","type":"user","attributes":{username:'blakeley','email-md5':'7e5ad427dbae149a81d3c82c11504b66'},"relationships":{"scores":{"data":[{"id":"1","type":"score"},{"id":"2","type":"score"},{"id":"3","type":"score"}]}}}
       });
     } else {
       res.send({
-        "user": {
-          "id": req.params.id,
-          "username": "user" + req.params.id,
-          "email_md5": md5(req.params.id),
+        data: {
+          type: 'user',
+          id: req.params.id,
+          attributes: {
+            username: "user" + req.params.id,
+            'email-md5': md5(req.params.id),
+          }
         },
       });
     }
@@ -30,32 +28,37 @@ module.exports = function(app) {
   });
 
   usersRouter.get('/', function(req, res) {
-    res.send({"users":[]});
+    res.send({"data":[{"id":"1","type":"user","relationships":{"scores":{"data":[{"id":"1","type":"score"},{"id":"2","type":"score"},{"id":"3","type":"score"}]}}},{"id":"2","type":"user","relationships":{"scores":{"data":[{"id":"4","type":"score"}]}}},{"id":"3","type":"user","relationships":{"scores":{"data":[]}}}]});
   });
 
   usersRouter.post('/', function(req, res) {
-    if(req.body.user.email == "invalid"){
+    if(req.body.data.attributes.email == "invalid"){
       res.status(422).send({
-        errors: {
-          email: ["is invalid"]
-        }
+        errors: [{
+          title: "Invalid email"
+        }]
       });
-    } else if (req.body.user.password == "blank") {
+    } else if (req.body.data.attributes.password == "blank") {
       res.status(422).send({
-        errors: {
-          password: ["can't be blank"]
-        }
+        errors: [{
+          title: "Password is blank"
+        }]
       });
     } else {
       var id = Date.now();
 
-      res.send({
-        "user": {
-          "id": id,
-          "username": 'user' + id,
-          "email_md5": md5(id),
+      res.status(201).send({
+        data: {
+          type: 'user',
+          id: 1,
+          attributes: {
+            username: 'blakeley',
+            'email-md5': '7e5ad427dbae149a81d3c82c11504b66',
+          }
         },
-        "authToken": 'token',
+        meta: {
+          authToken: 'token'
+        }
       });
     }
   });

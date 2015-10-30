@@ -33,7 +33,8 @@ var mockStore = {
   findRecord: function(name, id){
     return Ember.Object.create({id: id});
   },
-  pushPayload: function(name, params){
+  push: function(params){
+    return {id: 1};
   },
 };
 

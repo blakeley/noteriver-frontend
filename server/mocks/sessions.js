@@ -3,26 +3,31 @@ module.exports = function(app) {
   var sessionsRouter = express.Router();
 
   sessionsRouter.post('/', function(req, res) {
-    if(req.body.session.email == "unknown"){
+    if(req.body.data.attributes.email == "unknown"){
       res.status(422).send({
-        errors: {
-          email: ["is unknown"]
-        }
+        errors: [{
+          title: "Unknown email"
+        }]
       });
-    } else if (req.body.session.password == "incorrect") {
+    } else if (req.body.data.attributes.password == "incorrect") {
       res.status(422).send({
-        errors: {
-          password: ["is incorrect"]
-        }
+        errors: [{
+          title: "Incorrect password"
+        }]
       });
     } else {
-      res.send({
-        "user": {
-          "id": 1,
-          "username": 'brandon',
-          "email_md5": '7e5ad427dbae149a81d3c82c11504b66',
+      res.status(201).send({
+        data: {
+          type: 'user',
+          id: 1,
+          attributes: {
+            username: 'blakeley',
+            'email-md5': '7e5ad427dbae149a81d3c82c11504b66',
+          }
         },
-        "authToken": 'token',
+        meta: {
+          authToken: 'token'
+        }
       });
     }
   });

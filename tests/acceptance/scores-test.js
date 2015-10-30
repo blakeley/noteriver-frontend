@@ -14,7 +14,7 @@ module('Acceptance | scores', {
 
 test('Visiting /scores and clicking a score', function(assert) {
   visit('/scores');
-  click('li.score a');
+  click('li.score a:first');
   waitForMidi();
   waitForAudioBuffers();
   andThen(function() {
