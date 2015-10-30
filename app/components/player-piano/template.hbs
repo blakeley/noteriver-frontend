@@ -1,7 +1,7 @@
 
 
 {{#svg-g translateY=noteTranslateY}}
-  {{#each midi.notes as |note|}}
+  {{#each notes as |note|}}
     {{piano-roll-note note=note timeScale=timeScale}}
   {{/each}}
 {{/svg-g}}

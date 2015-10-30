@@ -2,6 +2,8 @@
 
 import Ember from 'ember';
 
+const { computed } = Ember;
+
 export default Ember.Component.extend({
   tagName: 'svg',
   classNames: ['piano-roll'],
@@ -14,11 +16,17 @@ export default Ember.Component.extend({
   highNumber: 108,
   timeScale: 10,
 
+  notes: computed('midi', 'time', function(){
+    if(!!this.get('midi') && this.get('midi').notesOnDuring){
+      return this.get('midi').notesOnDuring(this.get('time'), this.get('time') + 5);
+    }
+  }),
+
   notesOn: function(){
     var h = {};
 
-    if(!!this.get('midi') && this.get('midi').notesOnDuring){
-      this.get('midi').notesOnDuring(this.get('time')).forEach((note) => {
+    if(!!this.get('midi') && this.get('midi').notesOnAt){
+      this.get('midi').notesOnAt(this.get('time')).forEach((note) => {
         if(note.onSecond < this.get('time') && this.get('time') + 0.016 < note.offSecond){
           h[note.number] = note;
         }
