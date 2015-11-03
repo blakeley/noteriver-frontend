@@ -6,7 +6,6 @@ module.exports = function(app) {
 
   usersRouter.get('/:id', function(req, res) {
     if(req.params.id === '1'){
-      console.log(true);
       res.send({"data":{"id":"1","type":"user","attributes":{username:'blakeley','email-md5':'7e5ad427dbae149a81d3c82c11504b66'},"relationships":{"scores":{"data":[{"id":"1","type":"score"},{"id":"2","type":"score"},{"id":"3","type":"score"}]}}}
       });
     } else {
