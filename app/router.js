@@ -1,4 +1,7 @@
+/* global ga */
+
 import Ember from 'ember';
+import ENV from 'noteriver/config/environment';
 import config from './config/environment';
 
 var Router = Ember.Router.extend({
@@ -19,5 +22,17 @@ Router.map(function() {
     this.route('settings');
   });
 });
+
+if(ENV.environment === 'production'){
+  Router.reopen({
+    notifyGoogleAnalytics: function() {
+      ga('set', {
+        'page': this.get('url'),
+        'title': this.get('url')
+      });
+      return ga('send', 'pageview');
+    }.on('didTransition')
+  });
+}
 
 export default Router;
