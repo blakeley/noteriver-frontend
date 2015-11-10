@@ -16,31 +16,45 @@ export default Ember.Component.extend({
   highNumber: 108,
 
   play: function(){
-    var component = this;
-    var startTime = parseFloat(this.get('time'));
-    var initialDateNow = Date.now();
+    let component = this;
+    let initialPosition = parseFloat(this.get('time'));
+    let audioBufferPosition = initialPosition;
+    let audioBufferLength = 1.25; // MUST be > 1.0 because browsers cap setTimeout at 1000ms for inactive tabs
+    let initialDateNow = Date.now();
 
-    if(component.get('isPlaying') & !component.get('isInterrupted')){
-      component.get('score.midi.notes').forEach(function(note){
-        var url = component.get('synthesizer').noteToURL(note);
+    function sonate(){
+      if(component.get('isPlaying') & !component.get('isInterrupted')){
+        const elapsedSeconds = (Date.now() - initialDateNow) / 1000;
+        const currentPosition = initialPosition + elapsedSeconds;
 
-        var secondsDelay = note.onSecond - startTime;
-        if(secondsDelay >= 0){
-          component.get('audio').playSound(url, secondsDelay);
-        }
-      });
-    } else {
-      component.get('audio').stop();
+        component.get('score.midi.notes').filter(function(note){
+          return audioBufferPosition <= note.onSecond && note.onSecond <= currentPosition + audioBufferLength;
+        }).forEach(function(note) {
+          const url = component.get('synthesizer').noteToURL(note);
+          const secondsDelay = note.onSecond - currentPosition;
+          component.get('audio').playSound(url, secondsDelay, note.duration);
+        });
+        audioBufferPosition = currentPosition + audioBufferLength;
+
+        // can't use requestAnimationFrame because inactive tabs pause animation
+        Ember.run.later(this, sonate, audioBufferLength / 2);
+      }
     }
 
     function animate(){
       if(component.get('isPlaying') & !component.get('isInterrupted')){
-        var deltaTime = (Date.now() - initialDateNow) / 1000;
-        component.set('time', startTime + deltaTime);
+        const elapsedSeconds = (Date.now() - initialDateNow) / 1000;
+        const currentPosition = initialPosition + elapsedSeconds;
+        component.set('time', currentPosition);
+
         component.get('animation').scheduleFrame(animate);
+      } else {
+        component.get('audio').stop();
       }
     }
-    this.get('animation').scheduleFrame(animate);
+
+    sonate();
+    animate();
   }.observes('isPlaying','isInterrupted'),
 
   boundHighNumber: function(){
