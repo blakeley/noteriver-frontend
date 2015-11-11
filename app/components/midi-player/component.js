@@ -19,7 +19,7 @@ export default Ember.Component.extend({
     let component = this;
     let initialPosition = parseFloat(this.get('time'));
     let audioBufferPosition = initialPosition;
-    let audioBufferLength = 1.25; // MUST be > 1.0 because browsers cap setTimeout at 1000ms for inactive tabs
+    let audioBufferLength = 1.10; // MUST be > 1.0 because browsers cap setTimeout at 1000ms for inactive tabs
     let initialDateNow = Date.now();
 
     function sonate(){

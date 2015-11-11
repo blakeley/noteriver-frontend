@@ -54,14 +54,23 @@ export default Ember.Service.extend({
     return buffer;
   },
 
-  playSound: function(url, secondsDelay) {
-    var sounds = this.get('sounds');
-    var context = this.get('context');
+  playSound: function(url, secondsDelay, secondsDuration) {
+    let sounds = this.get('sounds');
+    let context = this.get('context');
     return this.getBuffer(url).then(function(buffer){
-      var source = context.createBufferSource();
+      const source = context.createBufferSource();
       source.buffer = buffer;
-      source.connect(context.destination);
+
+      const gainNode = context.createGain();
+      gainNode.gain.value = 0.125;
+
+      source.connect(gainNode);
+      gainNode.connect(context.destination);
+
       source.start(context.currentTime + secondsDelay);
+      gainNode.gain.setValueAtTime(0.125, context.currentTime + secondsDelay + secondsDuration);
+      gainNode.gain.exponentialRampToValueAtTime(0.0125, context.currentTime + secondsDelay + secondsDuration + 0.25);
+
       sounds.pushObject(source);
     });
   },

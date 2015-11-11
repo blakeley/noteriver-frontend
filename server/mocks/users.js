@@ -27,7 +27,20 @@ module.exports = function(app) {
   });
 
   usersRouter.get('/', function(req, res) {
-    res.send({"data":[{"id":"1","type":"user","relationships":{"scores":{"data":[{"id":"1","type":"score"},{"id":"2","type":"score"},{"id":"3","type":"score"}]}}},{"id":"2","type":"user","relationships":{"scores":{"data":[{"id":"4","type":"score"}]}}},{"id":"3","type":"user","relationships":{"scores":{"data":[]}}}]});
+    res.send({"data":[
+      {"id":"1","type":"user","relationships":{"scores":{"data":[
+        {"id":"1","type":"score"},
+        {"id":"2","type":"score"},
+        {"id":"3","type":"score"},
+      ]}}},
+      {"id":"2","type":"user","relationships":{"scores":{"data":[
+        {"id":"4","type":"score"},
+        {"id":"5","type":"score"},
+      ]}}},
+      {"id":"3","type":"user","relationships":{"scores":{"data":[
+        {"id":"6","type":"score"},
+      ]}}}
+    ]});
   });
 
   usersRouter.post('/', function(req, res) {

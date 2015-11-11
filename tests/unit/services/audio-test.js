@@ -121,8 +121,19 @@ test('#playSound plays a sound', function(assert) {
           assert.ok(true, "played a sound!");
         }
       };
+    },
+    createGain: function() {
+      return {
+        gain: {
+          value: 0,
+          setValueAtTime: function(){},
+          exponentialRampToValueAtTime: function(){},
+        },
+        connect: function(){},
+      };
     }
   });
+
   return service.getBuffer(url).then(function(){
     return service.playSound(url, 0);
   });
@@ -145,7 +156,18 @@ test('#playSound saves played sounds', function(assert) {
         },
         start: function(){}
       };
+    },
+    createGain: function() {
+      return {
+        gain: {
+          value: 0,
+          setValueAtTime: function(){},
+          exponentialRampToValueAtTime: function(){},
+        },
+        connect: function(){},
+      };
     }
+
   });
 
   assert.equal(0, service.get('sounds').length);
