@@ -84,6 +84,7 @@ export default Ember.Component.extend({
   },
 
   willDestroyElement: function(){
+    this.set('isPlaying', false);
     this.get('audio').stop();
   },
 
