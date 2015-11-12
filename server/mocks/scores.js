@@ -3,8 +3,8 @@ SCORES = [
   {"id":2,"type":'score',"attributes":{"title":"Chromatic Scale","artist":"Bach","s3-key":"fixtures/chromatic.mid","created-at":"2015-10-28T22:34:24.000Z"},"relationships":{"user":{"data":{"id":1,"type":"users"}}}},
   {"id":3,"type":'score',"attributes":{"title":"Ode to Joy","artist":"Beethoven","s3-key":"fixtures/ode.mid","created-at":"2015-10-28T22:34:24.000Z"},"relationships":{"user":{"data":{"id":1,"type":"users"}}}},
   {"id":4,"type":'score',"attributes":{"title":"Pachelbel's Canon","artist":"Johann Pachelbel","s3-key":"fixtures/pachelbel.mid","created-at":"2015-10-28T22:34:24.000Z"},"relationships":{"user":{"data":{"id":2,"type":"users"}}}},
-  {"id":5,"type":'score',"attributes":{"title":"The Entertainer","artist":"Scott Joplin","s3-key":"fixtures/entertainer.mid","created-at":"2015-16-28T22:34:24.000Z"},"relationships":{"user":{"data":{"id":2,"type":"users"}}}},
-  {"id":6,"type":'score',"attributes":{"title":"Death Waltz","artist":"U.N. Owen Was Her?","s3-key":"fixtures/deathwaltz.mid","created-at":"2015-17-28T22:34:24.000Z"},"relationships":{"user":{"data":{"id":3,"type":"users"}}}},
+  {"id":5,"type":'score',"attributes":{"title":"The Entertainer","artist":"Scott Joplin","s3-key":"fixtures/entertainer.mid","created-at":"2015-11-01T22:34:24.000Z"},"relationships":{"user":{"data":{"id":2,"type":"users"}}}},
+  {"id":6,"type":'score',"attributes":{"title":"Death Waltz","artist":"U.N. Owen Was Her?","s3-key":"fixtures/deathwaltz.mid","created-at":"2015-11-02T22:34:24.000Z"},"relationships":{"user":{"data":{"id":3,"type":"users"}}}},
 ]
 
 module.exports = function(app) {
@@ -12,9 +12,15 @@ module.exports = function(app) {
   var scoresRouter = express.Router();
 
   scoresRouter.get('/', function(req, res) {
-    res.send({"data":
-      SCORES
-    });
+    if(req.query.featured === 'true'){
+      res.send({"data":[
+        SCORES[4]
+      ]});
+    } else {
+      res.send({"data":
+        SCORES
+      });
+    }
   });
 
   scoresRouter.get('/:id', function(req, res) {

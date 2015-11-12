@@ -18,7 +18,7 @@ export default Ember.Component.extend({
 
   notes: computed('midi', 'time', function(){
     if(!!this.get('midi') && this.get('midi').notesOnDuring){
-      return this.get('midi').notesOnDuring(this.get('time'), this.get('time') + 5);
+      return this.get('midi').notesOnDuring(this.get('time'), this.get('time') + 3);
     }
   }),
 
