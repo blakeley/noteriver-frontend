@@ -1,3 +1,5 @@
+/* global Midi */
+
 import Ember from 'ember';
 
 export default Ember.Component.extend({
@@ -7,6 +9,7 @@ export default Ember.Component.extend({
 
   classNames: ['midi-player'],
 
+  midi: new Midi(),
   time: 0.0,
   isPlaying: false,
   isInterrupted: false,
@@ -19,7 +22,7 @@ export default Ember.Component.extend({
     let component = this;
     let initialPosition = parseFloat(this.get('time'));
     let audioBufferPosition = initialPosition;
-    let audioBufferLength = 1.10; // MUST be > 1.0 because browsers cap setTimeout at 1000ms for inactive tabs
+    let audioBufferDuration = 1.10; // MUST be > 1.0 because browsers cap setTimeout at 1000ms for inactive tabs
     let initialDateNow = Date.now();
 
     function sonate(){
@@ -28,16 +31,16 @@ export default Ember.Component.extend({
         const currentPosition = initialPosition + elapsedSeconds;
 
         component.get('score.midi.notes').filter(function(note){
-          return audioBufferPosition <= note.onSecond && note.onSecond <= currentPosition + audioBufferLength;
+          return audioBufferPosition <= note.onSecond && note.onSecond <= currentPosition + audioBufferDuration;
         }).forEach(function(note) {
           const url = component.get('synthesizer').noteToURL(note);
           const secondsDelay = note.onSecond - currentPosition;
           component.get('audio').playSound(url, secondsDelay, note.duration);
         });
-        audioBufferPosition = currentPosition + audioBufferLength;
+        audioBufferPosition = currentPosition + audioBufferDuration;
 
         // can't use requestAnimationFrame because inactive tabs pause animation
-        Ember.run.later(this, sonate, audioBufferLength / 2);
+        Ember.run.later(this, sonate, audioBufferDuration / 2);
       }
     }
 

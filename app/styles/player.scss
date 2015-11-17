@@ -10,7 +10,8 @@
 }
 
 .piano-roll {
-  background: $piano-background-color;
+  background: $piano-background-color-light;
+  background-image: -webkit-radial-gradient(center top, circle cover, $piano-background-color-light 70%, $piano-background-color-dark);
   width: 100%;
   flex: 1;
   transform: scaleY(-1);
