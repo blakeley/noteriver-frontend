@@ -12,7 +12,6 @@ moduleFor('service:audio', {
   beforeEach: function(){
     this.subject().get('buffers').clear();
     this.subject().get('buffersA').clear();
-    this.subject().get('sounds').clear();
   },
 });
 
@@ -58,7 +57,7 @@ test('#getBuffer memoizes the buffer (promise) for future calls', function(asser
   });
 });
 
-test('successive calls to #getBuffer with the same url returns the same buffer (promise)', function(assert) {
+test('#getBuffer returns the same promise for successive calls', function(assert) {
   assert.expect(2);
   var service = this.subject();
   var first = service.getBuffer(url);
@@ -101,115 +100,3 @@ test('#percentLoaded returns the percent of buffers that have loaded', function(
     assert.equal(service.get('percentLoaded'), 2/3);
   });
 });
-
-test('#playSound plays a sound', function(assert) {
-  assert.expect(2);
-
-  var service = this.subject();
-  service.set("context", {
-    decodeAudioData: function(audioData, callback){
-      callback();
-    },
-    destination: "AudioDestinationNode",
-    currentTime: 0,
-    createBufferSource: function(){
-      return {
-        connect: function(destination){
-          assert.ok(true, "connected to an output!");
-        },
-        start: function(url, delay){
-          assert.ok(true, "played a sound!");
-        }
-      };
-    },
-    createGain: function() {
-      return {
-        gain: {
-          value: 0,
-          setValueAtTime: function(){},
-          exponentialRampToValueAtTime: function(){},
-        },
-        connect: function(){},
-      };
-    }
-  });
-
-  return service.getBuffer(url).then(function(){
-    return service.playSound(url, 0);
-  });
-});
-
-test('#playSound saves played sounds', function(assert) {
-  assert.expect(2);
-
-  var service = this.subject();
-  service.set("context", {
-    decodeAudioData: function(audioData, callback){
-      callback();
-    },
-    destination: "AudioDestinationNode",
-    currentTime: 0,
-    createBufferSource: function(){
-      return {
-        connect: function(){
-          return "source";
-        },
-        start: function(){}
-      };
-    },
-    createGain: function() {
-      return {
-        gain: {
-          value: 0,
-          setValueAtTime: function(){},
-          exponentialRampToValueAtTime: function(){},
-        },
-        connect: function(){},
-      };
-    }
-
-  });
-
-  assert.equal(0, service.get('sounds').length);
-  return service.getBuffer(url).then(function(){
-    return service.playSound(url, 0).then(function(){
-      assert.equal(1, service.get('sounds').length);
-    });
-  });
-});
-
-test('#stop stops all sounds', function(assert) {
-  assert.expect(2); // stops both sounds
-  var service = this.subject();
-  var mockAudioBufferSourceNode = {
-    stop: function(){
-      assert.ok(true, "sound was stopped!");
-    }
-  };
-  service.get('sounds').pushObject(mockAudioBufferSourceNode);
-  service.get('sounds').pushObject(mockAudioBufferSourceNode);
-  service.stop();
-});
-
-test('#stop clears the array of saved audio buffer source nodes', function(assert) {
-  assert.expect(2); // stops both sounds
-  var service = this.subject();
-  service.get('sounds').pushObject({stop: function(){}});
-  service.get('sounds').pushObject({stop: function(){}});
-  assert.equal(2, service.get('sounds').length);
-  service.stop();
-  assert.equal(0, service.get('sounds').length);
-});
-
-
-
-
-
-
-
-
-
-
-
-
-

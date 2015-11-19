@@ -18,27 +18,25 @@
 </div>
 
 <div class="control-bar">
-  {{#if midiLoadFailed}}
+  {{#if loadMidiFailed}}
     <button {{action 'loadMidi'}}> {{! retry button }}
       <img src="/assets/images/retry.svg"/>
     </button>
+  {{else if loadMidiSucceeded}}
+    <button id="play-toggle" {{action 'toggleIsPlaying'}}>
+      {{!-- Replace with this once broccoli-asset-rev infers dynamic paths
+        <img src="/assets/images/{{if isPlaying 'pause' 'play'}}.svg"/>
+      --}}
+      {{#if isPlaying}}
+        <img src="/assets/images/pause.svg"/>
+      {{else}}
+        <img src="/assets/images/play.svg"/>
+      {{/if}}
+    </button>
   {{else}}
-    {{#if score.midi.notes}}
-      <button {{action 'toggleIsPlaying'}}>
-        {{!-- Replace with this once broccoli-asset-rev infers dynamic paths
-          <img src="/assets/images/{{if isPlaying 'pause' 'play'}}.svg"/>
-        --}}
-        {{#if isPlaying}}
-          <img src="/assets/images/pause.svg"/>
-        {{else}}
-          <img src="/assets/images/play.svg"/>
-        {{/if}}
-      </button>
-    {{else}}
-      <button>
-        <img src="/assets/images/loading.svg"/>
-      </button>
-    {{/if}}
+    <button>
+      <img src="/assets/images/loading.svg"/>
+    </button>
   {{/if}}
   <div class="slider-container">
     <strong>{{score.title}}</strong> - {{score.artist}}

@@ -1,7 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
-
   init: function(){
     this.frames = [];
   },
@@ -25,5 +24,4 @@ export default Ember.Service.extend({
       Ember.run.scheduleOnce('afterRender', this, this.scheduleAnimationFrame);
     }
   },
-
 });

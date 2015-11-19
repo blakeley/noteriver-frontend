@@ -6,7 +6,6 @@ export default Ember.Service.extend({
   context: new AudioContext(),
   buffers: new Ember.Map(),
   buffersA: Ember.A([]), // https://github.com/emberjs/ember.js/issues/10209
-  sounds: Ember.A([]),
 
   totalLoaded: 0,
   percentLoaded: function(){
@@ -53,35 +52,6 @@ export default Ember.Service.extend({
 
     return buffer;
   },
-
-  playSound: function(url, secondsDelay, secondsDuration) {
-    let sounds = this.get('sounds');
-    let context = this.get('context');
-    return this.getBuffer(url).then(function(buffer){
-      const source = context.createBufferSource();
-      source.buffer = buffer;
-
-      const gainNode = context.createGain();
-      gainNode.gain.value = 0.125;
-
-      source.connect(gainNode);
-      gainNode.connect(context.destination);
-
-      source.start(context.currentTime + secondsDelay);
-      gainNode.gain.setValueAtTime(0.125, context.currentTime + secondsDelay + secondsDuration);
-      gainNode.gain.exponentialRampToValueAtTime(0.0125, context.currentTime + secondsDelay + secondsDuration + 0.25);
-
-      sounds.pushObject(source);
-    });
-  },
-
-  stop: function(){
-    this.get('sounds').forEach(function(sound){
-      sound.stop();
-    });
-    this.get('sounds').clear();
-  },
-
 });
 
 
