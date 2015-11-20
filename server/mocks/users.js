@@ -22,7 +22,7 @@ module.exports = function(app) {
     }
   });
 
-  usersRouter.put('/:id', function(req, res) {
+  usersRouter.patch('/:id', function(req, res) {
     res.status(204);
   });
 
