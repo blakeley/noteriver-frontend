@@ -2,7 +2,7 @@
 
 import Ember from 'ember';
 
-// const { observes } = Ember;
+const { observer } = Ember;
 
 export default Ember.Component.extend({
   animation: Ember.inject.service(),
@@ -15,13 +15,28 @@ export default Ember.Component.extend({
   time: 0.0,
   isPlaying: false,
   isInterrupted: false,
-  settingsPanelIsOpen: false,
+  settingsPanelIsOpen: true,
   loadMidiFailed: false,
   loadMidiSucceeded: false,
   lowNumber: 21,
   highNumber: 108,
 
   audioBufferSourceNodes: Ember.A([]),
+  masterGainValue: 0.10,
+
+  init: function(){
+    this._super.apply(this, arguments);
+    window.t = this;
+    const audio = this.get('audio');
+
+    this.masterGain = audio.context.createGain();
+    this.masterGain.gain.value = this.get('masterGainValue');
+    this.masterGain.connect(audio.context.destination);
+  },
+
+  masterGainValueChanged: observer('masterGainValue', function(){
+    this.masterGain.gain.value = this.get('masterGainValue');
+  }),
 
   loadMidi: function(){
     let component = this;
@@ -34,10 +49,9 @@ export default Ember.Component.extend({
         audio.getBuffer(url);
       });
     }).catch(function(reason){
-      console.log(reason);
-      console.log('loadMidiFailed');
       component.set('loadMidiFailed', true);
     });
+
   },
 
   stop: function(){
@@ -76,14 +90,14 @@ export default Ember.Component.extend({
           audioBufferSourceNode.buffer = buffer;
 
           const gainNode = audio.context.createGain();
-          gainNode.gain.value = 0.125;
+          gainNode.gain.value = 1.0;
 
           audioBufferSourceNode.connect(gainNode);
-          gainNode.connect(audio.context.destination);
+          gainNode.connect(component.masterGain);
 
           audioBufferSourceNode.start(audio.context.currentTime + secondsDelay);
-          gainNode.gain.setValueAtTime(0.125, audio.context.currentTime + secondsDelay + note.duration);
-          gainNode.gain.exponentialRampToValueAtTime(0.0125, audio.context.currentTime + secondsDelay + note.duration + 0.25);
+          gainNode.gain.setValueAtTime(1.0, audio.context.currentTime + secondsDelay + note.duration);
+          gainNode.gain.exponentialRampToValueAtTime(0.1, audio.context.currentTime + secondsDelay + note.duration + 0.25);
 
           component.audioBufferSourceNodes.pushObject(audioBufferSourceNode);
         });

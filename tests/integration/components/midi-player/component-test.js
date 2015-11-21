@@ -5,7 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
 moduleForComponent('midi-player', 'Integration | Component | midi player', {
-  integration: true
+  integration: true,
 });
 
 let mockScore = {
@@ -14,6 +14,7 @@ let mockScore = {
     return Ember.RSVP.resolve(new Midi());
   },
 };
+
 
 test('it renders', function(assert) {
   this.set('score', mockScore);

@@ -8,11 +8,15 @@
           <img src="/assets/images/cancel.svg"/>
         </button>
       </header>
-      <section>
-        (coming soon!)
-      </section>
-      {{! input type="range" value=lowNumber min=21 max=108}}
-      {{! input type="range" value=highNumber min=21 max=108}}
+      <div class="slide-control">
+        <button>
+          <img src="/assets/images/low-volume.svg" />
+        </button>
+        {{input type="range" value=masterGainValue min=0.001 max=0.201 step=0.001}}
+        <button>
+          <img src="/assets/images/high-volume.svg" />          
+        </button>
+      </div>
     </div>
   </div>
 </div>

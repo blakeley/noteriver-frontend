@@ -36,4 +36,26 @@
     color: $mute-color;
     text-align: center;
   }
+  .slide-control {
+    height: 56px;
+    display: flex;
+    button: {
+      width: 56px;
+      height: 100%;
+    }
+  }
 }
+
+.slide-control {
+  button {
+    height: 100%;
+    padding: 14px;
+    img {
+      height: 100%;
+    }
+  }
+}
+
+
+
+
