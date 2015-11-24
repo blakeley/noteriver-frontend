@@ -8,6 +8,7 @@
           <img src="/assets/images/cancel.svg"/>
         </button>
       </header>
+
       <div class="slide-control">
         <button>
           <img src="/assets/images/low-volume.svg" />
@@ -15,6 +16,16 @@
         {{input type="range" value=masterGainValue min=0.001 max=0.201 step=0.001}}
         <button>
           <img src="/assets/images/high-volume.svg" />          
+        </button>
+      </div>
+
+      <div class="slide-control">
+        <button>
+          <img src="/assets/images/slow.svg" />
+        </button>
+        {{input type="range" value=playbackSpeed min=0.25 max=1.25 step=0.05}}
+        <button>
+          <img src="/assets/images/fast.svg" />
         </button>
       </div>
     </div>

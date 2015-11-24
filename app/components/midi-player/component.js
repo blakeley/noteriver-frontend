@@ -23,10 +23,10 @@ export default Ember.Component.extend({
 
   audioBufferSourceNodes: Ember.A([]),
   masterGainValue: 0.10,
+  playbackSpeed: 1.00,
 
   init: function(){
     this._super.apply(this, arguments);
-    window.t = this;
     const audio = this.get('audio');
 
     this.masterGain = audio.context.createGain();
@@ -36,6 +36,13 @@ export default Ember.Component.extend({
 
   masterGainValueChanged: observer('masterGainValue', function(){
     this.masterGain.gain.value = this.get('masterGainValue');
+  }),
+
+  playbackSpeedChanged: observer('playbackSpeed', function(){
+    this.stop();
+    this.initialPosition = parseFloat(this.get('time'));
+    this.initialDateNow = Date.now();
+    this.audioBufferPosition = this.initialPosition;    
   }),
 
   loadMidi: function(){
@@ -62,6 +69,7 @@ export default Ember.Component.extend({
   },
 
   play: function(){
+    this.stop();
     this.initialPosition = parseFloat(this.get('time'));
     this.initialDateNow = Date.now();
     this.audioBufferPosition = this.initialPosition;
@@ -77,7 +85,7 @@ export default Ember.Component.extend({
 
     if(component.get('isPlaying') & !component.get('isInterrupted')){
       const elapsedSeconds = (Date.now() - this.initialDateNow) / 1000;
-      const currentPosition = this.initialPosition + elapsedSeconds;
+      const currentPosition = this.initialPosition + elapsedSeconds * component.get('playbackSpeed');
 
       component.get('score.midi.notes').filter(function(note){
         return component.audioBufferPosition <= note.onSecond && note.onSecond <= currentPosition + audioBufferDuration;
@@ -95,9 +103,9 @@ export default Ember.Component.extend({
           audioBufferSourceNode.connect(gainNode);
           gainNode.connect(component.masterGain);
 
-          audioBufferSourceNode.start(audio.context.currentTime + secondsDelay);
-          gainNode.gain.setValueAtTime(1.0, audio.context.currentTime + secondsDelay + note.duration);
-          gainNode.gain.exponentialRampToValueAtTime(0.1, audio.context.currentTime + secondsDelay + note.duration + 0.25);
+          audioBufferSourceNode.start(audio.context.currentTime + secondsDelay / component.get('playbackSpeed'));
+          gainNode.gain.setValueAtTime(1.0, audio.context.currentTime + (secondsDelay + note.duration) / component.get('playbackSpeed'));
+          gainNode.gain.exponentialRampToValueAtTime(0.1, audio.context.currentTime + (secondsDelay + note.duration + 0.25) / component.get('playbackSpeed'));
 
           component.audioBufferSourceNodes.pushObject(audioBufferSourceNode);
         });
@@ -115,7 +123,7 @@ export default Ember.Component.extend({
 
     if(component.get('isPlaying') & !component.get('isInterrupted')){
       const elapsedSeconds = (Date.now() - component.initialDateNow) / 1000;
-      const currentPosition = component.initialPosition + elapsedSeconds;
+      const currentPosition = component.initialPosition + elapsedSeconds * component.get('playbackSpeed');
       component.set('time', currentPosition);
 
       component.get('animation').scheduleFrame(component.animate.bind(component));
