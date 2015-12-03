@@ -4,7 +4,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   // parameter defaults
-  notesOn: {},
+  notesOn: Ember.A([]),
 
   // element properties
   tagName: 'svg',
@@ -23,11 +23,11 @@ export default Ember.Component.extend({
 
   // computed properties
   fill: function(){
-    var noteOn = this.get('notesOn')[this.get('midiNumber')];
+    const noteOn = this.get('notesOn').findBy('number', this.get('midiNumber'));
     if(noteOn){
       return keyboard.IVORY_KEY_COLORS[noteOn.track.index % keyboard.IVORY_KEY_COLORS.length];
     } else {
       return '#FFFCE5';
     }
-  }.property('notesOn','midiNumber'),
+  }.property('notesOn.[]','midiNumber'),
 });

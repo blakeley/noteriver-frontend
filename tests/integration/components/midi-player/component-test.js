@@ -8,13 +8,13 @@ moduleForComponent('midi-player', 'Integration | Component | midi player', {
   integration: true,
 });
 
-let mockScore = {
+let mockScore = Ember.Object.create({
   midi: new Midi(),
   loadMidi: function(){
+    this.set('midi', new Midi());
     return Ember.RSVP.resolve(new Midi());
   },
-};
-
+});
 
 test('it renders', function(assert) {
   this.set('score', mockScore);

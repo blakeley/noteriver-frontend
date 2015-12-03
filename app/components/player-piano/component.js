@@ -2,7 +2,7 @@
 
 import Ember from 'ember';
 
-const { computed } = Ember;
+const { observer } = Ember;
 
 export default Ember.Component.extend({
   tagName: 'svg',
@@ -12,26 +12,60 @@ export default Ember.Component.extend({
   keyboard: keyboard,
 
   midi: new Midi(),
+  notes: Ember.A([]),
+  notesOn: Ember.A([]),
   time: 0,
   lowNumber: 21,
   highNumber: 108,
   timeScale: 10,
 
-  notes: computed('midi', 'time', function(){
-    return this.get('midi').notesOnDuring(this.get('time'), this.get('time') + 3);
+  midiChanged: observer('midi', function(){
+    this.leadingCursor = this.get('midi').newCursor();
+    this.nowCursor = this.get('midi').newCursor();
+    this.leadingCursor.forward(this.get('time') + 3, {
+      noteOn: (event) => {this.get('notes').pushObject(event.note);}
+    });
   }),
 
-  notesOn: function(){
-    var h = {};
+  timeChanged: observer('time', function(){
+    let time = this.get('time');
+    let notes = this.get('notes');
+    let notesOn = this.get('notesOn');
 
-    this.get('midi').notesOnAt(this.get('time')).forEach((note) => {
-      if(note.onSecond < this.get('time') && this.get('time') + 0.016 < note.offSecond){
-        h[note.number] = note;
-      }
-    });
+    if(this.nowCursor.second < time){
+      this.leadingCursor.forward(time + 3, {
+        noteOn: (event) => {
+          notes.pushObject(event.note);
+        }
+      });
 
-    return h;
-  }.property('time','midi'),
+      this.nowCursor.forward(time, {
+        noteOn: (event) => {
+          notesOn.pushObject(event.note);
+        },
+        noteOff: (event) => {
+          notes.removeObject(event.note);
+          notesOn.removeObject(event.note);
+        }
+      });
+    } else {
+      this.nowCursor.backward(time, {
+        noteOn: (event) => {
+          notesOn.removeObject(event.note);
+        },
+        noteOff: (event) => {
+          notes.pushObject(event.note);
+          notesOn.pushObject(event.note);
+        }
+      });
+
+      this.leadingCursor.backward(time + 3, {
+        noteOn: (event) => {
+          notes.removeObject(event.note);
+        }
+      });
+    }
+  }),
 
   noteTranslateY: function(){
     return keyboard.IVORY_HEIGHT - this.get('time') * this.get('timeScale');
