@@ -42,24 +42,29 @@ export default Ember.Component.extend({
     this.stop();
     this.initialPosition = parseFloat(this.get('time'));
     this.initialDateNow = Date.now();
-    this.audioBufferPosition = this.initialPosition;    
+
+    this.audioCursor.backward(this.initialPosition);
+    this.audioCursor.forward(this.initialPosition);
   }),
 
   loadMidi: function(){
-    let component = this;
-    let audio = this.get('audio');
-
-    component.get('score').loadMidi().then(function(midi){
-      component.set('loadMidiSucceeded', true);
-      midi.notes.forEach(function(note){
-        const url = component.get('synthesizer').noteToURL(note);
-        audio.getBuffer(url);
-      });
-    }).catch(function(reason){
-      component.set('loadMidiFailed', true);
+    this.get('score').loadMidi().then((midi) => {
+      this.set('loadMidiSucceeded', true);
+    }).catch((reason) => {
+      this.set('loadMidiFailed', true);
     });
-
   },
+
+  midiChanged: observer('score.midi', function(){
+    const midi = this.get('score.midi');
+
+    for(const note of midi.notes){
+      const url = this.get('synthesizer').noteToURL(note);
+      this.get('audio').getBuffer(url);
+    }
+
+    this.audioCursor = midi.newCursor();
+  }),
 
   stop: function(){
     this.get('audioBufferSourceNodes').forEach(function(audioBufferSourceNode){
@@ -72,7 +77,34 @@ export default Ember.Component.extend({
     this.stop();
     this.initialPosition = parseFloat(this.get('time'));
     this.initialDateNow = Date.now();
-    this.audioBufferPosition = this.initialPosition;
+    this.audioCursor.backward(this.initialPosition);
+    this.audioCursor.forward(this.initialPosition);
+
+    const audio = this.get('audio');
+    if(this.get('isPlaying') & !this.get('isInterrupted')){
+      for(const note of this.get('score.midi').notesOnAt(this.initialPosition)){
+        const url = this.get('synthesizer').noteToURL(note);
+
+        audio.getBuffer(url).then((buffer) => {
+          const audioBufferSourceNode = audio.context.createBufferSource();
+          audioBufferSourceNode.buffer = buffer;
+
+          const gainNode = audio.context.createGain();
+          gainNode.gain.value = 1.0;
+
+          audioBufferSourceNode.connect(gainNode);
+          gainNode.connect(this.masterGain);
+
+          const remainingSeconds = note.offSecond - this.initialPosition;
+          const startPosition = this.initialPosition - note.onSecond;
+          audioBufferSourceNode.start(audio.context.currentTime, startPosition);
+          gainNode.gain.setValueAtTime(1.0, audio.context.currentTime + remainingSeconds / this.get('playbackSpeed'));
+          gainNode.gain.exponentialRampToValueAtTime(0.1, audio.context.currentTime + (remainingSeconds + 0.25) / this.get('playbackSpeed'));
+
+          this.audioBufferSourceNodes.pushObject(audioBufferSourceNode);
+        });
+      }
+    }
 
     this.sonate();
     this.animate();
@@ -81,37 +113,36 @@ export default Ember.Component.extend({
   sonate: function(){
     let component = this;
     let audio = this.get('audio');
-    let audioBufferDuration = 1.10; // MUST be > 1.0 because browsers cap setTimeout at 1000ms for inactive tabs
+    const audioBufferDuration = 1.10 * component.get('playbackSpeed'); // MUST be > 1.0 because browsers cap setTimeout at 1000ms for inactive tabs
 
     if(component.get('isPlaying') & !component.get('isInterrupted')){
       const elapsedSeconds = (Date.now() - this.initialDateNow) / 1000;
       const currentPosition = this.initialPosition + elapsedSeconds * component.get('playbackSpeed');
 
-      component.get('score.midi.notes').filter(function(note){
-        return component.audioBufferPosition <= note.onSecond && note.onSecond <= currentPosition + audioBufferDuration;
-      }).forEach(function(note) {
-        const url = component.get('synthesizer').noteToURL(note);
-        const secondsDelay = note.onSecond - currentPosition;
+      component.audioCursor.forward(currentPosition + audioBufferDuration, {
+        noteOn: (event) => {
+          const note = event.note;
+          const url = component.get('synthesizer').noteToURL(note);
+          const secondsDelay = note.onSecond - currentPosition;
 
-        audio.getBuffer(url).then(function(buffer){
-          const audioBufferSourceNode = audio.context.createBufferSource();
-          audioBufferSourceNode.buffer = buffer;
+          audio.getBuffer(url).then(function(buffer){
+            const audioBufferSourceNode = audio.context.createBufferSource();
+            audioBufferSourceNode.buffer = buffer;
 
-          const gainNode = audio.context.createGain();
-          gainNode.gain.value = 1.0;
+            const gainNode = audio.context.createGain();
+            gainNode.gain.value = 1.0;
 
-          audioBufferSourceNode.connect(gainNode);
-          gainNode.connect(component.masterGain);
+            audioBufferSourceNode.connect(gainNode);
+            gainNode.connect(component.masterGain);
 
-          audioBufferSourceNode.start(audio.context.currentTime + secondsDelay / component.get('playbackSpeed'));
-          gainNode.gain.setValueAtTime(1.0, audio.context.currentTime + (secondsDelay + note.duration) / component.get('playbackSpeed'));
-          gainNode.gain.exponentialRampToValueAtTime(0.1, audio.context.currentTime + (secondsDelay + note.duration + 0.25) / component.get('playbackSpeed'));
+            audioBufferSourceNode.start(audio.context.currentTime + secondsDelay / component.get('playbackSpeed'));
+            gainNode.gain.setValueAtTime(1.0, audio.context.currentTime + (secondsDelay + note.duration) / component.get('playbackSpeed'));
+            gainNode.gain.exponentialRampToValueAtTime(0.1, audio.context.currentTime + (secondsDelay + note.duration + 0.25) / component.get('playbackSpeed'));
 
-          component.audioBufferSourceNodes.pushObject(audioBufferSourceNode);
-        });
-
+            component.audioBufferSourceNodes.pushObject(audioBufferSourceNode);
+          });
+        }
       });
-      component.audioBufferPosition = currentPosition + audioBufferDuration;
 
       // can't use requestAnimationFrame because inactive tabs pause animation
       Ember.run.later(this, this.sonate, audioBufferDuration / 2);
