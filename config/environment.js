@@ -23,6 +23,8 @@ module.exports = function(environment) {
     ENV.AWS_ACCESS_KEY_ID = process.env.NOTERIVER_AWS_ACCESS_KEY_ID;
     ENV.AWS_BUCKET = 'noteriver-dev';
 
+    ENV.assetPrefix = '';
+
     // ENV.APP.LOG_RESOLVER = true;
     ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
@@ -34,6 +36,8 @@ module.exports = function(environment) {
     ENV.AWS_ACCESS_KEY_ID = process.env.NOTERIVER_AWS_ACCESS_KEY_ID;
     ENV.AWS_SECRET_ACCESS_KEY = process.env.NOTERIVER_AWS_SECRET_ACCESS_KEY;
     ENV.AWS_BUCKET = 'noteriver-dev';
+
+    ENV.assetPrefix = '';
 
     // Testem prefers this...
     // ENV.baseURL = '/'; // necessary to match the above
@@ -49,6 +53,8 @@ module.exports = function(environment) {
   if (environment === 'production') {
     ENV.AWS_ACCESS_KEY_ID = process.env.NOTERIVER_AWS_ACCESS_KEY_ID;
     ENV.AWS_BUCKET = 'noteriver';
+
+    ENV.assetPrefix = 'https://s3.amazonaws.com/noteriver';
   }
 
   return ENV;

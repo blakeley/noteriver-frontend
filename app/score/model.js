@@ -11,7 +11,7 @@ export default DS.Model.extend({
   artist: DS.attr('string'),
   createdAt: DS.attr('date'),
 
-  midi: new Midi(), // default Midi enables "confident" javascript
+  midi: new Midi(), // default Midi for "confident" javascript
   promise: null,
 
   fileUrl: Ember.computed('s3Key', function(){

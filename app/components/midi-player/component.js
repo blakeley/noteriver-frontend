@@ -1,17 +1,15 @@
-/* global Midi */
-
 import Ember from 'ember';
+import Synthesizer from 'noteriver/mixins/synthesizer';
 
-const { observer } = Ember;
+const { computed } = Ember;
+const { alias } = computed;
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(Synthesizer, {
   animation: Ember.inject.service(),
-  audio: Ember.inject.service(),
-  synthesizer: Ember.inject.service(),
 
   classNames: ['midi-player'],
 
-  midi: new Midi(),
+  midi: alias('score.midi'),
   time: 0.0,
   isPlaying: false,
   isInterrupted: false,
@@ -21,32 +19,6 @@ export default Ember.Component.extend({
   lowNumber: 21,
   highNumber: 108,
 
-  audioBufferSourceNodes: Ember.A([]),
-  masterGainValue: 0.10,
-  playbackSpeed: 1.00,
-
-  init: function(){
-    this._super.apply(this, arguments);
-    const audio = this.get('audio');
-
-    this.masterGain = audio.context.createGain();
-    this.masterGain.gain.value = this.get('masterGainValue');
-    this.masterGain.connect(audio.context.destination);
-  },
-
-  masterGainValueChanged: observer('masterGainValue', function(){
-    this.masterGain.gain.value = this.get('masterGainValue');
-  }),
-
-  playbackSpeedChanged: observer('playbackSpeed', function(){
-    this.stop();
-    this.initialPosition = parseFloat(this.get('time'));
-    this.initialDateNow = Date.now();
-
-    this.audioCursor.backward(this.initialPosition);
-    this.audioCursor.forward(this.initialPosition);
-  }),
-
   loadMidi: function(){
     this.get('score').loadMidi().then((midi) => {
       this.set('loadMidiSucceeded', true);
@@ -55,54 +27,16 @@ export default Ember.Component.extend({
     });
   },
 
-  midiChanged: observer('score.midi', function(){
-    const midi = this.get('score.midi');
-
-    for(const note of midi.notes){
-      const url = this.get('synthesizer').noteToURL(note);
-      this.get('audio').getBuffer(url);
-    }
-
-    this.audioCursor = midi.newCursor();
-  }),
-
-  stop: function(){
-    this.get('audioBufferSourceNodes').forEach(function(audioBufferSourceNode){
-      audioBufferSourceNode.stop();
-    });
-    this.get('audioBufferSourceNodes').clear();
-  },
-
   play: function(){
-    this.stop();
-    this.initialPosition = parseFloat(this.get('time'));
+    this.stopAudio();
+    this.initialPositionSecond = parseFloat(this.get('time'));
     this.initialDateNow = Date.now();
-    this.audioCursor.backward(this.initialPosition);
-    this.audioCursor.forward(this.initialPosition);
+    this.audioCursor.backward(this.initialPositionSecond);
+    this.audioCursor.forward(this.initialPositionSecond);
 
-    const audio = this.get('audio');
     if(this.get('isPlaying') & !this.get('isInterrupted')){
-      for(const note of this.get('score.midi').notesOnAt(this.initialPosition)){
-        const url = this.get('synthesizer').noteToURL(note);
-
-        audio.getBuffer(url).then((buffer) => {
-          const audioBufferSourceNode = audio.context.createBufferSource();
-          audioBufferSourceNode.buffer = buffer;
-
-          const gainNode = audio.context.createGain();
-          gainNode.gain.value = 1.0;
-
-          audioBufferSourceNode.connect(gainNode);
-          gainNode.connect(this.masterGain);
-
-          const remainingSeconds = note.offSecond - this.initialPosition;
-          const startPosition = this.initialPosition - note.onSecond;
-          audioBufferSourceNode.start(audio.context.currentTime, startPosition);
-          gainNode.gain.setValueAtTime(1.0, audio.context.currentTime + remainingSeconds / this.get('playbackSpeed'));
-          gainNode.gain.exponentialRampToValueAtTime(0.1, audio.context.currentTime + (remainingSeconds + 0.25) / this.get('playbackSpeed'));
-
-          this.audioBufferSourceNodes.pushObject(audioBufferSourceNode);
-        });
+      for(const note of this.get('score.midi').notesOnAt(this.initialPositionSecond)){
+        this.playNote(note);
       }
     }
 
@@ -111,36 +45,15 @@ export default Ember.Component.extend({
   }.observes('isPlaying','isInterrupted'),
 
   sonate: function(){
-    let component = this;
-    let audio = this.get('audio');
-    const audioBufferDuration = 1.10 * component.get('playbackSpeed'); // MUST be > 1.0 because browsers cap setTimeout at 1000ms for inactive tabs
+    const audioBufferDuration = 1.10 * this.get('playbackSpeed'); // MUST be > 1.0 because browsers cap setTimeout at 1000ms for inactive tabs
 
-    if(component.get('isPlaying') & !component.get('isInterrupted')){
+    if(this.get('isPlaying') & !this.get('isInterrupted')){
       const elapsedSeconds = (Date.now() - this.initialDateNow) / 1000;
-      const currentPosition = this.initialPosition + elapsedSeconds * component.get('playbackSpeed');
+      const currentPosition = this.initialPositionSecond + elapsedSeconds * this.get('playbackSpeed');
 
-      component.audioCursor.forward(currentPosition + audioBufferDuration, {
+      this.audioCursor.forward(currentPosition + audioBufferDuration, {
         noteOn: (event) => {
-          const note = event.note;
-          const url = component.get('synthesizer').noteToURL(note);
-          const secondsDelay = note.onSecond - currentPosition;
-
-          audio.getBuffer(url).then(function(buffer){
-            const audioBufferSourceNode = audio.context.createBufferSource();
-            audioBufferSourceNode.buffer = buffer;
-
-            const gainNode = audio.context.createGain();
-            gainNode.gain.value = 1.0;
-
-            audioBufferSourceNode.connect(gainNode);
-            gainNode.connect(component.masterGain);
-
-            audioBufferSourceNode.start(audio.context.currentTime + secondsDelay / component.get('playbackSpeed'));
-            gainNode.gain.setValueAtTime(1.0, audio.context.currentTime + (secondsDelay + note.duration) / component.get('playbackSpeed'));
-            gainNode.gain.exponentialRampToValueAtTime(0.1, audio.context.currentTime + (secondsDelay + note.duration + 0.25) / component.get('playbackSpeed'));
-
-            component.audioBufferSourceNodes.pushObject(audioBufferSourceNode);
-          });
+          this.playNote(event.note);
         }
       });
 
@@ -150,16 +63,14 @@ export default Ember.Component.extend({
   },
 
   animate: function(){
-    const component = this; 
+    if(this.get('isPlaying') & !this.get('isInterrupted')){
+      const elapsedSeconds = (Date.now() - this.initialDateNow) / 1000;
+      const currentPosition = this.initialPositionSecond + elapsedSeconds * this.get('playbackSpeed');
+      this.set('time', currentPosition);
 
-    if(component.get('isPlaying') & !component.get('isInterrupted')){
-      const elapsedSeconds = (Date.now() - component.initialDateNow) / 1000;
-      const currentPosition = component.initialPosition + elapsedSeconds * component.get('playbackSpeed');
-      component.set('time', currentPosition);
-
-      component.get('animation').scheduleFrame(component.animate.bind(component));
+      this.get('animation').scheduleFrame(this.animate.bind(this));
     } else {
-      component.stop();
+      this.stopAudio();
     }
   },
 
@@ -181,7 +92,7 @@ export default Ember.Component.extend({
 
   willDestroyElement: function(){
     this.set('isPlaying', false);
-    this.stop();
+    this.stopAudio();
   },
 
   actions: {

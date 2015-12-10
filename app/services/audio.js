@@ -53,13 +53,3 @@ export default Ember.Service.extend({
     return buffer;
   },
 });
-
-
-
-
-
-
-
-
-
-
