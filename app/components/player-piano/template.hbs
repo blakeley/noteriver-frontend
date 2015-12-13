@@ -1,9 +1,21 @@
+
+{{!-- NOTES --}}
 {{#svg-g translateY=noteTranslateY}}
   {{#each notes as |note|}}
     {{piano-roll-note note=note timeScale=timeScale}}
   {{/each}}
 {{/svg-g}}
 
+{{!-- LINES --}}
+{{#each keyboard.C_MIDI_NUMBERS as |midiNumber|}}
+  {{piano-roll-vertical-bar midiNumber=midiNumber}}
+{{/each}}
+
+{{#each keyboard.F_MIDI_NUMBERS as |midiNumber|}}
+  {{piano-roll-vertical-bar midiNumber=midiNumber}}
+{{/each}}
+
+{{!-- KEYS --}}
 {{#each keyboard.IVORY_MIDI_NUMBERS as |midiNumber|}}
   {{ivory-key midiNumber=midiNumber notesOn=notesOn}}
 {{/each}}
@@ -11,3 +23,5 @@
 {{#each keyboard.EBONY_MIDI_NUMBERS as |midiNumber|}}
   {{ebony-key midiNumber=midiNumber notesOn=notesOn}}
 {{/each}}
+
+

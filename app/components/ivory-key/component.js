@@ -2,6 +2,8 @@
 
 import Ember from 'ember';
 
+const { computed}  = Ember;
+
 export default Ember.Component.extend({
   // parameter defaults
   notesOn: Ember.A([]),
@@ -11,9 +13,9 @@ export default Ember.Component.extend({
 
   attributeBindings: ['x','y','width','height'],
 
-  x: function(){
+  x: computed('midiNumber', function(){
     return keyboard.midiNumber(this.get('midiNumber')).x;
-  }.property('midiNumber'),
+  }),
 
   y: 0,
 

@@ -6,7 +6,7 @@ const {computed} = Ember;
 
 export default Ember.Component.extend({
   tagName: 'rect',
-  attributeBindings: ['x','y','rx','ry','width','height','fill','stroke','stroke-opacity','stroke-width'],
+  attributeBindings: ['x','y','rx','ry','width','height','fill'],
 
   x: computed('note.number', function(){
     return keyboard.midiNumber(this.get('note.number')).x;

@@ -28,10 +28,28 @@ Keyboard.prototype = {
       return keyboard.midiNumber(midiNumber).isIvory;
     });    
   },
+
+  get C_MIDI_NUMBERS(){
+    return keyboard.MIDI_NUMBERS.filter(function(midiNumber){
+      return keyboard.midiNumber(midiNumber).isC;
+    });
+  },
+
+  get F_MIDI_NUMBERS(){
+    return keyboard.MIDI_NUMBERS.filter(function(midiNumber){
+      return keyboard.midiNumber(midiNumber).isF;
+    });    
+  },
 }
 
 Keyboard.prototype.midiNumber = function(midiNumber) {
   return {
+    get isC(){
+      return midiNumber % 12 === 0;
+    },
+    get isF(){
+      return midiNumber % 12 === 5;
+    },
     get isEbony(){
       return !![1,3,6,8,10].contains(midiNumber % 12);
     },
