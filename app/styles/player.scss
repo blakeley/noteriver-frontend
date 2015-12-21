@@ -9,11 +9,18 @@
   overflow: hidden;
 }
 
-.piano-roll {
+.score-view {
   background: $piano-background-color-light;
-  background-image: -webkit-radial-gradient(center top, circle cover, $piano-background-color-light 70%, $piano-background-color-dark);
   width: 100%;
   flex: 1;
+  position: relative;
+  canvas {
+    position: absolute;
+  }
+}
+
+.piano-roll {
+  background-image: -webkit-radial-gradient(center top, circle cover, $piano-background-color-light 70%, $piano-background-color-dark);
   transform: scaleY(-1);
   svg {
     position: absolute;

@@ -6,7 +6,7 @@ const { computed } = Ember;
 
 export default Ember.Component.extend({
   tagName: 'svg',
-  classNames: ['piano-roll'],
+  classNames: ['score-view', 'piano-roll'],
   attributeBindings: ['viewBox', 'preserveAspectRatio'],
 
   keyboard: keyboard,

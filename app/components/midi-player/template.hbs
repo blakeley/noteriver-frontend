@@ -1,5 +1,6 @@
 <div class="flex-one flex-row" style="background: red;">
-  {{player-piano midi=score.midi time=time lowNumber=lowNumber highNumber=highNumber}}
+  {{!--player-piano midi=score.midi time=time lowNumber=lowNumber highNumber=highNumber--}}
+  {{bar-graph midi=score.midi time=time lowNumber=lowNumber highNumber=highNumber}}
   <div class="settings-panel-container {{if settingsPanelIsOpen 'is-open'}}">
     <div class="settings-panel">
       <header>
