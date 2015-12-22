@@ -22,5 +22,16 @@
   }  
 }
 
-
+.player-video {
+  position: relative;
+  background: $piano-background-color-light;
+  background-image: -webkit-radial-gradient(center bottom, circle cover, $piano-background-color-light 70%, $piano-background-color-dark);
+  width: 100%;
+  flex: 1;
+  svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }  
+}
 
