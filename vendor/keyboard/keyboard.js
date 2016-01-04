@@ -47,7 +47,14 @@ Keyboard.prototype.midiNumber = function(midiNumber) {
     },
     get x(){
       return Math.floor(midiNumber / 12) * keyboard.IVORY_WIDTH * 7 + keyboard.X_OFFSETS[midiNumber % 12];
-    }
+    },
+    get noteColors(){
+      if(this.isIvory){
+        return keyboard.IVORY_NOTE_COLORS;
+      } else {
+        return keyboard.EBONY_NOTE_COLORS;
+      }
+    },
   }
 }
 
