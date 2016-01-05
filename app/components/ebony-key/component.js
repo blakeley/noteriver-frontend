@@ -12,7 +12,7 @@ export default Ember.Component.extend({
   attributeBindings: ['x','y','width','height', 'viewBox', 'preserveAspectRatio'],
 
   x: function(){
-    return keyboard.midiNumber(this.get('midiNumber')).x;
+    return this.get('midiNumber').x;
   }.property('midiNumber'),
 
   y: keyboard.IVORY_HEIGHT - keyboard.EBONY_HEIGHT,
@@ -29,7 +29,7 @@ export default Ember.Component.extend({
 
   // computed properties
   fill: function(){
-    const noteOn = this.get('notesOn').findBy('number', this.get('midiNumber'));
+    const noteOn = this.get('notesOn').findBy('number', this.get('midiNumber').number);
     if(noteOn){
       return keyboard.EBONY_KEY_COLORS[noteOn.track.index % keyboard.EBONY_KEY_COLORS.length];
     } else {

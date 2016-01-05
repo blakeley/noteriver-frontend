@@ -1,4 +1,4 @@
-/* global keyboard */
+/* global MidiNumber */
 
 import Ember from 'ember';
 
@@ -11,7 +11,7 @@ export default Ember.Component.extend({
   attributeBindings: ['x','y','rx','ry','width','height','fill','stroke','stroke-opacity','stroke-width'],
 
   x: computed('note.number', function(){
-    return keyboard.midiNumber(this.get('note.number')).x + this.get('stroke-width') / overreach;
+    return new MidiNumber(this.get('note.number')).x + this.get('stroke-width') / overreach;
   }),
 
   y: computed('note.number', function(){
@@ -27,7 +27,7 @@ export default Ember.Component.extend({
   }),
 
   width: computed('note.number', function(){
-    return keyboard.midiNumber(this.get('note.number')).width - this.get('stroke-width') * 2 / overreach;
+    return new MidiNumber(this.get('note.number')).width - this.get('stroke-width') * 2 / overreach;
   }),
 
   height: computed('note.number', function(){
@@ -39,7 +39,7 @@ export default Ember.Component.extend({
   stroke: '#202020',
   'stroke-opacity': 0.9,
   'stroke-width': computed('note.number', function(){
-    return keyboard.midiNumber(this.get('note.number')).width / 16;
+    return new MidiNumber(this.get('note.number')).width / 16;
   }),
 
 });

@@ -1,4 +1,4 @@
-/* global Midi, keyboard */
+/* global Midi, MidiNumber, keyboard */
 
 import Ember from 'ember';
 
@@ -33,8 +33,8 @@ export default Ember.Component.extend({
     canvas.width = canvas.width;
     let ctx = canvas.getContext('2d');
 
-    const highMidiNumber = keyboard.midiNumber(this.get('highNumber'));
-    const lowMidiNumber = keyboard.midiNumber(this.get('lowNumber'));
+    const highMidiNumber = new MidiNumber(this.get('highNumber'));
+    const lowMidiNumber = new MidiNumber(this.get('lowNumber'));
 
     const xScale = window.devicePixelRatio * this.$().width() / (highMidiNumber.x - lowMidiNumber.x + keyboard.IVORY_WIDTH);
 
@@ -47,7 +47,7 @@ export default Ember.Component.extend({
     ctx.translate(0, -this.get('time') * this.get('timeScale'));
     for(const track of this.get('midi').tracks){
       for(const note of track.notesOnDuring(this.get('time'), this.get('time') + 10)){
-        const midiNumber = keyboard.midiNumber(note.number);
+        const midiNumber = new MidiNumber(note.number);
         ctx.fillStyle = midiNumber.noteColors[track.index % midiNumber.noteColors.length];
         ctx.strokeStyle = '#202020';
 

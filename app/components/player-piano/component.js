@@ -1,4 +1,4 @@
-/* global keyboard, Midi */
+/* global keyboard, Midi, MidiNumber */
 
 import Ember from 'ember';
 
@@ -73,11 +73,11 @@ export default Ember.Component.extend({
 
   // attributes
   vbx: function(){
-    return keyboard.midiNumber(this.get('lowNumber')).x;
+    return new MidiNumber(this.get('lowNumber')).x;
   }.property('lowNumber'),
 
   vbw: function(){
-    return keyboard.midiNumber(this.get('highNumber')).x - this.get('vbx') + keyboard.IVORY_WIDTH;
+    return new MidiNumber(this.get('highNumber')).x - this.get('vbx') + keyboard.IVORY_WIDTH;
   }.property('vbx', 'highNumber'),
 
   viewBox: function(){

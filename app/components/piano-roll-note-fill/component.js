@@ -1,4 +1,4 @@
-/* global keyboard */
+/* global keyboard, MidiNumber */
 
 import Ember from 'ember';
 
@@ -9,7 +9,7 @@ export default Ember.Component.extend({
   attributeBindings: ['x','y','rx','ry','width','height','fill','stroke','stroke-opacity','stroke-width'],
 
   x: computed('note.number', function(){
-    return keyboard.midiNumber(this.get('note.number')).x;
+    return new MidiNumber(this.get('note.number')).x;
   }),
 
   y: computed('note.number', function(){
@@ -25,7 +25,7 @@ export default Ember.Component.extend({
   }),
 
   width: computed('note.number', function(){
-    return keyboard.midiNumber(this.get('note.number')).width;
+    return new MidiNumber(this.get('note.number')).width;
   }),
 
   height: computed('note.number', function(){
@@ -33,7 +33,7 @@ export default Ember.Component.extend({
   }),
 
   fill: computed('note.number', function(){
-    if(keyboard.midiNumber(this.get('note.number')).isEbony){
+    if(new MidiNumber(this.get('note.number')).isEbony){
       return keyboard.EBONY_NOTE_COLORS[this.get('note.track.index') % keyboard.EBONY_NOTE_COLORS.length];
     } else {
       return keyboard.IVORY_NOTE_COLORS[this.get('note.track.index') % keyboard.IVORY_NOTE_COLORS.length];
