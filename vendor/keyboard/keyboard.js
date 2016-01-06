@@ -3,6 +3,12 @@ MidiNumber = function(number){
 }
 
 MidiNumber.prototype = {
+  get isC(){
+    return this.number % 12 === 0;
+  },
+  get isF(){
+    return this.number % 12 === 5;
+  },
   get isEbony(){
     return !![1,3,6,8,10].contains(this.number % 12);
   },
@@ -68,6 +74,17 @@ Keyboard.prototype = {
       return midiNumber.isIvory;
     });    
   },
-}
+
+  get C_MIDI_NUMBERS(){
+    return keyboard.MIDI_NUMBERS.filter(function(midiNumber){
+      return midiNumber.isC;
+    });
+  },
+
+  get F_MIDI_NUMBERS(){
+    return keyboard.MIDI_NUMBERS.filter(function(midiNumber){
+      return midiNumber.isF;
+    });
+  },}
 
 var keyboard = new Keyboard();

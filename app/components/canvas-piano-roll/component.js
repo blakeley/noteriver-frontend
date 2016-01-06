@@ -36,11 +36,23 @@ export default Ember.Component.extend({
     const highMidiNumber = new MidiNumber(this.get('highNumber'));
     const lowMidiNumber = new MidiNumber(this.get('lowNumber'));
 
-    const xScale = window.devicePixelRatio * this.$().width() / (highMidiNumber.x - lowMidiNumber.x + keyboard.IVORY_WIDTH);
+    const xScale = this.get('width') / (highMidiNumber.x - lowMidiNumber.x + keyboard.IVORY_WIDTH);
 
     ctx.translate(0, canvas.height);
     ctx.scale(xScale, -xScale);
     ctx.translate(-lowMidiNumber.x, 0);
+
+    ctx.fillStyle = '#555555';
+    for(const cMidiNumber of keyboard.C_MIDI_NUMBERS){
+      ctx.rect(cMidiNumber.x, 0, keyboard.IVORY_WIDTH / 20, canvas.height / xScale);
+    }
+    ctx.fill();
+
+    ctx.fillStyle = '#444444'
+    for(const cMidiNumber of keyboard.F_MIDI_NUMBERS){
+      ctx.rect(cMidiNumber.x, 0, keyboard.IVORY_WIDTH / 20, canvas.height / xScale);
+    }
+    ctx.fill();
 
     ctx.translate(0, keyboard.IVORY_HEIGHT);
     //ctx.scale(1, this.get('timeScale'));
