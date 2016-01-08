@@ -14,8 +14,8 @@ export default Ember.Component.extend({
   highNumber: 108,
   timeScale: 10,
 
-  width: 640,
-  height: 360,
+  width: 1280,
+  height: 720,
 
   didInsertElement: function(){
     this.draw();
@@ -26,9 +26,6 @@ export default Ember.Component.extend({
   }),
 
   draw: function(){
-    this.set('width', this.$().width() * window.devicePixelRatio);
-    this.set('height', this.$().height() * window.devicePixelRatio);
-
     let canvas = this.$()[0];
     canvas.width = canvas.width;
     let ctx = canvas.getContext('2d');
@@ -41,18 +38,6 @@ export default Ember.Component.extend({
     ctx.translate(0, canvas.height);
     ctx.scale(xScale, -xScale);
     ctx.translate(-lowMidiNumber.x, 0);
-
-    ctx.fillStyle = '#555555';
-    for(const cMidiNumber of keyboard.C_MIDI_NUMBERS){
-      ctx.rect(cMidiNumber.x, 0, keyboard.IVORY_WIDTH / 20, canvas.height / xScale);
-    }
-    ctx.fill();
-
-    ctx.fillStyle = '#444444'
-    for(const cMidiNumber of keyboard.F_MIDI_NUMBERS){
-      ctx.rect(cMidiNumber.x, 0, keyboard.IVORY_WIDTH / 20, canvas.height / xScale);
-    }
-    ctx.fill();
 
     ctx.translate(0, keyboard.IVORY_HEIGHT);
     //ctx.scale(1, this.get('timeScale'));
