@@ -13,13 +13,4 @@ test('it renders', function(assert) {
   this.render(hbs`{{canvas-piano-roll-background}}`);
 
   assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:" + EOL +
-  this.render(hbs`
-    {{#canvas-piano-roll-background}}
-      template block text
-    {{/canvas-piano-roll-background}}
-  `);
-
-  assert.equal(this.$().text().trim(), '');
 });

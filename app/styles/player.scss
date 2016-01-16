@@ -24,6 +24,7 @@
   position: relative;
   background: $piano-background-color-light;
   background-image: -webkit-radial-gradient(center bottom, circle cover, $piano-background-color-light 70%, $piano-background-color-dark);
+  overflow: hidden;
   width: 100%;
   flex: 1;
   svg {
@@ -33,8 +34,9 @@
   }
   canvas {
     position: absolute;
-    bottom: 0;
+    bottom: 10%;
     width: 100%;
+    height: 100%;
   }
 }
 
