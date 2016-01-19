@@ -52,9 +52,7 @@ export default Ember.Component.extend(Synthesizer, {
       const currentPosition = this.initialPositionSecond + elapsedSeconds * this.get('playbackSpeed');
 
       this.audioCursor.forward(currentPosition + audioBufferDuration, {
-        noteOn: (event) => {
-          this.playNote(event.note);
-        }
+        noteOn: event => this.playNote(event.note)
       });
 
       // can't use requestAnimationFrame because inactive tabs pause animation

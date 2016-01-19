@@ -8,7 +8,7 @@
     "ember-load-initializers": "0.1.7",
     "ember-qunit": "0.4.16",
     "ember-qunit-notifications": "0.1.0",
-    "jadin": "0.7.0",
+    "jadin": "blakeley/jadin#a81cda0",
     "jquery": "^1.11.3",
     "moment": ">= 2.8.0",
     "moment-timezone": ">= 0.1.0",
