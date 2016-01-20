@@ -59,8 +59,8 @@ export default Ember.Component.extend({
 
   didInsertElement: function(){
     run.next(this, function(){
-      this.set('height', this.$().height() * window.devicePixelRatio);
-      this.set('width', this.$().width() * window.devicePixelRatio);
+      this.set('height', this.element.parentElement.clientHeight * window.devicePixelRatio);
+      this.set('width', this.element.parentElement.clientWidth * window.devicePixelRatio);
       run.next(this, function(){
         this.draw();
       });

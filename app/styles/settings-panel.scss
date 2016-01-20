@@ -1,12 +1,14 @@
 .settings-panel-container {
-  position: relative;
-  width: 0px;
+  position: absolute;
+  height: 100%;
+  width: 325px;
+  right: -325px;
   background: $mute-color-dark;
-  transition: width 0.5s;
+  transition: right 0.5s;
 }
 
 .settings-panel-container.is-open {
-  width: 325px;
+  right: 0px;
 }
 
 .settings-panel {
