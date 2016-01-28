@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Icon made by Brandon Blakeley for www.noteriver.com -->
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g fill="none" stroke="white" stroke-width="2" transform="scale(0.966666) translate(1 1)">
+    <rect x="0" y="8" width="45" height="8" rx="2.5" ry="2.5" />
+    <rect x="15" y="24" width="45" height="8" rx="2.5" ry="2.5" />
+    <rect x="0" y="28" width="45" height="8" fill="white" rx="2.5" ry="2.5" />
+    <rect x="15" y="44" width="45" height="8" fill="white" rx="2.5" ry="2.5" />
+  </g>
+</svg>

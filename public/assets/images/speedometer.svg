@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Icon made by Brandon Blakeley for www.noteriver.com -->
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="-30 -37.5 60 60" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g fill="white" stroke="none" stroke-width="0" transform="scale(0.95)" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M-30,0
+             A30,30 0 1,1 30,0
+             M24,0
+             A27,27 0 1,0 -30,0
+             M-30,0"/>
+    <circle x="0" y="0" r="3"/>
+    <polygon points="-3,0 0,-30, 3,0" transform="rotate(-30)"/>
+  </g>
+</svg>

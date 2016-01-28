@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Icon made by Brandon Blakeley for www.noteriver.com -->
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="-30 -27.5 60 60" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g fill="none" stroke="white" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" transform="scale(0.90)">
+    <!-- bass drum -->
+    <circle cx="0" cy="15" r="15"/>
+    <line x1="0" x2="0" y1="30" y2="34" transform="rotate(35, 0, 15)"/>
+    <line x1="0" x2="0" y1="30" y2="34" transform="rotate(-35, 0, 15)"/>
+
+    <!-- left standing cymbal -->
+    <g stroke-width="1.5">
+      <line x1="-20" y1="22" x2="-26" y2="28"/> <!-- left leg -->
+      <line x1="-20" y1="22" x2="-14" y2="28"/> <!-- right leg -->
+      <line x1="-20" y1="22" x2="-20" y2="-23"/> <!-- stem --> 
+      <ellipse cx="-20" cy="-15" rx="10" ry="2" fill="white" stroke="none" transform="rotate(15,-20,-20)"/> <!-- cymbal -->
+    </g>
+
+    <!-- right standing cymbal -->
+    <g stroke-width="1.5" transform="scale(-1, 1)">
+      <line x1="-20" y1="22" x2="-26" y2="28"/> <!-- right leg -->
+      <line x1="-20" y1="22" x2="-14" y2="28"/> <!-- left leg -->
+      <line x1="-20" y1="22" x2="-20" y2="-23"/> <!-- stem --> 
+      <ellipse cx="-20" cy="-15" rx="10" ry="2" fill="white" stroke="none" transform="rotate(15,-20,-20)"/> <!-- cymbal -->
+    </g>
+
+    <!-- tom mask -->
+    <mask id="tom">
+      <rect x="-30" y="-30" width="60" height="60" fill="white"/>
+      <circle cx="0" cy="15" r="15" fill="black"/>
+    </mask>
+
+    <!-- left floating tom -->
+    <g mask="url(#tom)">
+      <g fill="white" stroke-width="0" transform="scale(0.5) translate(-30, -5) rotate(15, -30, -5)">
+        <rect x="-15" y="-15" width="30" height="30"/>
+        <line x1="-15" y1="-12" x2="15" y2="-12" stroke-width="6"/>
+        <line x1="-15" y1="12" x2="15" y2="12" stroke-width="6"/>
+      </g>
+    </g>
+
+    <!-- right floating tom -->
+    <g mask="url(#tom)">
+      <g fill="white" stroke-width="0" transform="scale(-0.5, 0.5) translate(-30, -5) rotate(15, -30, -5)">
+        <rect x="-15" y="-15" width="30" height="30"/>
+        <line x1="-15" y1="-12" x2="15" y2="-12" stroke-width="6"/>
+        <line x1="-15" y1="12" x2="15" y2="12" stroke-width="6"/>
+      </g>
+    </g>
+
+
+  </g>
+</svg>

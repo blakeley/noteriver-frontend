@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Icon made by Brandon Blakeley for www.noteriver.com -->
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g fill="none" stroke="white" stroke-width="3" transform="scale(0.95) translate(1.5 1.5)">
+    <polyline points="10,60 20,0 40,0 50,60 10,60" stroke-linejoin="round" stroke-linecap="round"/>
+    <g transform="rotate(30, 30, 50)">
+      <line x1="30" y1="50" x2="30" y2="0" stroke-linecap="round"/>
+      <polygon fill="white" points="27,10 26,8 34,8 33,10" />
+    </g>
+  </g>
+</svg>
