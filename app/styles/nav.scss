@@ -6,31 +6,56 @@
   flex-wrap: nowrap;
 }
 
-.main {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  flex: 1;
-}
-
 nav.primary {
-  height: $nav-height + 1px;
+  min-height: 72px;
+  height: 72px;
+  max-height: 72px;
+  padding: 0;
+  margin: 0;
   color: $text-gray;
   // border-bottom: 1px solid $separator-gray;
   /* alignment */
   display: flex;
   flex-direction: row;
-  justify-content: center; /* align horizontal */
-  align-items: center; /* align vertical */
+  align-items: stretch; /* align vertical */
+}
+
+.main {
+  position: relative;
+  flex-grow: 1;
+  flex-shrink: 0;
 }
 
 .nav-element {
-  padding: 0 0px;
   height: 100%;
+  min-width: 1px;
+  padding: 0;
   /* alignment */
   display: flex;
   justify-content: center; /* align horizontal */
   align-items: center; /* align vertical */
+}
+
+.vertical-center {
+  /* alignment */
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align vertical */
+}
+
+.logo {
+  height: 100%;
+
+  svg {
+    height: $nav-height / 2;
+    margin: $nav-height / 4;
+    .note {fill: $dark-gray;}
+    .river {fill: $primary-color;}
+  } 
+  &:hover svg {
+    .note {fill: $darkest-gray;}
+    .river {fill: $primary-color-dark;}
+  }
 }
 
 .search-button {
@@ -47,19 +72,6 @@ nav.primary {
   }
 }
 
-.logo {
-  height: 100%;
-  padding: 24px;
-  svg {
-    .note {fill: $dark-gray;}
-    .river {fill: $primary-color;}
-    height: 100%;
-  } 
-  &:hover svg {
-    .note {fill: $darkest-gray;}
-    .river {fill: $primary-color-dark;}
-  }
-}
 
 .remainder {
   flex: 1;
