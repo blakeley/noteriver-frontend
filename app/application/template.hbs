@@ -10,6 +10,12 @@
       {{/link-to}}
     </div>
 
+    <div class="nav-element">
+      {{#link-to "scores" (query-params search=null) class='search-button'}}
+        {{partial 'svg/hand-lens'}}
+      {{/link-to}}
+    </div>
+
     <div class="remainder"></div>
 
     {{#if session.isAuthenticated}}

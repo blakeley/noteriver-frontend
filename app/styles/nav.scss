@@ -1,4 +1,3 @@
-
 .app {
   position: absolute;
   left: 0; top: 0; right: 0; bottom: 0;
@@ -34,6 +33,20 @@ nav.primary {
   align-items: center; /* align vertical */
 }
 
+.search-button {
+  height: 100%;
+  svg {
+    height: 100%;
+    padding: 25%;
+    * {
+      stroke: $text-gray;
+    }
+  }
+  &:hover svg * {
+    stroke: $darkest-gray;
+  }
+}
+
 .logo {
   height: 100%;
   padding: 24px;
@@ -41,11 +54,11 @@ nav.primary {
     .note {fill: $dark-gray;}
     .river {fill: $primary-color;}
     height: 100%;
+  } 
+  &:hover svg {
+    .note {fill: $darkest-gray;}
+    .river {fill: $primary-color-dark;}
   }
-}
-.logo:hover {
-  .note {fill: $darkest-gray;}
-  .river {fill: $primary-color-dark;}
 }
 
 .remainder {

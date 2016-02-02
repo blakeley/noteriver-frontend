@@ -22,6 +22,15 @@ test('Visiting /scores and clicking a score', function(assert) {
   });
 });
 
+test('Visiting /scores and searching for a score', function(assert) {
+  visit('/scores');
+  fillIn('#scores-search-query', 'Test');
+  andThen(() => {
+    assert.equal(currentURL(), '/scores?search=Test'); // updates URL
+    assert.equal(find('li.score a:first').text().trim(), 'Test Score - Automaton'); // updates model (scores)
+  });
+});
+
 // Should be moved to integration test
 test('Visiting /scores/new', function(assert) {
   visit('/scores/new');

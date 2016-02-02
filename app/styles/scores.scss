@@ -1,3 +1,26 @@
+.search-header {
+  padding: 2rem;
+  background: linear-gradient(45deg, $primary-color 0, $primary-color-dark 100%);
+  text-align: center;
+  width: 100%;
+}
+
+.search-container {
+  display: flex;
+  max-width: $section-content-width;
+  margin: auto;
+}
+
+input#scores-search-query {
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.15rem;
+  padding: 1rem;
+  flex: 1;
+  color: $text-gray-dark;
+}
+
+
 ul.scores {
   padding: 2.5rem;
 

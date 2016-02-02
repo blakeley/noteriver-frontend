@@ -1,3 +1,5 @@
+var md5 = require('md5');
+
 SCORES = [
   {"id":1,"type":'score',"attributes":{"title":"C Scale","artist":"George P. Burdell","s3-key":"fixtures/c.mid","created-at":"2015-10-28T22:34:24.000Z"},"relationships":{"user":{"data":{"id":1,"type":"users"}}}},
   {"id":2,"type":'score',"attributes":{"title":"Chromatic Scale","artist":"Bach","s3-key":"fixtures/chromatic.mid","created-at":"2015-10-28T22:34:24.000Z"},"relationships":{"user":{"data":{"id":1,"type":"users"}}}},
@@ -12,15 +14,18 @@ module.exports = function(app) {
   var scoresRouter = express.Router();
 
   scoresRouter.get('/', function(req, res) {
+    var scores = SCORES.slice();
+
     if(req.query.featured === 'true'){
-      res.send({"data":[
-        SCORES[4]
-      ]});
-    } else {
-      res.send({"data":
-        SCORES
-      });
+      scores = SCORES.slice(4,5);
     }
+    if(!!req.query.search) {
+      scores.unshift({
+        "id":Math.floor(Math.random() * 999999),"type":'score',"attributes":{"title":req.query.search + " Score","artist":"Automaton","s3-key":"fixtures/c.mid","created-at":"2015-11-02T22:34:24.000Z"},"relationships":{"user":{"data":{"id":3,"type":"users"}}}
+      })
+    }
+
+    res.send({data: scores});
   });
 
   scoresRouter.get('/:id', function(req, res) {

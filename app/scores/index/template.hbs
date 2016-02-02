@@ -1,11 +1,14 @@
-<div class="content-page">
-  <div class="main-container content-container">
-    <h1>Public scores</h1>
 
-    <ul class="scores">
-    {{#each model as |score|}}
-      {{li-score score=score}}
-    {{/each}}
-    </ul>
+<header class="search-header">
+  <div class="search-container">
+    {{input value=search id='scores-search-query' placeholder="What song are you looking for?"}}
   </div>
+</header>
+
+<div class="main-container content-container">
+  <ul class="scores">
+  {{#each scores as |score|}}
+    {{li-score score=score}}
+  {{/each}}
+  </ul>
 </div>
