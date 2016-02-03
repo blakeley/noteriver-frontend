@@ -25,7 +25,9 @@ module.exports = function(app) {
       })
     }
 
-    res.send({data: scores});
+    setTimeout(function(){
+      res.send({data: scores});
+    }, 300);
   });
 
   scoresRouter.get('/:id', function(req, res) {

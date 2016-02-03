@@ -47,8 +47,8 @@ nav.primary {
   height: 100%;
 
   svg {
-    height: $nav-height / 2;
-    margin: $nav-height / 4;
+    height: 100%;
+    padding: $nav-height / 4;
     .note {fill: $dark-gray;}
     .river {fill: $primary-color;}
   } 
