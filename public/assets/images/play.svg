@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- Icon made by Freepik from www.flaticon.com is licensed by CC BY 3.0 -->
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 201.751 201.751" style="enable-background:new 0 0 201.751 201.751;" xml:space="preserve">
-  <path style="fill:#FFF;" d="M39.027,0v201.751l123.696-100.87L39.027,0z M45.516,13.668l106.943,87.217L45.516,188.094V13.668z"/>
+<!-- Icon made by Brandon Blakeley for www.noteriver.com -->
+<svg width="60" height="60" viewBox="-30 -30 60 60" xmlns="http://www.w3.org/2000/svg"  xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g fill="none" stroke="white" stroke-width="4" transform="scale(0.90)" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M 30,0 L -15,-28 L -15,28 Z" />
+  </g>
 </svg>
