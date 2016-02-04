@@ -60,31 +60,10 @@ function Keyboard() {
   this.EBONY_KEY_COLORS = ['#3768A5', '#569D11', '#DAC300', '#F57900', '#E93131', '#6C4C71'];
   this.IVORY_NOTE_COLORS = ['#95B7DB', '#AAEA6A', '#FCF084', '#FCC36E', '#F28989', '#CCA1D0'];
   this.EBONY_NOTE_COLORS = ['#4975AE', '#6AA92D', '#E2D038', '#F79433', '#ED5656', '#8A708D'];
+  this.IVORY_MIDI_NUMBERS = this.MIDI_NUMBERS.filter(function(midiNumber){return midiNumber.isIvory;});
+  this.EBONY_MIDI_NUMBERS = this.MIDI_NUMBERS.filter(function(midiNumber){return midiNumber.isEbony;});
+  this.C_MIDI_NUMBERS = this.MIDI_NUMBERS.filter(function(midiNumber){return midiNumber.isC;});
+  this.F_MIDI_NUMBERS = this.MIDI_NUMBERS.filter(function(midiNumber){return midiNumber.isF;});
 }
-
-Keyboard.prototype = {
-  get EBONY_MIDI_NUMBERS(){
-    return keyboard.MIDI_NUMBERS.filter(function(midiNumber){
-      return midiNumber.isEbony;
-    });
-  },
-
-  get IVORY_MIDI_NUMBERS(){
-    return keyboard.MIDI_NUMBERS.filter(function(midiNumber){
-      return midiNumber.isIvory;
-    });    
-  },
-
-  get C_MIDI_NUMBERS(){
-    return keyboard.MIDI_NUMBERS.filter(function(midiNumber){
-      return midiNumber.isC;
-    });
-  },
-
-  get F_MIDI_NUMBERS(){
-    return keyboard.MIDI_NUMBERS.filter(function(midiNumber){
-      return midiNumber.isF;
-    });
-  },}
 
 var keyboard = new Keyboard();

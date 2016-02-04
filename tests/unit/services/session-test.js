@@ -124,7 +124,9 @@ test('.logout() clears the currentUserId', function(assert){
 
 test('.login() returns a promise', function(assert){
   var service = this.subject({storage: mockStorage, store: mockStore});
-  assert.ok(!!service.login().then);
+  service.login().then(function(){
+    assert.ok(true);
+  });
 });
 
 test('.login() with valid credentials sets authToken', function(assert){
@@ -165,7 +167,9 @@ test('.login() with incorrect password sets newSessionPasswordError', function(a
 
 test('.register() returns a promise', function(assert){
   var service = this.subject({storage: mockStorage, store: mockStore});
-  assert.ok(!!service.register().then);
+  service.register().then(function(){
+    assert.ok(true);
+  });
 });
 
 test('.register() with valid credentials sets authToken', function(assert){
