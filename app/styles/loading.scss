@@ -3,9 +3,13 @@
   left: 0; top: 0; right: 0; bottom: 0;
   background: linear-gradient(45deg, $primary-color 0, $primary-color-dark 100%);
   text-align: center;
-  img {
-    width: 100%;
-    height: 100%;
-    padding: 25%;
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align vertical */
+  img, svg {
+    height: 50%;
+    width: 50%;
+    max-width: 50%;
+    max-height: 50%;
   }
 }
