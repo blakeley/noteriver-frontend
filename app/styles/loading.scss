@@ -1,5 +1,5 @@
 .loading {
-  position: fixed;
+  position: absolute;
   left: 0; top: 0; right: 0; bottom: 0;
   background: linear-gradient(45deg, $primary-color 0, $primary-color-dark 100%);
   text-align: center;
