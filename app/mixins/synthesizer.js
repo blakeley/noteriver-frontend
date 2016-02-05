@@ -3,7 +3,7 @@
 import Ember from 'ember';
 import ENV from 'noteriver/config/environment';
 
-const { observer } = Ember;
+const { observer, computed } = Ember;
 
 export default Ember.Mixin.create({
   audio: Ember.inject.service(),
@@ -15,12 +15,16 @@ export default Ember.Mixin.create({
   playbackSpeed: 1.00,
   transpositionInterval: 0,
 
+  audioCursor: computed('midi', function(){
+    return this.get('midi').newCursor();
+  }),
+
   noteToURL: function(note) {
     return `${ENV.assetPrefix}/assets/audios/${note.number}.mp3`;
   },
 
   init: function(){
-    this._super(...arguments);
+    this._super.apply(this, arguments);
 
     this.masterGain = this.get('audio').context.createGain();
     this.masterGain.gain.value = this.get('masterGainValue');
@@ -36,8 +40,8 @@ export default Ember.Mixin.create({
     this.initialPositionSecond = parseFloat(this.get('time'));
     this.initialDateNow = Date.now();
 
-    this.audioCursor.backward(this.initialPositionSecond);
-    this.audioCursor.forward(this.initialPositionSecond);
+    this.get('audioCursor').backward(this.initialPositionSecond);
+    this.get('audioCursor').forward(this.initialPositionSecond);
 
     if(this.get('isPlaying') & !this.get('isInterrupted')){
       for(const note of this.get('score.midi').notesOnAt(this.initialPositionSecond)){
@@ -50,8 +54,6 @@ export default Ember.Mixin.create({
     for(const note of this.get('midi').notes){
       this.get('audio').getBuffer(this.noteToURL(note));
     }
-
-    this.audioCursor = this.get('midi').newCursor();
   }),
 
   playNote: function(note){

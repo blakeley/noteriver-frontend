@@ -31,8 +31,8 @@ export default Ember.Component.extend(Synthesizer, {
     this.stopAudio();
     this.initialPositionSecond = parseFloat(this.get('time'));
     this.initialDateNow = Date.now();
-    this.audioCursor.backward(this.initialPositionSecond);
-    this.audioCursor.forward(this.initialPositionSecond);
+    this.get('audioCursor').backward(this.initialPositionSecond);
+    this.get('audioCursor').forward(this.initialPositionSecond);
 
     if(this.get('isPlaying') & !this.get('isInterrupted')){
       for(const note of this.get('score.midi').notesOnAt(this.initialPositionSecond)){
@@ -51,7 +51,7 @@ export default Ember.Component.extend(Synthesizer, {
       const elapsedSeconds = (Date.now() - this.initialDateNow) / 1000;
       const currentPosition = this.initialPositionSecond + elapsedSeconds * this.get('playbackSpeed');
 
-      this.audioCursor.forward(currentPosition + audioBufferDuration, {
+      this.get('audioCursor').forward(currentPosition + audioBufferDuration, {
         noteOn: event => this.playNote(event.note)
       });
 
