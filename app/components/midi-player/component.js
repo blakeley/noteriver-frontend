@@ -85,6 +85,7 @@ export default Ember.Component.extend(Synthesizer, {
   }.observes('highNumber'),
 
   willInsertElement: function(){
+    window.tt = this;
     this.loadMidi();
   },
 
@@ -104,6 +105,10 @@ export default Ember.Component.extend(Synthesizer, {
 
     toggleSettingsPanelIsOpen: function(){
       this.toggleProperty('settingsPanelIsOpen');
+    },
+
+    toggleFullscreen: function() {
+      this.fullscreen.toggle(this.element);
     },
   },
 });

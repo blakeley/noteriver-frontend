@@ -33,6 +33,18 @@
           <img src="/assets/images/fast.svg" />
         </button>
       </div>
+
+      {{#if fullscreen.isAvailable}}
+        <div class="button-control">
+          <button {{action 'toggleFullscreen'}}>
+            {{#if fullscreen.isEnabled}}
+              Exit fullscreen
+            {{else}}
+              View fullscreen
+            {{/if}}
+          </button>
+        </div>
+      {{/if}}
     </div>
   </div>
 </div>
