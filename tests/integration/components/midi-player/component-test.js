@@ -4,8 +4,20 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
+// stub resizeService
+const resizeStub = Ember.Service.extend({
+  on() {},
+  off() {},
+});
+
 moduleForComponent('midi-player', 'Integration | Component | midi player', {
   integration: true,
+  beforeEach: function () {
+    this.register('service:resize-service', resizeStub);
+    // Calling inject puts the service instance in the test's context,
+    // making it accessible as "locationService" within each test
+    this.inject.service('resize-service', { as: 'resizeService' });
+  }
 });
 
 let mockScore = Ember.Object.create({

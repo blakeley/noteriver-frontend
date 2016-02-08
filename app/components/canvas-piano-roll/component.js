@@ -1,10 +1,16 @@
 /* global Midi, MidiNumber, keyboard */
 
 import Ember from 'ember';
+import ResizeAware from 'ember-resize/mixins/resize-aware';
 
-const { observer, computed, run } = Ember;
+const { Component,
+        observer,
+        computed,
+        run,
+        inject } = Ember;
 
-export default Ember.Component.extend({
+export default Component.extend(ResizeAware, {
+  resizeService: inject.service('resize-service'),
   tagName: 'canvas',
   attributeBindings: ['height', 'width', 'style'],
 
@@ -57,27 +63,35 @@ export default Ember.Component.extend({
     return new Ember.Handlebars.SafeString(`bottom: ${this.get('bottom')}%;`);
   }),
 
-  didInsertElement: function(){
-    run.next(this, function(){
-      this.set('height', this.element.parentElement.clientHeight * window.devicePixelRatio);
-      this.set('width', this.element.parentElement.clientWidth * window.devicePixelRatio);
-      run.next(this, function(){
-        this.draw();
-      });
-    });
-  },
-
-  repaint: observer('index', function(){
+  indexChanged: observer('index', function(){
     if(this._previousIndex !== this.get('index')){
+      this._previousIndex = this.get('index');
       this.draw();
     }
+  }),
 
-    this._previousIndex = this.get('index');
+  dimensionChanged: observer('height', 'width', function(){
+    run.scheduleOnce('afterRender', this, function(){
+      this.draw();
+    });
   }),
 
   midiLoaded: observer('midi', function(){
     this.draw();
   }),
+
+  didInsertElement: function(){
+    this._super(...arguments);
+    run.scheduleOnce('afterRender', this, function(){
+      this.set('height', this.element.parentElement.clientHeight * window.devicePixelRatio);
+      this.set('width', this.element.parentElement.clientWidth * window.devicePixelRatio);
+    });
+  },
+
+  didResize: function(width, height) {
+    this.set('height', this.element.parentElement.clientHeight * window.devicePixelRatio);
+    this.set('width', this.element.parentElement.clientWidth * window.devicePixelRatio);
+  },
 
   draw: function(){
     if(!this.get('isDestroyed')){

@@ -1,10 +1,16 @@
 /* global Midi, MidiNumber, keyboard */
 
 import Ember from 'ember';
+import ResizeAware from 'ember-resize/mixins/resize-aware';
 
-const { computed, run } = Ember;
+const { Component,
+        observer,
+        computed,
+        run,
+        inject } = Ember;
 
-export default Ember.Component.extend({
+export default Component.extend(ResizeAware, {
+  resizeService: inject.service('resize-service'),
   tagName: 'canvas',
   attributeBindings: ['height', 'width'],
 
@@ -23,19 +29,26 @@ export default Ember.Component.extend({
     return new MidiNumber(this.get('highNumber'));
   }),
 
-  xScale: computed('width', 'highMidiNumber', 'lowMidiNumber', function(){
+  scale: computed('width', 'highMidiNumber', 'lowMidiNumber', function(){
     return (this.get('width') ) / (this.get('highMidiNumber').x - this.get('lowMidiNumber').x + keyboard.IVORY_WIDTH);
   }),
 
+  dimensionChanged: observer('height', 'width', function(){
+    run.scheduleOnce('afterRender', this, function(){
+      this.draw();
+    });
+  }),
+
   didInsertElement: function(){
-    window.tt = this;
     run.next(this, function(){
       this.set('height', this.$().height() * window.devicePixelRatio);
       this.set('width', this.$().width() * window.devicePixelRatio);
-      run.next(this, function(){
-        this.draw();
-      });
     });
+  },
+
+  didResize: function(width, height) {
+    this.set('height', this.element.parentElement.clientHeight * window.devicePixelRatio);
+    this.set('width', this.element.parentElement.clientWidth * window.devicePixelRatio);
   },
 
   draw: function(){
@@ -44,7 +57,7 @@ export default Ember.Component.extend({
       let ctx = canvas.getContext('2d');
 
       ctx.translate(0, canvas.height);
-      ctx.scale(this.get('xScale'), -this.get('xScale'));
+      ctx.scale(this.get('scale'), -this.get('scale'));
       ctx.translate(-this.get('lowMidiNumber').x, 0);
 
       ctx.fillStyle = '#555555';
@@ -52,7 +65,7 @@ export default Ember.Component.extend({
         const width = keyboard.IVORY_WIDTH / 20;
         const x = cMidiNumber.x - width / 2;
         const y = 0;
-        const height = canvas.height / this.get('xScale');
+        const height = canvas.height / this.get('scale');
         ctx.rect(x, y, width, height);
       }
       ctx.fill();
@@ -62,7 +75,7 @@ export default Ember.Component.extend({
         const width = keyboard.IVORY_WIDTH / 20;
         const x = cMidiNumber.x - width / 2;
         const y = 0;
-        const height = canvas.height / this.get('xScale');
+        const height = canvas.height / this.get('scale');
         ctx.rect(x, y, width, height);
       }
       ctx.fill();
