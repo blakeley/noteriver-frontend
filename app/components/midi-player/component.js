@@ -1,7 +1,9 @@
+/* global MidiNumber, keyboard */
+
 import Ember from 'ember';
 import Synthesizer from 'noteriver/mixins/synthesizer';
 
-const { computed } = Ember;
+const { computed, run } = Ember;
 const { alias } = computed;
 
 export default Ember.Component.extend(Synthesizer, {
@@ -11,17 +13,43 @@ export default Ember.Component.extend(Synthesizer, {
 
   midi: alias('score.midi'),
   time: 0.0,
+  timeScale: 10,
+  lowNumber: 21,
+  highNumber: 108,
+
+  width: 1280,
+  height: 720,
+
   isPlaying: false,
   isInterrupted: false,
   settingsPanelIsOpen: false,
   loadMidiFailed: false,
   loadMidiSucceeded: false,
-  lowNumber: 21,
-  highNumber: 108,
+
+  scrollRatio: computed('midi', 'time', 'isPlaying', 'scrollRatioRaw', function(){
+    if(this.get('isPlaying')){
+      return this.get('time') / this.get('midi').duration;
+    } else {
+      return this.get('scrollRatioRaw');
+    }
+  }),
+
+  lowMidiNumber: computed('lowNumber', function(){
+    return new MidiNumber(this.get('lowNumber'));
+  }),
+
+  highMidiNumber: computed('highNumber', function(){
+    return new MidiNumber(this.get('highNumber'));
+  }),
+
+  durationInPixels: computed('midi', 'timeScale', 'lowMidiNumber', 'highMidiNumber', 'height', 'width', function(){
+    return this.get('midi.duration') * this.get('timeScale') * (this.get('height') / this.get('width')) * (this.get('highMidiNumber').x - this.get('lowMidiNumber').x + keyboard.IVORY_WIDTH);
+  }),
 
   loadMidi: function(){
     this.get('score').loadMidi().then((midi) => {
       this.set('loadMidiSucceeded', true);
+      this.set('progressSliderMax', this.get('score.midi.duration')); // HACK: computed properties on score.midi.duration don't update
     }).catch((reason) => {
       this.set('loadMidiFailed', true);
     });
@@ -72,21 +100,21 @@ export default Ember.Component.extend(Synthesizer, {
     }
   },
 
-  boundHighNumber: function(){
-    if(parseInt(this.get('lowNumber')) >= parseInt(this.get('highNumber'))){
-      this.set('highNumber', parseInt(this.get('lowNumber')) + 1);
-    }
-  }.observes('lowNumber'),
-
-  boundLowNumber: function(){
-    if(parseInt(this.get('lowNumber')) >= parseInt(this.get('highNumber'))){
-      this.set('lowNumber', parseInt(this.get('highNumber')) - 1);
-    }
-  }.observes('highNumber'),
-
   willInsertElement: function(){
-    window.tt = this;
     this.loadMidi();
+  },
+
+  didInsertElement: function(){
+    this._super(...arguments);
+    run.scheduleOnce('afterRender', this, function(){
+      this.set('height', this.element.parentElement.clientHeight * window.devicePixelRatio);
+      this.set('width', this.element.parentElement.clientWidth * window.devicePixelRatio);
+    });
+  },
+
+  didResize: function(width, height) {
+    this.set('height', this.element.parentElement.clientHeight * window.devicePixelRatio);
+    this.set('width', this.element.parentElement.clientWidth * window.devicePixelRatio);
   },
 
   willDestroyElement: function(){
@@ -95,20 +123,25 @@ export default Ember.Component.extend(Synthesizer, {
   },
 
   actions: {
-    loadMidi: function(){
+    loadMidi(){
       this.loadMidi();
     },
 
-    toggleIsPlaying: function(){
+    toggleIsPlaying() {
       this.toggleProperty('isPlaying');
     },
 
-    toggleSettingsPanelIsOpen: function(){
+    toggleSettingsPanelIsOpen() {
       this.toggleProperty('settingsPanelIsOpen');
     },
 
-    toggleFullscreen: function() {
+    toggleFullscreen() {
       this.fullscreen.toggle(this.element);
+    },
+
+    setScrollRatioRaw(scrollRatioRaw) {
+      this.set('scrollRatioRaw', scrollRatioRaw);
+      this.set('time', this.get('midi').duration * scrollRatioRaw);
     },
   },
 });

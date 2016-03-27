@@ -18,7 +18,6 @@ export default Component.extend(ResizeAware, {
   time: 0,
   lowNumber: 21,
   highNumber: 108,
-
   timeScale: 10,
 
   width: 1280,
@@ -130,5 +129,5 @@ export default Component.extend(ResizeAware, {
         }
       }
     }
-  }
+  },
 });

@@ -1,8 +1,9 @@
 <div class="flex-one flex-row" style="position: relative; background: red;">
   <div class="player-video">
+    {{scroll-overlay height=durationInPixels scrollRatio=scrollRatio onScroll=(action "setScrollRatioRaw")}}
     {{canvas-piano-roll-background lowNumber=lowNumber highNumber=highNumber}}
-    {{canvas-piano-roll midi=score.midi time=time lowNumber=lowNumber highNumber=highNumber indexParity=false}}
-    {{canvas-piano-roll midi=score.midi time=time lowNumber=lowNumber highNumber=highNumber indexParity=true}}
+    {{canvas-piano-roll timeScale=timeScale midi=score.midi time=time lowNumber=lowNumber highNumber=highNumber indexParity=false}}
+    {{canvas-piano-roll timeScale=timeScale midi=score.midi time=time lowNumber=lowNumber highNumber=highNumber indexParity=true}}
     {{svg-keyboard midi=score.midi time=time lowNumber=lowNumber highNumber=highNumber}}
   </div>
   <div class="settings-panel-container {{if settingsPanelIsOpen 'is-open'}}">
@@ -72,7 +73,7 @@
   {{/if}}
   <div class="slider-container">
     <strong>{{score.title}}</strong> - {{score.artist}}
-    {{progress-slider value=time min=0 max=score.midi.duration isInterrupted=isInterrupted}}
+    {{progress-slider value=time min=0 max=progressSliderMax isInterrupted=isInterrupted}}
   </div>
   <button {{action 'toggleSettingsPanelIsOpen'}}>
     <img class="{{if settingsPanelIsOpen 'rotated'}}" src="/assets/images/gear.svg"/>

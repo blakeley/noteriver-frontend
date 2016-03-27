@@ -8,7 +8,7 @@ export default Ember.Test.registerAsyncHelper('waitForSession', function(app) {
     Ember.Test.adapter.asyncStart();
 
     var session = app.__container__.lookup('service:session');
-    console.log(`waiting for session...`);
+    console.log(`Waiting for session...`);
     session.get('currentUser').then(function(user){
       console.log(`Waited for session, got user.id: ${user.id}`);
       Ember.run.schedule('afterRender', null, resolve);
