@@ -25,7 +25,9 @@
       </div>
       <div class="nav-element">
         <button {{action 'toggleSessionMenuIsOpen'}} id="current-session-button">
-          <img src="{{session.currentUser.avatarUrl}}" class="avatar fill-height"/>
+          <div id="current-session-button-avatar-container">
+            <img src="{{session.currentUser.avatarUrl}}" class="avatar" style="height: 100%;"/>
+          </div>
           <div class="arrow-down">
             <div class="menu {{if sessionMenuIsOpen 'faded-in' 'faded-out'}}">
               <ul>
