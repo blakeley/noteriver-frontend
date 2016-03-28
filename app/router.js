@@ -1,7 +1,6 @@
 /* global ga */
 
 import Ember from 'ember';
-import ENV from 'noteriver/config/environment';
 import config from './config/environment';
 
 const Router = Ember.Router.extend({
@@ -23,7 +22,7 @@ Router.map(function() {
   });
 });
 
-if(ENV.environment === 'production'){
+if(config.environment === 'production'){
   Router.reopen({
     notifyGoogleAnalytics: function() {
       ga('set', {
