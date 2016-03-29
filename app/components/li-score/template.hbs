@@ -1,8 +1,10 @@
-<li class="score">
-  {{#link-to 'score' score class="name"}}
+{{#link-to 'score' score}}
+  <section>
     {{score.title}} - {{score.artist}}
-  {{/link-to}}
-  {{#link-to 'score' score class="date"}}
-    {{moment-from-now score.createdAt}}
-  {{/link-to}}
-</li>
+  </section>
+{{/link-to}}
+
+<footer>
+  <img src="{{score.user.avatarUrl}}" class="avatar"/>
+  &nbsp;&nbsp;{{moment-from-now score.createdAt}}
+</footer>

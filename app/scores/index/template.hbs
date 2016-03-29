@@ -1,14 +1,13 @@
-
 <header class="search-header">
   <div class="search-container">
     {{input value=search id='scores-search-query' placeholder="What song are you looking for?"}}
   </div>
 </header>
 
-<div class="main-container content-container">
+<section class="content">
   <ul class="scores">
-  {{#each scores as |score|}}
-    {{li-score score=score}}
-  {{/each}}
+    {{#each scores as |score|}}
+      {{li-score score=score}}
+    {{/each}}
   </ul>
-</div>
+</section>

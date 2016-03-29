@@ -34,17 +34,15 @@
   }
 }
 
-.main-container {
-  margin: auto;
-  float: none;
-  &.content-container {
-    max-width: 1104px;
-  }
+section.content {
+  padding: 0 24px;
+  margin: 0 auto;
+  max-width: 1152px;
+}
 
-  .message {
-    text-align: center;
-    color: $text-gray;
-    font-size: 1.3rem;
-    margin: 2rem;
-  }
+.message {
+  text-align: center;
+  color: $text-gray;
+  font-size: 1.3rem;
+  margin: 2rem;
 }

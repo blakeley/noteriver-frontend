@@ -17,7 +17,6 @@ Router.map(function() {
   });
 
   this.route('account', function() {
-    this.route('scores');
     this.route('settings');
   });
 });

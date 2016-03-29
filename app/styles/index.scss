@@ -10,6 +10,8 @@ section.intro {
   position: relative;
 
   h1 {
+    position: relative;
+    z-index: 1;
     padding-top: 25px;
     font-size: 5rem;
     letter-spacing: -4px;
@@ -17,6 +19,8 @@ section.intro {
   }
 
   p {
+    position: relative;
+    z-index: 1;
     margin: 0;
     font-size: 2rem;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.42);
@@ -114,7 +118,6 @@ section.features {
 }
 
 .hero-layer {
-  z-index: -1;
   position: absolute;
   left: 0;
   right: 0;
