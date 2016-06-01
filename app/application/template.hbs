@@ -23,11 +23,13 @@
           Upload
         {{/link-to}}
       </div>
-      <div class="nav-element">
+
+      {{#click-outside action=(if sessionMenuIsOpen 'toggleSessionMenuIsOpen') class="nav-element" tagName="div"}}
         <button {{action 'toggleSessionMenuIsOpen'}} id="current-session-button">
           <div id="current-session-button-avatar-container">
             <img src="{{session.currentUser.avatarUrl}}" class="avatar" style="height: 100%;"/>
           </div>
+
           <div class="arrow-down">
             <div class="menu {{if sessionMenuIsOpen 'faded-in' 'faded-out'}}">
               <ul>
@@ -38,7 +40,7 @@
             </div>
           </div>
         </button>
-      </div>
+      {{/click-outside}}
     {{else}}
       <div class="nav-element">
         <button {{action 'openModal' 'new-session'}} id="new-session-button" class="nav-button">
