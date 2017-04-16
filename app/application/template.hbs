@@ -27,7 +27,7 @@
       {{#click-outside action=(if sessionMenuIsOpen 'toggleSessionMenuIsOpen') class="nav-element" tagName="div"}}
         <button {{action 'toggleSessionMenuIsOpen'}} id="current-session-button">
           <div id="current-session-button-avatar-container">
-            <img src="{{session.currentUser.avatarUrl}}" class="avatar" style="height: 100%;"/>
+            <img src="{{session.currentUser.avatarUrl}}" class="avatar"/>
           </div>
 
           <div class="arrow-down">
